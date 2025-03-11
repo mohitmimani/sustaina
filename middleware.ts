@@ -37,5 +37,5 @@ export function middleware(req: NextRequest) {
 
 // Specify the paths to apply the middleware
 export const config = {
-  matcher: ["/api/telegram/:path*", "/api/auth"],
+  matcher: ["/api/telegram/:path*", "/api/auth/:path*"],
 };
