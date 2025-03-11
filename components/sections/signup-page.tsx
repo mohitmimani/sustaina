@@ -30,7 +30,7 @@ export default function SignupPage() {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await magicSignIn(`${countryCode}${phoneNumber}`);
+    await magicSignIn(fullName, `${countryCode}${phoneNumber}`);
     setIsLoading(false);
     setIsSuccess(true);
   };
