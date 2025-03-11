@@ -4,6 +4,7 @@ export const magicSignIn = async (name: string, email: string) => {
   try {
     const { data, error } = await authClient.signIn.magicLink({
       email: `${email}@sustaina.com`,
+
       name: name,
       //   callbackURL: "/dashboard", //redirect after successful login (optional)
     });

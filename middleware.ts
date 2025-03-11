@@ -3,6 +3,19 @@ import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const userAgent = req.headers.get("user-agent") || "";
+
+  // Block /auth route from TelegramBot user agent
+  if (pathname.startsWith("/auth") && userAgent.includes("TelegramBot")) {
+    console.log(`Blocked TelegramBot request to ${pathname}`);
+
+    return new NextResponse(JSON.stringify({ error: "Forbidden" }), {
+      status: 403,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 
   // Check if the request is for an API route inside the telegram folder
   if (pathname.startsWith("/api/telegram")) {
@@ -25,5 +38,5 @@ export function middleware(req: NextRequest) {
 
 // Specify the paths to apply the middleware
 export const config = {
-  matcher: "/api/telegram/:path*",
+  matcher: ["/api/telegram/:path*", "/auth"],
 };
