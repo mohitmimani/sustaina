@@ -20,7 +20,17 @@ export const auth = betterAuth({
     }),
     magicLink({
       sendMagicLink: async ({ email, token, url }, request) => {
-        console.log("Sending magic link to", email, "with token", token);
+        await fetch(`${process.env.BETTER_AUTH_URL}/api/telegram/send`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.API_AUTH_TOKEN}`,
+          },
+          body: JSON.stringify({
+            phoneNumber: email,
+            message: `Click this link to login: ${url}`,
+          }),
+        });
         // send email to user
         // We expect  a number to get in email will convert to a temp email
         // like number@sustaina.com

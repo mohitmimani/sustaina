@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { googleSignIn } from "@/helper/auth/googleSignIn";
+import { magicSignIn } from "@/helper/auth/magicSignIn";
 
 export default function SignupPage() {
   const [fullName, setFullName] = useState("");
@@ -29,17 +30,9 @@ export default function SignupPage() {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsSuccess(true);
-
-      // Reset success state after showing animation
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 3000);
-    }, 2000);
+    await magicSignIn(`${countryCode}${phoneNumber}`);
+    setIsLoading(false);
+    setIsSuccess(true);
   };
 
   // Confetti animation elements
