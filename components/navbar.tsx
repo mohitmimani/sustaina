@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Leaf, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMenuStore } from "@/store/menuStore";
-import { oneTapCall } from "@/helper/auth/one-tap";
 
 export function Navbar() {
   const setIsMenuOpen = useMenuStore((state) => state.setIsMenuOpen);
@@ -22,7 +21,7 @@ export function Navbar() {
             </Link>
           </div>
 
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-8">
             <Link
               href="#how-it-works"
               className="text-slate-600 hover:text-emerald-500 dark:text-slate-300 dark:hover:text-emerald-400 transition-colors"
@@ -61,7 +60,7 @@ export function Navbar() {
             </div>
           </nav>
 
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button
               variant="ghost"
               size="icon"
