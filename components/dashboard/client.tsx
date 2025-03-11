@@ -263,8 +263,8 @@ export default function Dashboard() {
               </Badge>
               <Avatar>
                 <AvatarImage
-                  src="/placeholder.svg?height=40&width=40"
-                  alt="User"
+                  src={session?.user.image || ""}
+                  alt={session?.user.name}
                 />
                 <AvatarFallback className="bg-green-100 text-green-800">
                   {session?.user?.name?.charAt(0) || "U"}
