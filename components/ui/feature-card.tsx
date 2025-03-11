@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { motion } from "motion/react";
+import { motion, Variants } from "motion/react";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -12,7 +12,7 @@ interface FeatureCardProps {
     title: string;
     description: string;
   };
-  variants: any;
+  variants: Variants;
 }
 
 export function FeatureCard({ feature, variants }: FeatureCardProps) {

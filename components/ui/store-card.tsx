@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion, Variants } from "motion/react";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -11,7 +11,7 @@ interface StoreCardProps {
     logo: string;
     locations: number;
   };
-  variants: any;
+  variants: Variants | undefined;
 }
 
 export function StoreCard({ store, variants }: StoreCardProps) {

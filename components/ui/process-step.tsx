@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { motion } from "motion/react";
+import { motion, Variants } from "motion/react";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -14,7 +14,7 @@ interface ProcessStepProps {
     icon: React.ReactNode;
   };
   isActive: boolean;
-  variants: any;
+  variants: Variants;
 }
 
 export function ProcessStep({ step, isActive, variants }: ProcessStepProps) {
