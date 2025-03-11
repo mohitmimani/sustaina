@@ -13,8 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title:
-    "Sustaina: AI-powered Waste Management and Sustainability Tracking Platform",
+  title: "Sustaina: AI-powered Waste Management",
   description:
     "Sustaina is an AI-powered platform designed to optimize waste management and track sustainability efforts. Our platform leverages advanced machine learning algorithms to provide actionable insights, helping organizations and consumers reduce waste, improve recycling rates, and achieve their sustainability goals.",
   keywords:
