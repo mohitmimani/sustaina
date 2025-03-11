@@ -4,7 +4,7 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const { isBot, ua } = userAgent(req);
   // Block /auth route from TelegramBot user agent
-  if (pathname.startsWith("/auth") && ua.includes("TelegramBot")) {
+  if (pathname.startsWith("/api/auth") && ua.includes("TelegramBot")) {
     console.log(`Blocked TelegramBot request to ${pathname}`);
 
     return new NextResponse(JSON.stringify({ error: "Forbidden" }), {
