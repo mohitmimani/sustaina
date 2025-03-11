@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { Store } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { StoreCard } from "@/components/ui/store-card";
+import { StoreCard } from "@/store-card";
 
 export function PartnerStoresSection() {
   const partnerStores = [

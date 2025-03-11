@@ -48,12 +48,14 @@ export function Navbar({ setIsMenuOpen }: NavbarProps) {
             >
               Testimonials
             </Link>
-            <Button variant="outline" className="rounded-full">
-              Log In
-            </Button>
-            <Button className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
-              Get Started
-            </Button>
+            <div className="flex gap-x-3">
+              <Button variant="outline" className="rounded-full">
+                Log In
+              </Button>
+              <Button className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
+                Get Started
+              </Button>
+            </div>
           </nav>
 
           <div className="md:hidden">
