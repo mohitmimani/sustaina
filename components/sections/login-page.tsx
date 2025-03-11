@@ -17,6 +17,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { authClient } from "@/lib/auth-client";
+import { googleSignIn } from "@/helper/auth/googleSignIn";
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -71,6 +73,7 @@ export default function LoginPage() {
                   <Button
                     type="button"
                     variant="outline"
+                    onClick={googleSignIn}
                     className="w-full flex items-center justify-center gap-2 py-6 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 rounded-xl shadow-sm transition-all"
                   >
                     <Image

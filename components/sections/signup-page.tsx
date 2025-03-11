@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { googleSignIn } from "@/helper/auth/googleSignIn";
 
 export default function SignupPage() {
   const [fullName, setFullName] = useState("");
@@ -155,6 +156,7 @@ export default function SignupPage() {
                       className="w-full"
                     >
                       <Button
+                        onClick={googleSignIn}
                         type="button"
                         variant="outline"
                         className="w-full flex items-center justify-center gap-2 py-6 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 rounded-xl shadow-sm transition-all"
