@@ -1,8 +1,3 @@
-"use client";
-
-import { useState } from "react";
-import { AnimatePresence } from "motion/react";
-
 import { Navbar } from "@/components/navbar";
 import { MobileMenu } from "@/components/mobile-menu";
 import { HeroSection } from "@/components/sections/hero-section";
@@ -15,22 +10,11 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { CTASection } from "@/components/sections/cta-section";
 import { Footer } from "@/components/footer";
 
-export default function SustainaLanding() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+export default async function SustainaLanding() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-teal-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      <Navbar setIsMenuOpen={setIsMenuOpen} />
-
-      <AnimatePresence>
-        {isMenuOpen && (
-          <MobileMenu
-            isOpen={isMenuOpen}
-            onClose={() => setIsMenuOpen(false)}
-          />
-        )}
-      </AnimatePresence>
-
+      <Navbar />
+      <MobileMenu />
       <HeroSection />
       <HowItWorksSection />
       <FeaturesSection />

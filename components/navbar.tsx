@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import { Leaf, Menu } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
+import { useMenuStore } from "@/store/menuStore";
+import { oneTapCall } from "@/helper/auth/one-tap";
 
-interface NavbarProps {
-  setIsMenuOpen: (isOpen: boolean) => void;
-}
+export function Navbar() {
+  const setIsMenuOpen = useMenuStore((state) => state.setIsMenuOpen);
 
-export function Navbar({ setIsMenuOpen }: NavbarProps) {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-700">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,9 +48,11 @@ export function Navbar({ setIsMenuOpen }: NavbarProps) {
               Testimonials
             </Link>
             <div className="flex gap-x-3">
-              <Button variant="outline" className="rounded-full">
-                Log In
-              </Button>
+              <Link href="/signin">
+                <Button variant="outline" className="rounded-full">
+                  Log In
+                </Button>
+              </Link>
               <Button className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
                 Get Started
               </Button>
