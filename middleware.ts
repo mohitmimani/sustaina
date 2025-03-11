@@ -4,6 +4,7 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const { isBot, ua } = userAgent(req);
   // Block /auth route from TelegramBot user agent
+  console.log(ua, pathname);
   if (pathname.startsWith("/api/auth") && ua.includes("TelegramBot")) {
     console.log(`Blocked TelegramBot request to ${pathname}`);
 
@@ -36,5 +37,5 @@ export function middleware(req: NextRequest) {
 
 // Specify the paths to apply the middleware
 export const config = {
-  matcher: ["/api/telegram/:path*", "/auth"],
+  matcher: ["/api/telegram/:path*", "/api/auth"],
 };
