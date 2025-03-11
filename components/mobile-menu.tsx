@@ -61,12 +61,17 @@ export function MobileMenu() {
               Testimonials
             </Link>
             <div className="flex flex-col space-y-4 w-full max-w-xs">
-              <Button variant="outline" className="rounded-full w-full">
-                Log In
-              </Button>
-              <Button className="rounded-full w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
-                Get Started
-              </Button>
+              <Link href="/login">
+                <Button variant="outline" className="rounded-full w-full">
+                  Log In
+                </Button>
+              </Link>
+
+              <Link href="/signup">
+                <Button className="rounded-full w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </nav>
         </motion.div>

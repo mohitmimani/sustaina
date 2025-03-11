@@ -48,14 +48,16 @@ export function Navbar() {
               Testimonials
             </Link>
             <div className="flex gap-x-3">
-              <Link href="/signin">
+              <Link href="/login">
                 <Button variant="outline" className="rounded-full">
                   Log In
                 </Button>
               </Link>
-              <Button className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
-                Get Started
-              </Button>
+              <Link href="/signup">
+                <Button className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </nav>
 
