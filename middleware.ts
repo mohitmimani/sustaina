@@ -8,9 +8,15 @@ export function middleware(req: NextRequest) {
   if (pathname.startsWith("/api/telegram")) {
     const authHeader = req.headers.get("authorization");
     const token = process.env.API_AUTH_TOKEN;
-
     if (!authHeader || authHeader !== `Bearer ${token}`) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      console.log(`Unauthorized request to ${pathname}`);
+
+      return new NextResponse(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     }
   }
 
