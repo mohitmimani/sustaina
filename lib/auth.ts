@@ -14,6 +14,13 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+  trustedOrigins: ["http://localhost:3000", "https://sustainadev.vercel.app/"],
+  advanced: {
+    defaultCookieAttributes: {
+      sameSite: "none",
+      secure: true,
+    },
+  },
   plugins: [
     oneTap({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
