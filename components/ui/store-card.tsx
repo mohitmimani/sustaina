@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { motion } from "framer-motion"
+import Image from "next/image";
+import { motion } from "motion/react";
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card";
 
 interface StoreCardProps {
   store: {
-    name: string
-    logo: string
-    locations: number
-  }
-  variants: any
+    name: string;
+    logo: string;
+    locations: number;
+  };
+  variants: any;
 }
 
 export function StoreCard({ store, variants }: StoreCardProps) {
@@ -32,11 +32,14 @@ export function StoreCard({ store, variants }: StoreCardProps) {
               className="object-cover"
             />
           </div>
-          <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-1">{store.name}</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400">{store.locations} locations</p>
+          <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-1">
+            {store.name}
+          </h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {store.locations} locations
+          </p>
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }
-

@@ -1,26 +1,29 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import Image from "next/image"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { Leaf, MessageSquare, Store } from "lucide-react"
+import { useRef } from "react";
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "motion/react";
+import { Leaf, MessageSquare, Store } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export function HeroSection() {
-  const heroRef = useRef(null)
+  const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
-  })
+  });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
     <section className="relative py-16 md:py-24 overflow-hidden" ref={heroRef}>
-      <motion.div className="absolute inset-0 pointer-events-none z-0" style={{ y, opacity }}>
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{ y, opacity }}
+      >
         <div className="absolute top-20 left-10 w-64 h-64 bg-emerald-300/20 dark:bg-emerald-700/20 rounded-full blur-3xl" />
         <div className="absolute top-40 right-20 w-72 h-72 bg-teal-300/20 dark:bg-teal-700/20 rounded-full blur-3xl" />
         <div className="absolute bottom-10 left-1/3 w-80 h-80 bg-blue-300/20 dark:bg-blue-700/20 rounded-full blur-3xl" />
@@ -42,15 +45,19 @@ export function HeroSection() {
               <span className="text-teal-500">Telegram</span> Integration
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-300 max-w-lg">
-              Sustaina partners with supermarkets to send digital receipts and expiry alerts via Telegram, helping you
-              track purchases, reduce waste, and earn rewards.
+              Sustaina partners with supermarkets to send digital receipts and
+              expiry alerts via Telegram, helping you track purchases, reduce
+              waste, and earn rewards.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button className="rounded-full text-base px-8 py-6 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 group">
                 <span>Join via Telegram</span>
                 <MessageSquare className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
               </Button>
-              <Button variant="outline" className="rounded-full text-base px-8 py-6">
+              <Button
+                variant="outline"
+                className="rounded-full text-base px-8 py-6"
+              >
                 <span>Become a Partner Store</span>
                 <Store className="ml-2 h-5 w-5" />
               </Button>
@@ -62,12 +69,15 @@ export function HeroSection() {
                     key={i}
                     className="w-8 h-8 rounded-full border-2 border-white dark:border-slate-800 bg-emerald-100 dark:bg-emerald-800 flex items-center justify-center"
                   >
-                    <span className="text-xs font-medium text-emerald-700 dark:text-emerald-300">{i}</span>
+                    <span className="text-xs font-medium text-emerald-700 dark:text-emerald-300">
+                      {i}
+                    </span>
                   </div>
                 ))}
               </div>
               <p className="text-sm text-slate-600 dark:text-slate-400">
-                <span className="font-bold">500+</span> partner stores nationwide
+                <span className="font-bold">500+</span> partner stores
+                nationwide
               </p>
             </div>
           </motion.div>
@@ -99,8 +109,12 @@ export function HeroSection() {
                   <Leaf className="h-5 w-5 text-emerald-500" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-800 dark:text-white">Carbon Footprint</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Reduced by 24% this month</p>
+                  <p className="text-sm font-medium text-slate-800 dark:text-white">
+                    Carbon Footprint
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Reduced by 24% this month
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -116,8 +130,12 @@ export function HeroSection() {
                   <MessageSquare className="h-5 w-5 text-blue-500" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-800 dark:text-white">Telegram Alerts</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">1,243 expiry alerts sent today</p>
+                  <p className="text-sm font-medium text-slate-800 dark:text-white">
+                    Telegram Alerts
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    1,243 expiry alerts sent today
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -125,6 +143,5 @@ export function HeroSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

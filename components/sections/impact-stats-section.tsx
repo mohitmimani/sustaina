@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "motion/react";
 
 export function ImpactStatsSection() {
   const statsVariants = {
@@ -11,7 +11,7 @@ export function ImpactStatsSection() {
         staggerChildren: 0.2,
       },
     },
-  }
+  };
 
   const statItemVariants = {
     hidden: { scale: 0.8, opacity: 0 },
@@ -24,7 +24,7 @@ export function ImpactStatsSection() {
         damping: 10,
       },
     },
-  }
+  };
 
   return (
     <section className="py-16 md:py-24 bg-emerald-600 dark:bg-emerald-800 relative overflow-hidden">
@@ -60,6 +60,5 @@ export function ImpactStatsSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
-

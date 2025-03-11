@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { motion } from "framer-motion"
+import { motion } from "motion/react";
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card";
 
 interface FeatureCardProps {
   feature: {
-    icon: React.ReactNode
-    title: string
-    description: string
-  }
-  variants: any
+    icon: React.ReactNode;
+    title: string;
+    description: string;
+  };
+  variants: any;
 }
 
 export function FeatureCard({ feature, variants }: FeatureCardProps) {
@@ -27,11 +27,14 @@ export function FeatureCard({ feature, variants }: FeatureCardProps) {
           <div className="w-16 h-16 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
             {feature.icon}
           </div>
-          <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-3">{feature.title}</h3>
-          <p className="text-slate-600 dark:text-slate-300">{feature.description}</p>
+          <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-3">
+            {feature.title}
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300">
+            {feature.description}
+          </p>
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }
-

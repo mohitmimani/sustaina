@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { ArrowRight, Bell, Gift, Receipt, Sparkles, Store } from "lucide-react";
 
 import { Button } from "@/components/ui/button";

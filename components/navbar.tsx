@@ -1,16 +1,15 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Leaf, Menu } from "lucide-react"
+import Link from "next/link";
+import { Leaf, Menu } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 interface NavbarProps {
-  isMenuOpen: boolean
-  setIsMenuOpen: (isOpen: boolean) => void
+  setIsMenuOpen: (isOpen: boolean) => void;
 }
 
-export function Navbar({ isMenuOpen, setIsMenuOpen }: NavbarProps) {
+export function Navbar({ setIsMenuOpen }: NavbarProps) {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-700">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +17,9 @@ export function Navbar({ isMenuOpen, setIsMenuOpen }: NavbarProps) {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <Leaf className="h-8 w-8 text-emerald-500" />
-              <span className="text-xl font-bold text-slate-800 dark:text-white">Sustaina</span>
+              <span className="text-xl font-bold text-slate-800 dark:text-white">
+                Sustaina
+              </span>
             </Link>
           </div>
 
@@ -56,13 +57,17 @@ export function Navbar({ isMenuOpen, setIsMenuOpen }: NavbarProps) {
           </nav>
 
           <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMenuOpen(true)}
+              aria-label="Open menu"
+            >
               <Menu className="h-6 w-6" />
             </Button>
           </div>
         </div>
       </div>
     </header>
-  )
+  );
 }
-

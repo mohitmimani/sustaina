@@ -20,7 +20,7 @@ export default function SustainaLanding() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-teal-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      <Navbar setIsMenuOpen={setIsMenuOpen} />
 
       <AnimatePresence>
         {isMenuOpen && (

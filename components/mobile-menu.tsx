@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { X } from "lucide-react"
+import Link from "next/link";
+import { motion } from "motion/react";
+import { X } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 interface MobileMenuProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
@@ -21,21 +21,42 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       transition={{ type: "spring", damping: 25, stiffness: 200 }}
     >
       <div className="flex justify-end">
-        <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close menu">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onClose}
+          aria-label="Close menu"
+        >
           <X className="h-6 w-6" />
         </Button>
       </div>
       <nav className="flex flex-col space-y-6 mt-10 items-center">
-        <Link href="#how-it-works" className="text-xl font-medium text-slate-800 dark:text-white" onClick={onClose}>
+        <Link
+          href="#how-it-works"
+          className="text-xl font-medium text-slate-800 dark:text-white"
+          onClick={onClose}
+        >
           How It Works
         </Link>
-        <Link href="#features" className="text-xl font-medium text-slate-800 dark:text-white" onClick={onClose}>
+        <Link
+          href="#features"
+          className="text-xl font-medium text-slate-800 dark:text-white"
+          onClick={onClose}
+        >
           Features
         </Link>
-        <Link href="#partners" className="text-xl font-medium text-slate-800 dark:text-white" onClick={onClose}>
+        <Link
+          href="#partners"
+          className="text-xl font-medium text-slate-800 dark:text-white"
+          onClick={onClose}
+        >
           Partner Stores
         </Link>
-        <Link href="#testimonials" className="text-xl font-medium text-slate-800 dark:text-white" onClick={onClose}>
+        <Link
+          href="#testimonials"
+          className="text-xl font-medium text-slate-800 dark:text-white"
+          onClick={onClose}
+        >
           Testimonials
         </Link>
         <div className="flex flex-col space-y-4 w-full max-w-xs">
@@ -48,6 +69,5 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         </div>
       </nav>
     </motion.div>
-  )
+  );
 }
-

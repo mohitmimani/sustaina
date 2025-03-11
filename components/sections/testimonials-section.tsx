@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "motion/react";
 
-import { TestimonialCard } from "@/components/ui/testimonial-card"
+import { TestimonialCard } from "@/components/ui/testimonial-card";
 
 export function TestimonialsSection() {
   const testimonials = [
@@ -30,7 +30,7 @@ export function TestimonialsSection() {
       quote:
         "The analytics provided by Sustaina have helped us identify key areas to reduce waste in our supply chain. It's a win for us, our customers, and the planet.",
     },
-  ]
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -40,7 +40,7 @@ export function TestimonialsSection() {
         staggerChildren: 0.1,
       },
     },
-  }
+  };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
@@ -53,10 +53,13 @@ export function TestimonialsSection() {
         damping: 15,
       },
     },
-  }
+  };
 
   return (
-    <section id="testimonials" className="py-16 md:py-24 bg-white dark:bg-slate-900 relative overflow-hidden">
+    <section
+      id="testimonials"
+      className="py-16 md:py-24 bg-white dark:bg-slate-900 relative overflow-hidden"
+    >
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-20 right-10 w-64 h-64 bg-emerald-300/10 dark:bg-emerald-700/10 rounded-full blur-3xl" />
         <div className="absolute bottom-40 left-20 w-72 h-72 bg-teal-300/10 dark:bg-teal-700/10 rounded-full blur-3xl" />
@@ -76,8 +79,12 @@ export function TestimonialsSection() {
           >
             What Our Users Say
           </motion.h2>
-          <motion.p variants={itemVariants} className="text-lg text-slate-600 dark:text-slate-300">
-            Join thousands of satisfied users who are making a difference with Sustaina.
+          <motion.p
+            variants={itemVariants}
+            className="text-lg text-slate-600 dark:text-slate-300"
+          >
+            Join thousands of satisfied users who are making a difference with
+            Sustaina.
           </motion.p>
         </motion.div>
 
@@ -89,11 +96,14 @@ export function TestimonialsSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} testimonial={testimonial} variants={itemVariants} />
+            <TestimonialCard
+              key={index}
+              testimonial={testimonial}
+              variants={itemVariants}
+            />
           ))}
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
-

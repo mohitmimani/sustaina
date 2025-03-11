@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { motion } from "framer-motion"
-import { MessageSquare, Sparkles, Store } from "lucide-react"
+import Image from "next/image";
+import { motion } from "motion/react";
+import { MessageSquare, Sparkles, Store } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export function CTASection() {
   return (
@@ -27,20 +27,26 @@ export function CTASection() {
             transition={{ duration: 0.5 }}
             className="text-white"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Join the Sustainability Revolution?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to Join the Sustainability Revolution?
+            </h2>
             <p className="text-lg text-teal-50 mb-8">
-              Whether you're a shopper looking to reduce waste or a store wanting to enhance customer experience,
-              Sustaina has a solution for you.
+              Whether you&apos;re a shopper looking to reduce waste or a store
+              wanting to enhance customer experience, Sustaina has a solution
+              for you.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Card className="backdrop-blur-sm bg-white/20 border border-white/20 rounded-2xl">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     <MessageSquare className="h-8 w-8 text-white mr-3" />
-                    <h3 className="text-xl font-bold text-white">For Shoppers</h3>
+                    <h3 className="text-xl font-bold text-white">
+                      For Shoppers
+                    </h3>
                   </div>
                   <p className="text-teal-50 mb-6">
-                    Join via Telegram and start receiving digital receipts and expiry alerts.
+                    Join via Telegram and start receiving digital receipts and
+                    expiry alerts.
                   </p>
                   <Button className="w-full bg-white text-emerald-600 hover:bg-teal-50 rounded-lg">
                     Join via Telegram
@@ -55,7 +61,8 @@ export function CTASection() {
                     <h3 className="text-xl font-bold text-white">For Stores</h3>
                   </div>
                   <p className="text-teal-50 mb-6">
-                    Partner with us to offer digital receipts and enhance customer loyalty.
+                    Partner with us to offer digital receipts and enhance
+                    customer loyalty.
                   </p>
                   <Button className="w-full bg-white text-emerald-600 hover:bg-teal-50 rounded-lg">
                     Become a Partner
@@ -94,7 +101,9 @@ export function CTASection() {
                   <MessageSquare className="h-5 w-5 text-emerald-500" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-800">Telegram Integration</p>
+                  <p className="text-sm font-medium text-slate-800">
+                    Telegram Integration
+                  </p>
                   <p className="text-xs text-slate-500">Simple and seamless</p>
                 </div>
               </div>
@@ -112,8 +121,12 @@ export function CTASection() {
                   <Sparkles className="h-5 w-5 text-blue-500" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-800">AI-Powered</p>
-                  <p className="text-xs text-slate-500">Smart recommendations</p>
+                  <p className="text-sm font-medium text-slate-800">
+                    AI-Powered
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    Smart recommendations
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -121,6 +134,5 @@ export function CTASection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

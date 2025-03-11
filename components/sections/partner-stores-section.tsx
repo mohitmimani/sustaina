@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Store } from "lucide-react"
+import { motion } from "motion/react";
+import { Store } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { StoreCard } from "@/components/ui/store-card"
+import { Button } from "@/components/ui/button";
+import { StoreCard } from "@/components/ui/store-card";
 
 export function PartnerStoresSection() {
   const partnerStores = [
@@ -38,7 +38,7 @@ export function PartnerStoresSection() {
       logo: "/placeholder.svg?height=100&width=100",
       locations: 15,
     },
-  ]
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -48,7 +48,7 @@ export function PartnerStoresSection() {
         staggerChildren: 0.1,
       },
     },
-  }
+  };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
@@ -61,10 +61,13 @@ export function PartnerStoresSection() {
         damping: 15,
       },
     },
-  }
+  };
 
   return (
-    <section id="partners" className="py-16 md:py-24 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
+    <section
+      id="partners"
+      className="py-16 md:py-24 bg-slate-50 dark:bg-slate-800 relative overflow-hidden"
+    >
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-20 right-10 w-64 h-64 bg-emerald-300/10 dark:bg-emerald-700/10 rounded-full blur-3xl" />
         <div className="absolute bottom-40 left-20 w-72 h-72 bg-teal-300/10 dark:bg-teal-700/10 rounded-full blur-3xl" />
@@ -84,9 +87,12 @@ export function PartnerStoresSection() {
           >
             Our Partner Stores
           </motion.h2>
-          <motion.p variants={itemVariants} className="text-lg text-slate-600 dark:text-slate-300">
-            Join the growing network of eco-conscious stores using Sustaina to reduce waste and increase customer
-            loyalty.
+          <motion.p
+            variants={itemVariants}
+            className="text-lg text-slate-600 dark:text-slate-300"
+          >
+            Join the growing network of eco-conscious stores using Sustaina to
+            reduce waste and increase customer loyalty.
           </motion.p>
         </motion.div>
 
@@ -110,6 +116,5 @@ export function PartnerStoresSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-
