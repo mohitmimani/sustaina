@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { googleSignIn } from "@/helper/auth/googleSignIn";
-import { magicSignIn } from "@/helper/auth/magicSignIn";
+import { magicSignUp } from "@/helper/auth/magicSignUp";
 
 export default function SignupPage() {
   const [fullName, setFullName] = useState("");
@@ -30,7 +30,7 @@ export default function SignupPage() {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await magicSignIn(fullName, `${countryCode}${phoneNumber}`);
+    await magicSignUp(fullName, `${countryCode}${phoneNumber}`);
     setIsLoading(false);
     setIsSuccess(true);
   };
