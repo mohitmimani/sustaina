@@ -19,7 +19,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-700">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
+          <div className= "flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <Leaf className="h-8 w-8 text-emerald-500" />
               <span className="text-xl font-bold text-slate-800 dark:text-white">
@@ -28,7 +28,7 @@ export function Navbar() {
             </Link>
           </div>
 
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg: flex items-center space-x-8">
             <Link
               href="#how-it-works"
               className="text-slate-600 hover:text-emerald-500 dark:text-slate-300 dark:hover:text-emerald-400 transition-colors"
