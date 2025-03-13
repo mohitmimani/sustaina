@@ -1,19 +1,29 @@
+"use server";
+
 import { authClient } from "@/lib/auth-client";
+import prisma from "@/lib/prisma";
 
-export const magicSignIn = async (name: string, email: string) => {
+export const magicSignIn = async (email: string) => {
   try {
-    const { data, error } = await authClient.signIn.magicLink({
-      email: `${email}@sustaina.com`,
-
-      name: name,
-      //   callbackURL: "/dashboard", //redirect after successful login (optional)
+    const user = await prisma.user.findFirst({
+      where: {
+        email: `${email}@sustaina.com`,
+      },
     });
-    if (error) {
-      console.error(error);
-      return;
+    console.log(user, email);
+    if (user?.email === `${email}@sustaina.com`) {
+      const { data, error } = await authClient.signIn.magicLink({
+        email: `${email}@sustaina.com`,
+
+        //   callbackURL: "/dashboard", //redirect after successful login (optional)
+      });
+      if (error) {
+        console.error(error);
+        return;
+      }
+    } else {
+      return "User not found";
     }
-    // console.log("Magic link sent to user");
-    // console.log("Google sign-in successful");
   } catch (error) {
     console.error(error);
   }
