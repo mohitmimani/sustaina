@@ -4,10 +4,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Home, FileText, BarChart3, Leaf, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export function MobileDock() {
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <motion.div
@@ -18,14 +19,20 @@ export function MobileDock() {
       <div className="flex justify-around items-center">
         <Link
           href="/dashboard"
-          className="flex flex-col items-center p-2 text-green-800"
+          className={`flex flex-col items-center p-2 ${
+            pathname === "/dashboard" ? "bg-green-200" : "text-green-800"
+          }`}
         >
           <Home className="h-6 w-6" />
           <span className="text-xs mt-1">Home</span>
         </Link>
         <Link
           href="/dashboard/receipts"
-          className="flex flex-col items-center p-2 text-gray-600"
+          className={`flex flex-col items-center p-2 ${
+            pathname === "/dashboard/receipts"
+              ? "bg-green-200"
+              : "text-gray-600"
+          }`}
         >
           <FileText className="h-6 w-6" />
           <span className="text-xs mt-1">Receipts</span>
@@ -40,14 +47,20 @@ export function MobileDock() {
         </Button>
         <Link
           href="/dashboard/statistics"
-          className="flex flex-col items-center p-2 text-gray-600"
+          className={`flex flex-col items-center p-2 ${
+            pathname === "/dashboard/statistics"
+              ? "bg-green-200"
+              : "text-gray-600"
+          }`}
         >
           <BarChart3 className="h-6 w-6" />
           <span className="text-xs mt-1">Stats</span>
         </Link>
         <Link
           href="/impact"
-          className="flex flex-col items-center p-2 text-gray-600"
+          className={`flex flex-col items-center p-2 ${
+            pathname === "/impact" ? "bg-green-200" : "text-gray-600"
+          }`}
         >
           <Leaf className="h-6 w-6" />
           <span className="text-xs mt-1">Impact</span>

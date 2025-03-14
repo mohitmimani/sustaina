@@ -1,8 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Home,
   FileText,
@@ -15,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -22,9 +22,9 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
-  const router = useRouter();
+  const pathname = usePathname();
   const isMobile = useIsMobile();
-
+  const router = useRouter();
   return (
     <AnimatePresence>
       {(isSidebarOpen || !isMobile) && (
@@ -70,7 +70,9 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
               <li>
                 <Link
                   href="/dashboard"
-                  className="flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors"
+                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
+                    pathname === "/dashboard" ? "bg-green-100" : ""
+                  }`}
                 >
                   <Home className="h-5 w-5 mr-3" />
                   {isSidebarOpen && <span>Dashboard</span>}
@@ -79,7 +81,9 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
               <li>
                 <Link
                   href="/dashboard/receipts"
-                  className="flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors"
+                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
+                    pathname === "/dashboard/receipts" ? "bg-green-100" : ""
+                  }`}
                 >
                   <FileText className="h-5 w-5 mr-3" />
                   {isSidebarOpen && <span>Receipts</span>}
@@ -88,7 +92,9 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
               <li>
                 <Link
                   href="/dashboard/statistics"
-                  className="flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors"
+                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
+                    pathname === "/dashboard/statistics" ? "bg-green-100" : ""
+                  }`}
                 >
                   <BarChart3 className="h-5 w-5 mr-3" />
                   {isSidebarOpen && <span>Statistics</span>}
@@ -97,7 +103,9 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
               <li>
                 <Link
                   href="/impact"
-                  className="flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors"
+                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
+                    pathname === "/impact" ? "bg-green-100" : ""
+                  }`}
                 >
                   <Leaf className="h-5 w-5 mr-3" />
                   {isSidebarOpen && <span>Environmental Impact</span>}
@@ -106,7 +114,9 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
               <li>
                 <Link
                   href="/settings"
-                  className="flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors"
+                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
+                    pathname === "/settings" ? "bg-green-100" : ""
+                  }`}
                 >
                   <Settings className="h-5 w-5 mr-3" />
                   {isSidebarOpen && <span>Settings</span>}
