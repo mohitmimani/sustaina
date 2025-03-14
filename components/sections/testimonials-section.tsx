@@ -10,7 +10,7 @@ export function TestimonialsSection() {
       name: "Sarah Johnson",
       role: "Regular Shopper",
       store: "GreenMart",
-      image: "/placeholder.svg?height=80&width=80",
+      image: "/sarah_johnson.jpeg",
       quote:
         "Sustaina has completely changed how I shop. The expiry alerts have reduced my food waste by 70%, and I love earning points for being eco-conscious!",
     },
@@ -18,7 +18,7 @@ export function TestimonialsSection() {
       name: "Michael Chen",
       role: "Store Manager",
       store: "EcoFresh Market",
-      image: "/placeholder.svg?height=80&width=80",
+      image: "/michael_chen.jpeg",
       quote:
         "Implementing Sustaina has increased customer loyalty and reduced our paper usage by 90%. Our customers love the Telegram receipts and sustainability rewards.",
     },
@@ -26,7 +26,7 @@ export function TestimonialsSection() {
       name: "Priya Sharma",
       role: "Sustainability Officer",
       store: "Nature's Basket",
-      image: "/placeholder.svg?height=80&width=80",
+      image: "/priya_sharma.jpeg",
       quote:
         "The analytics provided by Sustaina have helped us identify key areas to reduce waste in our supply chain. It's a win for us, our customers, and the planet.",
     },

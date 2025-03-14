@@ -10,32 +10,32 @@ export function PartnerStoresSection() {
   const partnerStores = [
     {
       name: "GreenMart",
-      logo: "/placeholder.svg?height=100&width=100",
+      logo: "/greenmart_logo.jpeg",
       locations: 24,
     },
     {
       name: "EcoFresh Market",
-      logo: "/placeholder.svg?height=100&width=100",
+      logo: "/ecofresh_logo.jpeg",
       locations: 12,
     },
     {
       name: "Nature's Basket",
-      logo: "/placeholder.svg?height=100&width=100",
+      logo: "/naturesbasket_logo.jpeg",
       locations: 35,
     },
     {
       name: "Organic Valley",
-      logo: "/placeholder.svg?height=100&width=100",
+      logo: "/organicvalley_logo.jpeg",
       locations: 18,
     },
     {
       name: "Sustainable Foods",
-      logo: "/placeholder.svg?height=100&width=100",
+      logo: "/sustainablefoods_logo.jpeg",
       locations: 9,
     },
     {
       name: "EarthWise Grocers",
-      logo: "/placeholder.svg?height=100&width=100",
+      logo: "/earthgrocers_logo.jpeg",
       locations: 15,
     },
   ];

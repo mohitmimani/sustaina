@@ -25,11 +25,12 @@ export function StoreCard({ store, variants }: StoreCardProps) {
         <CardContent className="p-6 flex flex-col items-center text-center">
           <div className="w-16 h-16 rounded-full overflow-hidden mb-4 group-hover:scale-110 transition-transform duration-300">
             <Image
-              src={store.logo || "/placeholder.svg"}
+              src={store.logo}
               alt={store.name}
               width={64}
               height={64}
-              className="object-cover"
+              className="object-cover w-full h-full"
+              priority
             />
           </div>
           <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-1">
