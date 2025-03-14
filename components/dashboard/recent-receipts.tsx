@@ -1,32 +1,46 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Search, Filter } from "lucide-react"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FileText } from "lucide-react"
-import { ReceiptList } from "@/components/receipts/receipt-list"
-import type { Receipt } from "@/types/receipt"
+import { useState } from "react";
+import { Search, Filter } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FileText } from "lucide-react";
+import { ReceiptList } from "@/components/receipts/receipt-list";
+import type { Receipt } from "@/types/receipt";
+import Link from "next/link";
 
 interface RecentReceiptsProps {
-  receipts: Receipt[]
+  receipts: Receipt[];
 }
 
 export function RecentReceipts({ receipts }: RecentReceiptsProps) {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [activeTab, setActiveTab] = useState("all")
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("all");
 
   const filteredReceipts = receipts.filter((receipt) => {
-    if (activeTab !== "all" && receipt.type.toLowerCase() !== activeTab.toLowerCase()) {
-      return false
+    if (
+      activeTab !== "all" &&
+      receipt.type.toLowerCase() !== activeTab.toLowerCase()
+    ) {
+      return false;
     }
-    if (searchQuery && !receipt.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-      return false
+    if (
+      searchQuery &&
+      !receipt.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ) {
+      return false;
     }
-    return true
-  })
+    return true;
+  });
 
   return (
     <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm md:col-span-2 lg:col-span-1">
@@ -51,7 +65,11 @@ export function RecentReceipts({ receipts }: RecentReceiptsProps) {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
+          <Tabs
+            defaultValue="all"
+            className="w-full"
+            onValueChange={setActiveTab}
+          >
             <TabsList className="grid grid-cols-4 w-full">
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="recycle">Recycle</TabsTrigger>
@@ -65,15 +83,15 @@ export function RecentReceipts({ receipts }: RecentReceiptsProps) {
         <ReceiptList receipts={filteredReceipts} limit={4} />
       </CardContent>
       <CardFooter>
-        <Button
-          variant="ghost"
-          className="w-full text-green-600 hover:text-green-700 hover:bg-green-50"
-          onClick={() => (window.location.href = "/receipts")}
-        >
-          View All Receipts
-        </Button>
+        <Link href="/dashboard/receipts" className="flex w-full justify-center">
+          <Button
+            variant="ghost"
+            className="w-full text-green-600 hover:text-green-700 hover:bg-green-50"
+          >
+            View All Receipts
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
-  )
+  );
 }
-

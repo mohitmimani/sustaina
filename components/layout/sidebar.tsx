@@ -45,13 +45,8 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
                 isSidebarOpen ? "justify-start" : "justify-center"
               }`}
             >
-              <Image
-                src="/placeholder.svg?height=40&width=40"
-                alt="Sustaina Logo"
-                width={40}
-                height={40}
-                className="mr-2"
-              />
+              <Leaf className="h-8 w-8 text-emerald-500 mr-2" />
+
               {isSidebarOpen && (
                 <span className="font-bold text-green-800 text-xl">
                   Sustaina

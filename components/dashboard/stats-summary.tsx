@@ -25,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { Stats } from "@/types/stats";
+import Link from "next/link";
 
 interface StatsSummaryProps {
   stats: Stats;
@@ -111,13 +112,17 @@ export function StatsSummary({ stats }: StatsSummaryProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button
-          variant="ghost"
-          className="w-full text-green-600 hover:text-green-700 hover:bg-green-50"
-          onClick={() => (window.location.href = "/statistics")}
+        <Link
+          href="/dashboard/statistics"
+          className="flex w-full justify-center"
         >
-          View Detailed Statistics
-        </Button>
+          <Button
+            variant="ghost"
+            className="w-full text-green-600 hover:text-green-700 hover:bg-green-50"
+          >
+            View Detailed Statistics
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
