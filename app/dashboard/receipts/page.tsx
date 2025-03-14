@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { authClient } from "@/lib/auth-client";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useState } from "react";
+import { ReceiptFilters } from "@/components/receipts/receipt-filters";
+import { ReceiptList } from "@/components/receipts/receipt-list";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -10,16 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-
-import { Sidebar } from "@/components/layout/sidebar";
-import { MobileDock } from "@/components/layout/mobile-dock";
-import { Header } from "@/components/layout/header";
-import { ReceiptFilters } from "@/components/receipts/receipt-filters";
-import { ReceiptList } from "@/components/receipts/receipt-list";
-
-const { useSession } = authClient;
 
 // Mock data for receipts
 const receipts = [
@@ -123,22 +115,9 @@ const receipts = [
 ];
 
 export default function ReceiptsPage() {
-  const isMobile = useIsMobile();
-  const { data: session, isPending, error } = useSession();
-
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
   const [sortOrder, setSortOrder] = useState("date-desc");
-
-  // Close sidebar on mobile by default
-  useEffect(() => {
-    if (isMobile) {
-      setIsSidebarOpen(false);
-    } else {
-      setIsSidebarOpen(true);
-    }
-  }, [isMobile]);
 
   // Filter and sort receipts
   const filteredReceipts = receipts.filter((receipt) => {
@@ -171,79 +150,36 @@ export default function ReceiptsPage() {
     return 0;
   });
 
-  if (isPending) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Error: {error.message}
-      </div>
-    );
-  }
-
   return (
-    <div className="flex h-screen bg-gradient-to-br from-green-50 to-blue-50">
-      {/* Sidebar */}
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
-
-      {/* Mobile Dock */}
-      {isMobile && <MobileDock />}
-
-      {/* Main Content */}
-      <div
-        className={`flex-1 flex flex-col overflow-hidden ${
-          isMobile ? "pb-20" : ""
-        }`}
-      >
-        {/* Header */}
-        <Header
-          session={session}
-          isMobile={isMobile}
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        />
-
-        {/* Receipts Content */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold text-green-800">Receipts</h1>
-            <Button className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Receipt
-            </Button>
-          </div>
-
-          <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm">
-            <CardHeader>
-              <CardTitle>All Receipts</CardTitle>
-              <CardDescription>
-                Browse and manage your waste tracking entries
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <ReceiptFilters
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                sortOrder={sortOrder}
-                setSortOrder={setSortOrder}
-              />
-
-              <ReceiptList receipts={sortedReceipts} />
-            </CardContent>
-          </Card>
-        </main>
+    <>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-green-800">Receipts</h1>
+        <Button className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white">
+          <Plus className="h-4 w-4 mr-2" />
+          Add Receipt
+        </Button>
       </div>
-    </div>
+
+      <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm">
+        <CardHeader>
+          <CardTitle>All Receipts</CardTitle>
+          <CardDescription>
+            Browse and manage your waste tracking entries
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <ReceiptFilters
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+          />
+
+          <ReceiptList receipts={sortedReceipts} />
+        </CardContent>
+      </Card>
+    </>
   );
 }

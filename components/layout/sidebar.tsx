@@ -83,7 +83,7 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
               </li>
               <li>
                 <Link
-                  href="/receipts"
+                  href="/dashboard/receipts"
                   className="flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors"
                 >
                   <FileText className="h-5 w-5 mr-3" />
@@ -92,7 +92,7 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
               </li>
               <li>
                 <Link
-                  href="/statistics"
+                  href="/dashboard/statistics"
                   className="flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors"
                 >
                   <BarChart3 className="h-5 w-5 mr-3" />
