@@ -48,16 +48,16 @@ export function WasteBreakdown({ stats }: WasteBreakdownProps) {
           Detailed analysis of your waste composition
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid md:grid-cols-2 gap-6">
+      <CardContent className="grid gap-6 md:grid-cols-2">
         <div className="flex justify-center items-center h-[300px]">
-          <PieChart width={300} height={300}>
+          <PieChart width={250} height={250}>
             <Pie
               data={stats.wasteByCategory}
               dataKey="amount"
               nameKey="category"
               cx="50%"
               cy="50%"
-              outerRadius={100}
+              outerRadius={80}
               fill="#8884d8"
               label
             >
@@ -73,7 +73,7 @@ export function WasteBreakdown({ stats }: WasteBreakdownProps) {
           </PieChart>
         </div>
 
-        <div>
+        <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>

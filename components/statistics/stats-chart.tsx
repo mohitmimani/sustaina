@@ -26,7 +26,7 @@ import {
   Area,
   XAxis,
   YAxis,
-  CartesianGrid,
+  ResponsiveContainer,
 } from "recharts";
 
 interface StatsChartProps {
@@ -55,63 +55,83 @@ export function StatsChart({ stats }: StatsChartProps) {
           </TabsList>
 
           <TabsContent value="bar" className="space-y-4">
-            <div className="h-[300px]">
-              <ChartContainer config={chartConfig}>
-                <BarChart data={stats.monthlyData}>
-                  <YAxis />
-                  <Bar dataKey="recycled" fill="#3b82f6" />
-                  <Bar dataKey="composted" fill="#22c55e" />
-                  <Bar dataKey="landfill" fill="#ef4444" />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <ChartLegend content={<ChartLegendContent />} />
-                </BarChart>
+            <div className="h-[300px] w-full">
+              <ChartContainer
+                config={chartConfig}
+                className="h-full w-full -ml-5"
+              >
+                <ResponsiveContainer width="100%" height="100px">
+                  <BarChart data={stats.monthlyData}>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Bar dataKey="recycled" fill="#3b82f6" />
+                    <Bar dataKey="composted" fill="#22c55e" />
+                    <Bar dataKey="landfill" fill="#ef4444" />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <ChartLegend content={<ChartLegendContent />} />
+                  </BarChart>
+                </ResponsiveContainer>
               </ChartContainer>
             </div>
           </TabsContent>
 
           <TabsContent value="line" className="space-y-4">
-            <div className="h-[300px]">
-              <ChartContainer config={chartConfig}>
-                <LineChart data={stats.monthlyData}>
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Line type="monotone" dataKey="recycled" stroke="#3b82f6" />
-                  <Line type="monotone" dataKey="composted" stroke="#22c55e" />
-                  <Line type="monotone" dataKey="landfill" stroke="#ef4444" />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <ChartLegend content={<ChartLegendContent />} />
-                </LineChart>
+            <div className="h-[300px] w-full">
+              <ChartContainer
+                config={chartConfig}
+                className="h-full w-full -ml-5"
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={stats.monthlyData}>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Line type="monotone" dataKey="recycled" stroke="#3b82f6" />
+                    <Line
+                      type="monotone"
+                      dataKey="composted"
+                      stroke="#22c55e"
+                    />
+                    <Line type="monotone" dataKey="landfill" stroke="#ef4444" />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <ChartLegend content={<ChartLegendContent />} />
+                  </LineChart>
+                </ResponsiveContainer>
               </ChartContainer>
             </div>
           </TabsContent>
 
           <TabsContent value="area" className="space-y-4">
-            <div className="h-[300px]">
-              <ChartContainer config={chartConfig}>
-                <AreaChart data={stats.monthlyData}>
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Area
-                    type="monotone"
-                    dataKey="recycled"
-                    stroke="#3b82f6"
-                    fill="#3b82f6"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="composted"
-                    stroke="#22c55e"
-                    fill="#22c55e"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="landfill"
-                    stroke="#ef4444"
-                    fill="#ef4444"
-                  />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <ChartLegend content={<ChartLegendContent />} />
-                </AreaChart>
+            <div className="h-[300px] w-full">
+              <ChartContainer
+                config={chartConfig}
+                className="h-full w-full -ml-5"
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={stats.monthlyData}>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Area
+                      type="monotone"
+                      dataKey="recycled"
+                      stroke="#3b82f6"
+                      fill="#3b82f6"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="composted"
+                      stroke="#22c55e"
+                      fill="#22c55e"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="landfill"
+                      stroke="#ef4444"
+                      fill="#ef4444"
+                    />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <ChartLegend content={<ChartLegendContent />} />
+                  </AreaChart>
+                </ResponsiveContainer>
               </ChartContainer>
             </div>
           </TabsContent>
