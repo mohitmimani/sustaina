@@ -11,7 +11,7 @@ import { CTASection } from "@/components/sections/cta-section";
 import { Footer } from "@/components/footer";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import Dashboard from "@/components/dashboard/client";
+import Dashboard from "./dashboard/page";
 export default async function SustainaLanding() {
   const session = await auth.api.getSession({
     headers: await headers(),
