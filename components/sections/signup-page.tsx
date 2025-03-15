@@ -26,9 +26,20 @@ export default function SignupPage() {
   const [countryCode, setCountryCode] = useState("+91");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  const validatePhoneNumber = (phone: string) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(phone);
+  };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validatePhoneNumber(phoneNumber)) {
+      setError("Please enter a valid phone number.");
+      return;
+    }
+    setError("");
     setIsLoading(true);
     await magicSignUp(fullName, `${countryCode}${phoneNumber}`);
     setIsLoading(false);
@@ -228,6 +239,9 @@ export default function SignupPage() {
                           />
                         </motion.div>
                       </div>
+                      {error && (
+                        <p className="text-xs text-red-500 mt-1">{error}</p>
+                      )}
                       <p className="text-xs text-gray-500 mt-1">
                         We&apos;ll send a secure signup link to your Telegram.
                       </p>

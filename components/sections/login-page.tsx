@@ -26,9 +26,20 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserFound, setIsUserFound] = useState(true);
   const [magicLinkSent, setMagicLinkSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const validatePhoneNumber = (number: string) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(number);
+  };
 
   const handleSendMagicLink = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validatePhoneNumber(phoneNumber)) {
+      setError("Please enter a valid phone number.");
+      return;
+    }
+    setError("");
     setIsLoading(true);
     const res = await magicSignIn(`${countryCode}${phoneNumber}`);
     setIsLoading(false);
@@ -151,6 +162,9 @@ export default function LoginPage() {
                           />
                         </motion.div>
                       </div>
+                      {error && (
+                        <p className="text-xs text-red-500 mt-1">{error}</p>
+                      )}
                       <p className="text-xs text-gray-500 mt-1">
                         We&apos;ll send a secure login link to your Telegram.
                       </p>

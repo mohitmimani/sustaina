@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         params.length >= 3 &&
         (params[1] === "connect_sustaina" || params[1] === "connectSustaina")
       ) {
-        const connectionToken = "_" + params[2];
+        const connectionToken = params[2];
 
         // Find pending connection with this token
         const now = new Date();

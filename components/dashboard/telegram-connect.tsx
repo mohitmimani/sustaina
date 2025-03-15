@@ -18,7 +18,7 @@ export function TelegramConnect() {
   const { data: session, isPending, error } = useSession();
   const userId = session?.user?.id;
 
-  const connectionToken = `${userId}_${Date.now()}`;
+  const connectionToken = `${userId}${Date.now()}`;
 
   useEffect(() => {
     const checkConnection = async () => {
