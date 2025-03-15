@@ -5,11 +5,14 @@ import { Leaf, Menu, Sun, Moon, ListEnd } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMenuStore } from "@/store/menuStore";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
+const { useSession } = authClient;
 
 export function Navbar() {
   const setIsMenuOpen = useMenuStore((state) => state.setIsMenuOpen);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const { data: session, isPending, error } = useSession();
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle("dark", !isDarkMode);
@@ -56,16 +59,26 @@ export function Navbar() {
           </nav>
           <div className="hidden lg:flex items-center space-x-4">
             <div className="flex gap-x-3">
-              <Link href="/login">
-                <Button variant="outline" className="rounded-full">
-                  Log In
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
-                  Get Started
-                </Button>
-              </Link>
+              {session ? (
+                <Link href="/dashboard">
+                  <Button className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
+                    Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <Button variant="outline" className="rounded-full">
+                      Log In
+                    </Button>
+                  </Link>
+                  <Link href="/signup">
+                    <Button className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
+                      Get Started
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
             <hr className="h-6 border-r border-slate-200 dark:border-slate-700" />
             <div className="flex items-center">
