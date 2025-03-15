@@ -6,6 +6,7 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { MobileDock } from "@/components/layout/mobile-dock";
 import { Header } from "@/components/layout/header";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const { useSession } = authClient;
 
@@ -17,7 +18,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const isMobile = useIsMobile();
   const { data: session, isPending, error } = useSession();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
+  const router = useRouter();
   // Close sidebar on mobile by default
   useEffect(() => {
     if (isMobile) {
@@ -26,6 +27,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
       setIsSidebarOpen(true);
     }
   }, [isMobile]);
+
+  useEffect(() => {
+    if (session === null) {
+      router.push("/login");
+    }
+  }, [session, router]);
 
   if (isPending) {
     return (
@@ -42,7 +49,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
       </div>
     );
   }
-
+  if (session === null) {
+    return null;
+  }
   return (
     <div className="flex h-screen bg-gradient-to-br from-green-50 to-blue-50">
       {/* Sidebar */}
