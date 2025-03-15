@@ -3,25 +3,21 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Check, ExternalLink } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { authClient } from "@/lib/auth-client";
+const { useSession } = authClient;
 
-interface TelegramConnectProps {
-  isTelegramConnected: boolean;
-  setIsTelegramConnected: (connected: boolean) => void;
-}
-
-export function TelegramConnect({
-  isTelegramConnected,
-  setIsTelegramConnected,
-}: TelegramConnectProps) {
+export function TelegramConnect() {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isTelegramConnected, setIsTelegramConnected] = useState(false);
 
-  const botUsername = "Sustaina_Bot";
-  const startParameter = "connectSustaina";
-  const userId = localStorage.getItem("sustaina_user_id") || "";
+  const botUsername = process.env.NEXT_PUBLIC_BOT_USERNAME;
+  const startParameter = process.env.NEXT_PUBLIC_START_PARAMETER;
+  const { data: session, isPending, error } = useSession();
+  const userId = session?.user?.id;
+
   const connectionToken = `${userId}_${Date.now()}`;
 
   useEffect(() => {
@@ -48,10 +44,12 @@ export function TelegramConnect({
       }
     };
     checkConnection();
-  }, [setIsTelegramConnected]);
+  }, []);
 
   const handleConnect = () => {
-    localStorage.setItem("telegram_connection_token", connectionToken);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("telegram_connection_token", connectionToken);
+    }
 
     fetch("/api/telegram/initiate-connection", {
       method: "POST",
@@ -123,52 +121,57 @@ export function TelegramConnect({
 
   if (isTelegramConnected) {
     return (
-      <div className="connected-status">
-        <div className="status-success">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="check-icon"
+      <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm mb-6 transition-all">
+        <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between">
+          <div className="flex items-center mb-4 sm:mb-0">
+            <div className="bg-green-100 p-3 rounded-full mr-5">
+              <Check className="h-6 w-6 text-green-600" />
+            </div>
+            <div>
+              <h3 className="font-medium text-green-700 flex items-center gap-2">
+                Connected to Telegram
+                <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded-full">
+                  Active
+                </span>
+              </h3>
+              <p className="text-sm text-gray-600 mt-1 flex items-center">
+                <span className="font-medium">@{username}</span>
+                <span className="mx-2 text-gray-400">•</span>
+                <span className="text-gray-500">Receiving notifications</span>
+              </p>
+            </div>
+          </div>
+          <Button
+            onClick={handleDisconnect}
+            variant="outline"
+            className="border-red-200 hover:bg-red-50 hover:text-red-600 text-red-500 transition-colors"
           >
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-          </svg>
-          Connected to Telegram
-        </div>
-        <p>Receiving notifications as: @{username}</p>
-        <Button onClick={handleDisconnect} className="disconnect-button">
-          Disconnect
-        </Button>
-      </div>
+            Disconnect
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm mb-6">
-      <CardContent className="p-4 flex flex-col sm:flex-row items-center justify-between">
+    <Card className="backdrop-blur-md bg-white/70 border-blue-100 shadow-sm mb-6 hover:border-blue-200 transition-all">
+      <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between">
         <div className="flex items-center mb-4 sm:mb-0">
-          <div className="bg-blue-100 p-2 rounded-full mr-4">
+          <div className="bg-blue-100 p-3 rounded-full mr-5">
             <MessageSquare className="h-6 w-6 text-blue-600" />
           </div>
           <div>
-            <h3 className="font-medium">Connect Telegram Bot</h3>
-            <p className="text-sm text-gray-500">
-              Receive updates and submit receipts via Telegram
+            <h3 className="font-medium text-gray-800">Connect Telegram Bot</h3>
+            <p className="text-sm text-gray-500 mt-1">
+              Get instant notifications and submit receipts via chat
             </p>
           </div>
         </div>
         <Button
-          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white flex items-center gap-2 px-5"
           onClick={handleConnect}
         >
-          Connect Now
+          Connect <ExternalLink className="h-4 w-4 ml-1" />
         </Button>
       </CardContent>
     </Card>

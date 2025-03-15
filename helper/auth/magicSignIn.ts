@@ -10,12 +10,12 @@ export const magicSignIn = async (email: string) => {
         email: `${email}@sustaina.com`,
       },
     });
-    console.log(user, email);
+
     if (user?.email === `${email}@sustaina.com`) {
       const { data, error } = await authClient.signIn.magicLink({
         email: `${email}@sustaina.com`,
 
-        //   callbackURL: "/dashboard", //redirect after successful login (optional)
+        callbackURL: "/dashboard",
       });
       if (error) {
         console.error(error);

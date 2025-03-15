@@ -6,7 +6,7 @@ export const magicSignUp = async (name: string, email: string) => {
       email: `${email}@sustaina.com`,
 
       name: name,
-      //   callbackURL: "/dashboard", //redirect after successful login (optional)
+      callbackURL: "/dashboard",
     });
     if (error) {
       console.error(error);

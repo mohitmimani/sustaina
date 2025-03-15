@@ -91,10 +91,7 @@ export default function Dashboard() {
   return (
     <>
       {/* Telegram Bot Connection Card */}
-      <TelegramConnect
-        isTelegramConnected={false}
-        setIsTelegramConnected={() => {}}
-      />
+      <TelegramConnect />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Recent Receipts */}
