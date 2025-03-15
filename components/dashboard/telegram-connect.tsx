@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { MessageSquare } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface TelegramConnectProps {
   isTelegramConnected: boolean;
@@ -19,7 +20,7 @@ export function TelegramConnect({
   const [isLoading, setIsLoading] = useState(true);
 
   const botUsername = "Sustaina_Bot";
-  const startParameter = "connect_sustaina";
+  const startParameter = "connectSustaina";
   const userId = localStorage.getItem("sustaina_user_id") || "";
   const connectionToken = `${userId}_${Date.now()}`;
 
@@ -46,7 +47,6 @@ export function TelegramConnect({
         setIsLoading(false);
       }
     };
-
     checkConnection();
   }, [setIsTelegramConnected]);
 
@@ -94,7 +94,6 @@ export function TelegramConnect({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
         },
       });
 
@@ -106,7 +105,20 @@ export function TelegramConnect({
   };
 
   if (isLoading) {
-    return <div>Loading connection status...</div>;
+    return (
+      <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm mb-6">
+        <CardContent className="p-4 flex flex-col sm:flex-row items-center justify-between">
+          <div className="flex items-center mb-4 sm:mb-0">
+            <Skeleton className="h-10 w-10 rounded-full mr-4" />
+            <div>
+              <Skeleton className="h-5 w-[150px] mb-2" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+          <Skeleton className="h-9 w-[100px]" />
+        </CardContent>
+      </Card>
+    );
   }
 
   if (isTelegramConnected) {

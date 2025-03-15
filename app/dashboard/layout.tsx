@@ -29,10 +29,10 @@ export default function MainLayout({ children }: MainLayoutProps) {
   }, [isMobile]);
 
   useEffect(() => {
-    if (session === null) {
+    if (session === null && !isPending) {
       router.push("/login");
     }
-  }, [session, router]);
+  }, [session, router, isPending]);
 
   if (isPending) {
     return (
