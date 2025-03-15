@@ -5,10 +5,11 @@ import { RecentReceipts } from "@/components/dashboard/recent-receipts";
 import { StatsSummary } from "@/components/dashboard/stats-summary";
 import { QuickActions } from "@/components/dashboard/quick-actions";
 import { EnvironmentalImpact } from "@/components/dashboard/environmental-impact";
+import { RewardsCard } from "@/components/dashboard/RewardsCard";
 
 // Mock data for the dashboard
 const recentReceipts = [
-  {
+  { 
     id: 1,
     name: "Grocery Store",
     date: "May 15, 2023",
@@ -111,6 +112,9 @@ export default function Dashboard() {
             waterSaved={waterSaved}
             co2Reduced={co2Reduced}
           />
+          
+          {/* Rewards Card */}
+          <RewardsCard />
         </div>
       </div>
     </>
