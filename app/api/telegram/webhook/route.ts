@@ -24,14 +24,15 @@ export async function POST(request: NextRequest) {
         params.length >= 3 &&
         (params[1] === "connect_sustaina" || params[1] === "connectSustaina")
       ) {
-        const connectionToken = params[2];
+        const connectionToken = "_" + params[2];
 
         // Find pending connection with this token
+        const now = new Date();
         const pendingConnection =
           await prisma.telegramPendingConnection.findFirst({
             where: {
               connectionToken,
-              expiresAt: { gt: new Date() },
+              expiresAt: { gt: now },
             },
           });
 
