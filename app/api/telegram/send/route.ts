@@ -4,14 +4,10 @@ import { type NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
   const { phoneNumber, message } = await req.json();
 
-  const botUsername = process.env.NEXT_PUBLIC_BOT_USERNAME;
-  const startParameter = process.env.NEXT_PUBLIC_START_PARAMETER;
-
-  if (!phoneNumber || !message || !botUsername || !startParameter) {
+  if (!phoneNumber || !message) {
     return new Response(
       JSON.stringify({
-        error:
-          "Phone number, message, botUsername, and startParameter are required",
+        error: "Phone number and message are required",
       }),
       {
         status: 400,
