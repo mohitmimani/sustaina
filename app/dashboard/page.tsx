@@ -90,7 +90,7 @@ export default function Dashboard() {
   const co2Reduced = (stats.recycled * 2.5).toFixed(1);
 
   return (
-    <>
+    <div className="space-y-6">
       {/* Telegram Bot Connection Card */}
       <TelegramConnect />
 
@@ -112,11 +112,13 @@ export default function Dashboard() {
             waterSaved={waterSaved}
             co2Reduced={co2Reduced}
           />
-          
-          {/* Rewards Card */}
-          <RewardsCard />
         </div>
       </div>
-    </>
+      
+      {/* Rewards Card */}
+      <div className="w-full">
+        <RewardsCard />
+      </div>
+    </div>
   );
 }
