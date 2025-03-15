@@ -17,10 +17,13 @@ export async function POST(request: NextRequest) {
       const chatId = update.message.chat.id;
       const username = update.message.from.username;
 
-      const params = update.message.text.split("_");
+      const params = update.message.text.split(/[\s_]+/);
       console.log(params);
       // Check if this is a connection request with the right parameter
-      if (params.length >= 3 && params[1] === "connect_sustaina") {
+      if (
+        params.length >= 3 &&
+        (params[1] === "connect_sustaina" || params[1] === "connectSustaina")
+      ) {
         const connectionToken = params[2];
 
         // Find pending connection with this token
