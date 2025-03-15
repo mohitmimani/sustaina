@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "lib/telegram-client.js",
-    "lib/telegram-client.js"
+    "lib/telegram-client.js",
+    "scripts/setup-telegram-webhook.js"
   ],
   "exclude": ["node_modules"]
 }

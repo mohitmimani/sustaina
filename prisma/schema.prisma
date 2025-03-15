@@ -16,6 +16,8 @@ datasource db {
 model User {
   id            String    @id @map("_id")
   name          String
+  telegramChatId String?
+  telegramUsername String?
   email         String
   emailVerified Boolean
   image         String?
@@ -23,9 +25,23 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
-
+pendingConnections TelegramPendingConnection[]
   @@unique([email])
   @@map("user")
+}
+// New model for pending Telegram connections
+model TelegramPendingConnection {
+  id              String  @id @map("_id") @default(cuid())
+  userId          String
+  connectionToken String   @unique
+  expiresAt       DateTime
+  createdAt       DateTime @default(now())
+  
+  // Relation to user
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Index for faster expiry lookup and cleanup
+  @@index([expiresAt])
 }
 
 model Session {
