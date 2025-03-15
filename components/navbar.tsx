@@ -6,16 +6,16 @@ import { Button } from "@/components/ui/button";
 import { useMenuStore } from "@/store/menuStore";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { useTheme } from "next-themes";
 const { useSession } = authClient;
 
 export function Navbar() {
   const setIsMenuOpen = useMenuStore((state) => state.setIsMenuOpen);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const { data: session, isPending, error } = useSession();
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle("dark", !isDarkMode);
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -89,7 +89,7 @@ export function Navbar() {
                 aria-label="Toggle Dark Mode"
                 className="rounded-full p-1  hover:bg-green-100 dark:hover:bg-green-800/40 transition-colors"
               >
-                {isDarkMode ? (
+                {theme === "dark" ? (
                   <Sun className="h-5 w-5 text-amber-500" />
                 ) : (
                   <Moon className="h-5 w-5 text-teal-600" />

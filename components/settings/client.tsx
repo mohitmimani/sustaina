@@ -29,13 +29,14 @@ import { Switch } from "@/components/ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { authClient } from "@/lib/auth-client";
+import { useTheme } from "next-themes";
 
 const { useSession } = authClient;
 
 export default function SettingsPage() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
-  const [theme, setTheme] = useState("light");
+  const { theme, setTheme } = useTheme();
 
   // Toggle theme function
   const toggleTheme = () => {
