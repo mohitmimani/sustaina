@@ -16,7 +16,7 @@ export function middleware(req: NextRequest) {
   }
 
   // Check if the request is for an API route inside the telegram folder
-  if (pathname.startsWith("/api/telegram")) {
+  if (pathname.startsWith("/api/telegram/send")) {
     const authHeader = req.headers.get("authorization");
     const token = process.env.API_AUTH_TOKEN;
     if (!authHeader || authHeader !== `Bearer ${token}`) {
