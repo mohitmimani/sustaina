@@ -57,8 +57,8 @@ export function Navbar() {
               Testimonials
             </Link>
           </nav>
-          <div className="hidden lg:flex items-center space-x-4">
-            <div className="flex gap-x-3">
+          <div className="flex items-center space-x-4">
+            <div className="hidden lg:flex gap-x-3 ">
               {session ? (
                 <Link href="/dashboard">
                   <Button className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
@@ -80,14 +80,14 @@ export function Navbar() {
                 </>
               )}
             </div>
-            <hr className="h-6 border-r border-slate-200 dark:border-slate-700" />
+            <hr className="h-6 border-r border-slate-200 dark:border-slate-700 lg:flex hidden" />
             <div className="flex items-center">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={toggleDarkMode}
                 aria-label="Toggle Dark Mode"
-                className="rounded-full p-1  hover:bg-green-100 dark:hover:bg-green-800/40 transition-colors"
+                className="rounded-full p-1 hover:bg-green-100 dark:hover:bg-green-800/40 transition-colors"
               >
                 {theme === "dark" ? (
                   <Sun className="h-5 w-5 text-amber-500" />

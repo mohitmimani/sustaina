@@ -34,7 +34,7 @@ export const auth = betterAuth({
           },
           body: JSON.stringify({
             phoneNumber: email,
-            message: `Hello! Please click the following link to securely log in to your account: ${url}. If you did not request this, please ignore this message.`,
+            message: `Hello! Please click the following link to securely log in to your account: ${url}\n If you did not request this, please ignore this message.`,
           }),
         });
         // send email to user
