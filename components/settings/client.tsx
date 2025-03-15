@@ -110,7 +110,7 @@ export default function SettingsPage() {
             </li>
             <li>
               <Link
-                href="/impact"
+                href="/dashboard/impact"
                 className="flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors"
               >
                 <Leaf className="h-5 w-5 mr-3" />
@@ -119,7 +119,7 @@ export default function SettingsPage() {
             </li>
             <li>
               <Link
-                href="/settings"
+                href="/dashboard/settings"
                 className="flex items-center p-2 rounded-lg bg-green-100/50 text-green-800 hover:bg-green-100 transition-colors"
               >
                 <Settings className="h-5 w-5 mr-3" />
@@ -237,7 +237,9 @@ export default function SettingsPage() {
                         Email
                       </label>
                       <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-green-100">
-                        <span>{session?.user?.email || "user@example.com"}</span>
+                        <span>
+                          {session?.user?.email || "user@example.com"}
+                        </span>
                         <ChevronRight className="h-4 w-4 text-gray-400" />
                       </div>
                     </div>
@@ -276,7 +278,10 @@ export default function SettingsPage() {
                         <Switch />
                       </div>
                     </div>
-                    <Button variant="outline" className="w-full border-green-200 text-green-700 hover:bg-green-50">
+                    <Button
+                      variant="outline"
+                      className="w-full border-green-200 text-green-700 hover:bg-green-50"
+                    >
                       Security Settings
                     </Button>
                   </CardContent>
@@ -310,7 +315,10 @@ export default function SettingsPage() {
                       )}
                       <span>Dark Mode</span>
                     </div>
-                    <Switch checked={theme === "dark"} onCheckedChange={toggleTheme} />
+                    <Switch
+                      checked={theme === "dark"}
+                      onCheckedChange={toggleTheme}
+                    />
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-green-100">
                     <div className="flex items-center">
@@ -345,8 +353,12 @@ export default function SettingsPage() {
                         <Mail className="h-5 w-5 text-blue-500" />
                       </div>
                       <div>
-                        <span className="font-medium text-gray-900">Email Notifications</span>
-                        <p className="text-sm text-gray-500">Receive updates via email</p>
+                        <span className="font-medium text-gray-900">
+                          Email Notifications
+                        </span>
+                        <p className="text-sm text-gray-500">
+                          Receive updates via email
+                        </p>
                       </div>
                     </div>
                     <Switch defaultChecked />
@@ -357,8 +369,12 @@ export default function SettingsPage() {
                         <MessageSquare className="h-5 w-5 text-teal-500" />
                       </div>
                       <div>
-                        <span className="font-medium text-gray-900">Telegram Notifications</span>
-                        <p className="text-sm text-gray-500">Get instant alerts on Telegram</p>
+                        <span className="font-medium text-gray-900">
+                          Telegram Notifications
+                        </span>
+                        <p className="text-sm text-gray-500">
+                          Get instant alerts on Telegram
+                        </p>
                       </div>
                     </div>
                     <Switch defaultChecked />
@@ -369,8 +385,12 @@ export default function SettingsPage() {
                         <AlertCircle className="h-5 w-5 text-amber-500" />
                       </div>
                       <div>
-                        <span className="font-medium text-gray-900">Expiry Alerts</span>
-                        <p className="text-sm text-gray-500">Get notified before items expire</p>
+                        <span className="font-medium text-gray-900">
+                          Expiry Alerts
+                        </span>
+                        <p className="text-sm text-gray-500">
+                          Get notified before items expire
+                        </p>
                       </div>
                     </div>
                     <Switch defaultChecked />
@@ -381,8 +401,12 @@ export default function SettingsPage() {
                         <Lightbulb className="h-5 w-5 text-emerald-500" />
                       </div>
                       <div>
-                        <span className="font-medium text-gray-900">Sustainability Tips</span>
-                        <p className="text-sm text-gray-500">Receive eco-friendly suggestions</p>
+                        <span className="font-medium text-gray-900">
+                          Sustainability Tips
+                        </span>
+                        <p className="text-sm text-gray-500">
+                          Receive eco-friendly suggestions
+                        </p>
                       </div>
                     </div>
                     <Switch defaultChecked />
@@ -410,8 +434,12 @@ export default function SettingsPage() {
                         <BarChart3 className="h-5 w-5 text-blue-500" />
                       </div>
                       <div>
-                        <span className="font-medium text-gray-900">Share Usage Data</span>
-                        <p className="text-sm text-gray-500">Help us improve by sharing anonymous usage statistics</p>
+                        <span className="font-medium text-gray-900">
+                          Share Usage Data
+                        </span>
+                        <p className="text-sm text-gray-500">
+                          Help us improve by sharing anonymous usage statistics
+                        </p>
                       </div>
                     </div>
                     <Switch defaultChecked />
@@ -422,8 +450,12 @@ export default function SettingsPage() {
                         <Lightbulb className="h-5 w-5 text-purple-500" />
                       </div>
                       <div>
-                        <span className="font-medium text-gray-900">Personalized Recommendations</span>
-                        <p className="text-sm text-gray-500">Get tailored suggestions based on your usage patterns</p>
+                        <span className="font-medium text-gray-900">
+                          Personalized Recommendations
+                        </span>
+                        <p className="text-sm text-gray-500">
+                          Get tailored suggestions based on your usage patterns
+                        </p>
                       </div>
                     </div>
                     <Switch defaultChecked />
@@ -434,8 +466,12 @@ export default function SettingsPage() {
                         <Shield className="h-5 w-5 text-emerald-500" />
                       </div>
                       <div>
-                        <span className="font-medium text-gray-900">Allow Anonymous Analytics</span>
-                        <p className="text-sm text-gray-500">Help us understand how to improve our services</p>
+                        <span className="font-medium text-gray-900">
+                          Allow Anonymous Analytics
+                        </span>
+                        <p className="text-sm text-gray-500">
+                          Help us understand how to improve our services
+                        </p>
                       </div>
                     </div>
                     <Switch defaultChecked />
@@ -448,4 +484,4 @@ export default function SettingsPage() {
       </div>
     </div>
   );
-} 
+}

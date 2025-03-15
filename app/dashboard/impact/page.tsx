@@ -2,7 +2,20 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Leaf, Droplets, TreePine, Factory, TrendingUp, Calendar, Target, Home, FileText, BarChart3, Settings, LogOut } from "lucide-react";
+import {
+  Leaf,
+  Droplets,
+  TreePine,
+  Factory,
+  TrendingUp,
+  Calendar,
+  Target,
+  Home,
+  FileText,
+  BarChart3,
+  Settings,
+  LogOut,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -118,7 +131,7 @@ export default function ImpactPage() {
             </li>
             <li>
               <Link
-                href="/impact"
+                href="/dashboard/impact"
                 className="flex items-center p-2 rounded-lg bg-green-100/50 text-green-800 hover:bg-green-100 transition-colors"
               >
                 <Leaf className="h-5 w-5 mr-3" />
@@ -127,7 +140,7 @@ export default function ImpactPage() {
             </li>
             <li>
               <Link
-                href="/settings"
+                href="/dashboard/settings"
                 className="flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors"
               >
                 <Settings className="h-5 w-5 mr-3" />
@@ -176,7 +189,9 @@ export default function ImpactPage() {
                   <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
               </Button>
-              <h1 className="text-xl font-bold text-green-800">Environmental Impact</h1>
+              <h1 className="text-xl font-bold text-green-800">
+                Environmental Impact
+              </h1>
             </div>
           </div>
         </header>
@@ -191,10 +206,7 @@ export default function ImpactPage() {
           >
             {/* Header Section */}
             <div className="text-center mb-12">
-              <motion.div
-                variants={itemVariants}
-                className="inline-block mb-4"
-              >
+              <motion.div variants={itemVariants} className="inline-block mb-4">
                 <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
                   <Leaf className="h-8 w-8 text-emerald-500" />
                 </div>
@@ -209,8 +221,8 @@ export default function ImpactPage() {
                 variants={itemVariants}
                 className="text-lg text-gray-600 max-w-2xl mx-auto"
               >
-                Track your contribution to environmental sustainability through water conservation,
-                carbon reduction, and tree preservation.
+                Track your contribution to environmental sustainability through
+                water conservation, carbon reduction, and tree preservation.
               </motion.p>
             </div>
 
@@ -227,7 +239,9 @@ export default function ImpactPage() {
                         <Droplets className="h-6 w-6 text-blue-500" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">Water Saved</h3>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          Water Saved
+                        </h3>
                         <p className="text-2xl font-bold text-blue-500">250L</p>
                       </div>
                     </div>
@@ -246,8 +260,12 @@ export default function ImpactPage() {
                         <TreePine className="h-6 w-6 text-emerald-500" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">Trees Equivalent</h3>
-                        <p className="text-2xl font-bold text-emerald-500">20</p>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          Trees Equivalent
+                        </h3>
+                        <p className="text-2xl font-bold text-emerald-500">
+                          20
+                        </p>
                       </div>
                     </div>
                     <p className="text-sm text-gray-600">
@@ -265,8 +283,12 @@ export default function ImpactPage() {
                         <Factory className="h-6 w-6 text-amber-500" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">CO2 Reduced</h3>
-                        <p className="text-2xl font-bold text-amber-500">95kg</p>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          CO2 Reduced
+                        </h3>
+                        <p className="text-2xl font-bold text-amber-500">
+                          95kg
+                        </p>
                       </div>
                     </div>
                     <p className="text-sm text-gray-600">
@@ -372,7 +394,9 @@ export default function ImpactPage() {
                         className="flex items-center justify-between p-4 bg-white rounded-lg border border-green-100 hover:shadow-md transition-shadow"
                       >
                         <div>
-                          <h4 className="font-medium text-gray-900">{data.month}</h4>
+                          <h4 className="font-medium text-gray-900">
+                            {data.month}
+                          </h4>
                           <div className="flex items-center space-x-4 mt-1">
                             <div className="flex items-center text-sm text-blue-600">
                               <Droplets className="h-4 w-4 mr-1" />
@@ -388,9 +412,9 @@ export default function ImpactPage() {
                             </div>
                           </div>
                         </div>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
+                        <Button
+                          variant="outline"
+                          size="sm"
                           className="border-green-200 text-green-700 hover:bg-green-50"
                         >
                           View Details
@@ -406,4 +430,4 @@ export default function ImpactPage() {
       </div>
     </div>
   );
-} 
+}

@@ -57,9 +57,9 @@ export function MobileDock() {
           <span className="text-xs mt-1">Stats</span>
         </Link>
         <Link
-          href="/impact"
+          href="/dashboard/impact"
           className={`flex flex-col items-center p-2 ${
-            pathname === "/impact" ? "bg-green-200" : "text-gray-600"
+            pathname === "/dashboard/impact" ? "bg-green-200" : "text-gray-600"
           }`}
         >
           <Leaf className="h-6 w-6" />

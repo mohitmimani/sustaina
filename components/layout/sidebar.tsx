@@ -102,9 +102,9 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
               </li>
               <li>
                 <Link
-                  href="/impact"
+                  href="/dashboard/impact"
                   className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
-                    pathname === "/impact" ? "bg-green-100" : ""
+                    pathname === "/dashboard/impact" ? "bg-green-100" : ""
                   }`}
                 >
                   <Leaf className="h-5 w-5 mr-3" />
@@ -113,9 +113,9 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
               </li>
               <li>
                 <Link
-                  href="/settings"
+                  href="/dashboard/settings"
                   className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
-                    pathname === "/settings" ? "bg-green-100" : ""
+                    pathname === "/dashboard/settings" ? "bg-green-100" : ""
                   }`}
                 >
                   <Settings className="h-5 w-5 mr-3" />
