@@ -15,7 +15,8 @@ async function main() {
         create: [
           {
             name: "Milk",
-            weight: "1L",
+            weight: 1000, // weight in grams
+            weightUnit: "ml",
             category: "Dairy",
             expiry: new Date(new Date().setMonth(new Date().getMonth() + 1)),
             price: 2.5,
@@ -24,7 +25,8 @@ async function main() {
           },
           {
             name: "Bread",
-            weight: "500g",
+            weight: 500, // weight in grams
+            weightUnit: "g",
             category: "Bakery",
             expiry: new Date(new Date().setMonth(new Date().getMonth() + 1)),
             price: 1.5,
@@ -33,7 +35,8 @@ async function main() {
           },
           {
             name: "Eggs",
-            weight: "12pcs",
+            weight: 12, // quantity of eggs
+            weightUnit: "pcs",
             category: "Poultry",
             expiry: new Date(new Date().setMonth(new Date().getMonth() + 1)),
             price: 3.0,

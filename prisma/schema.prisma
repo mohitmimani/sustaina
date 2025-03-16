@@ -106,6 +106,7 @@ model Item {
   id        String  @id @map("_id") @default(cuid())
   name      String
   weight    Int
+  weightUnit String
   category  String
   expiry    DateTime?
   price     Float

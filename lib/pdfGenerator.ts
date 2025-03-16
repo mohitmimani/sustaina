@@ -63,7 +63,11 @@ export const downloadReceiptPDF = async (
     pdf.setTextColor(44, 62, 80);
     pdf.text(`Type: ${receipt.type}`, margin, margin + 30);
     pdf.text(`Total Waste: ${receipt.amount}`, margin, margin + 40);
-    pdf.text(`Total Waste Cost: $${wasteCost.toFixed(2)}`, margin, margin + 50);
+    pdf.text(
+      `Total Waste Cost: Rs. ${wasteCost.toFixed(2)}`,
+      margin,
+      margin + 50
+    );
 
     // Calculate consumption stats
     const totalItems = receipt.items.length;
@@ -157,7 +161,7 @@ export const downloadReceiptPDF = async (
       }
 
       pdf.text(item.name, margin + 3, y);
-      pdf.text(item.weight.toString(), margin + colWidth + 3, y);
+      pdf.text(`${item.weight} ${item.weightUnit}`, margin + colWidth + 3, y);
 
       // Category with color indicator
       const category = item.category;
