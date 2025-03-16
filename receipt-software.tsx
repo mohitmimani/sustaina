@@ -7,15 +7,15 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlusCircle, Printer, Save } from "lucide-react"
+// Generate Dynamic barcode
 import Barcode from "react-barcode"
 
-// Receipt Data Types
 interface Item {
   id: number
   name: string
   price: number
   quantity: number
-  expiryDate?: string // Optional expiry date for the product
+  expiryDate?: string 
 }
 
 interface ReceiptData {
@@ -25,12 +25,10 @@ interface ReceiptData {
   tax: number
   total: number
   date: Date
-  expiryDate: Date // Stored but not displayed on receipt
+ expiryDate: Date 
 }
 
-// Utility Functions
 const saveReceipt = (receiptData: ReceiptData): void => {
-  // In a real app, this would save to a database or localStorage
   const receipts = getReceipts()
   receipts.push(receiptData)
   localStorage.setItem("receipts", JSON.stringify(receipts))
@@ -44,7 +42,6 @@ const getReceipts = (): ReceiptData[] => {
 
   try {
     const receipts = JSON.parse(receiptsJson)
-    // Convert string dates back to Date objects
     return receipts.map((receipt: any) => ({
       ...receipt,
       date: new Date(receipt.date),
@@ -60,7 +57,7 @@ const isReceiptExpired = (receiptId: string): boolean => {
   const receipts = getReceipts()
   const receipt = receipts.find((r) => r.id === receiptId)
 
-  if (!receipt) return true // If receipt not found, consider it expired
+  if (!receipt) return true 
 
   const now = new Date()
   return now > receipt.expiryDate
@@ -78,12 +75,10 @@ const generateReceiptId = (): string => {
 function ReceiptGenerator({ items }: { items: Item[] }) {
   const [receiptId, setReceiptId] = useState("")
   const [expiryDate, setExpiryDate] = useState<Date>()
-
-  // Generate a unique receipt ID and set expiry date (30 days from now)
+  
   useEffect(() => {
     setReceiptId(generateReceiptId())
 
-    // Set expiry date to 30 days from now (stored but not displayed)
     const today = new Date()
     const expiry = new Date()
     expiry.setDate(today.getDate() + 30)
@@ -95,14 +90,14 @@ function ReceiptGenerator({ items }: { items: Item[] }) {
   }
 
   const calculateTax = () => {
-    return calculateSubtotal() * 0.07 // Assuming 7% tax
+    return calculateSubtotal() * 0.07 
   }
 
   const calculateTotal = () => {
     return calculateSubtotal() + calculateTax()
   }
 
-  // Fixed width of 76mm (approximately 287px at 96 DPI)
+  )
   const receiptWidth = "76mm"
 
   return (
@@ -205,7 +200,6 @@ function ReceiptGenerator({ items }: { items: Item[] }) {
   )
 }
 
-// Main Application Component
 export default function ReceiptApp() {
   const [items, setItems] = useState([
     { id: 101, name: "Harry Potter", price: 999.99, quantity: 1, expiryDate: "2025-12-31" },
