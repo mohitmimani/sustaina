@@ -66,9 +66,10 @@ export async function PUT(
     return invalidDataResponse;
   }
 
+  const { id, ...updateData } = parsedBody.data;
   const updatedItem = await prisma.item.update({
-    where: { id: parsedBody.data.id, receipt: { userId: session.user.id } },
-    data: parsedBody.data,
+    where: { id, receipt: { userId: session.user.id } },
+    data: updateData,
   });
   return NextResponse.json(updatedItem);
 }
