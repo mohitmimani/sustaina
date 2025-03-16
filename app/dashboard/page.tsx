@@ -47,7 +47,7 @@ export default function Dashboard() {
         <StatsSummary stats={stats} />
 
         {/* Actions & Impact */}
-        <div className="space-y-6 md:col-span-3 lg:col-span-1">
+        <div className="space-y-6 md:col-span-3 xl:col-span-1">
           {/* Actions Card */}
           <QuickActions />
 

@@ -33,7 +33,7 @@ interface StatsSummaryProps {
 
 export function StatsSummary({ stats }: StatsSummaryProps) {
   return (
-    <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm md:col-span-2 lg:col-span-1">
+    <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm md:col-span-3 lg:col-span-1 w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-bold flex items-center justify-between">
           <div className="flex items-center">

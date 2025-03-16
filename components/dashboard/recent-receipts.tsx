@@ -40,6 +40,8 @@ export function RecentReceipts() {
   const { data: receipts = [], isLoading } = useQuery({
     queryKey: ["receipts"],
     queryFn: fetchReceipts,
+    staleTime: 0, // Ensures data is always fresh
+    refetchOnMount: true,
   });
 
   const filteredReceipts = receipts.filter((receipt) => {
@@ -99,9 +101,8 @@ export function RecentReceipts() {
       </Card>
     );
   }
-  console.log(receipts);
   return (
-    <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm md:col-span-2 lg:col-span-1">
+    <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm md:col-span-3 lg:col-span-2 xl:col-span-1 w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-bold flex items-center justify-between">
           <div className="flex items-center">

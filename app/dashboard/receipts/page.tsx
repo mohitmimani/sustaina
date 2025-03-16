@@ -37,6 +37,8 @@ export default function ReceiptsPage() {
   const { data: receipts = [], isLoading } = useQuery({
     queryKey: ["receipts"],
     queryFn: fetchReceipts,
+    staleTime: 0, // Ensures data is always fresh
+    refetchOnMount: true,
   });
 
   const filteredReceipts = receipts.filter((receipt) => {
@@ -68,6 +70,9 @@ export default function ReceiptsPage() {
     return 0;
   });
 
+  if (isLoading) {
+    <Skeleton className="h-24 w-full mb-4" />;
+  }
   return (
     <>
       <div className="flex justify-between items-center mb-6">
