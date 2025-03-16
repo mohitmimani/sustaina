@@ -125,19 +125,19 @@ export function RewardsCard() {
       <Card className="backdrop-blur-md bg-gradient-to-br from-white/90 to-white/70 dark:from-gray-900/90 dark:to-gray-900/70 border-green-100 dark:border-green-900 shadow-lg overflow-hidden relative">
         {/* Decorative elements */}
         <motion.div
-          className="absolute top-0 right-0 w-40 h-40 -mt-10 -mr-10 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full"
+          className="absolute top-0 right-0 w-20 h-20 sm:w-40 sm:h-40 -mt-5 sm:-mt-10 -mr-5 sm:-mr-10 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full"
           variants={pulseVariants}
           animate="pulse"
         />
         <motion.div
-          className="absolute bottom-0 left-0 w-24 h-24 -mb-8 -ml-8 bg-gradient-to-tr from-teal-100 to-green-100 dark:from-teal-900/30 dark:to-green-900/30 rounded-full opacity-70"
+          className="absolute bottom-0 left-0 w-12 h-12 sm:w-24 sm:h-24 -mb-4 sm:-mb-8 -ml-4 sm:-ml-8 bg-gradient-to-tr from-teal-100 to-green-100 dark:from-teal-900/30 dark:to-green-900/30 rounded-full opacity-70"
           variants={pulseVariants}
           animate="pulse"
           transition={{ delay: 1 }}
         />
 
         <CardHeader className="pb-2 relative z-10">
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
             <div>
               <CardTitle className="text-lg font-bold flex items-center">
                 <Award className="h-5 w-5 mr-2 text-green-600 dark:text-green-400" />
@@ -149,7 +149,7 @@ export function RewardsCard() {
             </div>
             <Badge
               variant="outline"
-              className="bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800"
+              className="bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800 mt-2 sm:mt-0"
             >
               Silver Level
             </Badge>
@@ -178,9 +178,9 @@ export function RewardsCard() {
               >
                 <motion.div
                   variants={itemVariants}
-                  className="flex items-center justify-between"
+                  className="flex flex-col sm:flex-row items-center justify-between"
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center mb-4 sm:mb-0">
                     <div className="relative">
                       <Star className="h-8 w-8 text-amber-500 fill-amber-500" />
                       <motion.div
@@ -274,7 +274,7 @@ export function RewardsCard() {
                     <p className="text-xs text-gray-600 dark:text-gray-400">
                       Streak
                     </p>
-                    <p className="font-semibold text-green-700 dark:text-green-400 text-lg">
+                    <p className="font-semibold text-green-700 dark:text-green-400 sm:text-lg">
                       7 days
                     </p>
                   </div>

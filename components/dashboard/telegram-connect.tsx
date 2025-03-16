@@ -122,9 +122,9 @@ export function TelegramConnect() {
   if (isTelegramConnected) {
     return (
       <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm mb-6 transition-all">
-        <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between">
+        <CardContent className="p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between">
           <div className="flex items-center mb-4 sm:mb-0">
-            <div className="bg-green-100 p-3 rounded-full mr-5">
+            <div className="bg-green-100 p-3 rounded-full mr-4 sm:mr-5">
               <Check className="h-6 w-6 text-green-600" />
             </div>
             <div>
@@ -136,8 +136,10 @@ export function TelegramConnect() {
               </h3>
               <p className="text-sm text-gray-600 mt-1 flex items-center">
                 <span className="font-medium">@{username}</span>
-                <span className="mx-2 text-gray-400">•</span>
-                <span className="text-gray-500">Receiving notifications</span>
+                <span className="mx-2 text-gray-400 sm:flex hidden">•</span>
+                <span className="text-gray-500 sm:flex hidden">
+                  Receiving notifications
+                </span>
               </p>
             </div>
           </div>
