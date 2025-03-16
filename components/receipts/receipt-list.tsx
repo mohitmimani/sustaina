@@ -241,6 +241,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
                 <TableHead>Item</TableHead>
                 <TableHead>Weight</TableHead>
                 <TableHead>Category</TableHead>
+                <TableHead>Expiry Date</TableHead>
                 <TableHead className="w-16">Consumed</TableHead>
               </TableRow>
             </TableHeader>
@@ -263,6 +264,13 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
                     >
                       {item.category}
                     </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {new Date(item.expiry + "").toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
                   </TableCell>
                   <TableCell>
                     <div
