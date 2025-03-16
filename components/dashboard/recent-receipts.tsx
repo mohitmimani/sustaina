@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Search, Filter } from "lucide-react";
 import {
   Card,
@@ -15,16 +16,26 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText } from "lucide-react";
 import { ReceiptList } from "@/components/receipts/receipt-list";
-import type { Receipt } from "@/types/receipt";
+import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { ReceiptSchema } from "@/lib/schemas/receipt";
 
-interface RecentReceiptsProps {
-  receipts: Receipt[];
+async function fetchReceipts(): Promise<ReceiptSchema[]> {
+  const response = await fetch("/api/receipts");
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
 }
 
-export function RecentReceipts({ receipts }: RecentReceiptsProps) {
+export function RecentReceipts() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+
+  const { data: receipts = [], isLoading } = useQuery({
+    queryKey: ["receipts"],
+    queryFn: fetchReceipts,
+  });
 
   const filteredReceipts = receipts.filter((receipt) => {
     if (
@@ -42,6 +53,48 @@ export function RecentReceipts({ receipts }: RecentReceiptsProps) {
     return true;
   });
 
+  if (isLoading) {
+    return (
+      <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm md:col-span-2 lg:col-span-1">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-bold flex items-center justify-between">
+            <div className="flex items-center">
+              <FileText className="h-5 w-5 mr-2 text-green-600" />
+              Recent Receipts
+            </div>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <Filter className="h-4 w-4" />
+            </Button>
+          </CardTitle>
+          <CardDescription>Your latest waste tracking entries</CardDescription>
+          <div className="mt-2 space-y-2">
+            <div className="relative">
+              <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+              <Input placeholder="Search receipts..." className="pl-8" />
+            </div>
+            <Tabs defaultValue="all" className="w-full">
+              <TabsList className="grid grid-cols-4 w-full">
+                <TabsTrigger value="all">All</TabsTrigger>
+                <TabsTrigger value="recycle">Recycle</TabsTrigger>
+                <TabsTrigger value="compost">Compost</TabsTrigger>
+                <TabsTrigger value="landfill">Landfill</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="h-24 w-full mb-4" />
+          <Skeleton className="h-24 w-full mb-4" />
+          <Skeleton className="h-24 w-full mb-4" />
+          <Skeleton className="h-24 w-full mb-4" />
+        </CardContent>
+        <CardFooter>
+          <Skeleton className="h-10 w-full" />
+        </CardFooter>
+      </Card>
+    );
+  }
+  console.log(receipts);
   return (
     <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm md:col-span-2 lg:col-span-1">
       <CardHeader className="pb-2">

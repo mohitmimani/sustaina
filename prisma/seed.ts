@@ -3,18 +3,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create a user
-  const user = await prisma.user.create({
-    data: {
-      id: "1",
-      name: "John Doe",
-      email: "john.doe@example.com",
-      emailVerified: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  });
-
   // Create a receipt with multiple items for the user
   const receipt = await prisma.receipt.create({
     data: {
@@ -22,7 +10,7 @@ async function main() {
       date: new Date(),
       amount: "100.00",
       type: "Grocery",
-      userId: user.id,
+      userId: "DRhBxGhkco8uhafDi8Xog0JXyey8NwhG",
       items: {
         create: [
           {
@@ -57,7 +45,7 @@ async function main() {
     },
   });
 
-  console.log("Seed data created:", { user, receipt });
+  console.log("Seed data created:", { receipt });
 }
 
 main()

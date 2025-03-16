@@ -1,16 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth"; // Adjust the import path as necessary
+import { z } from "zod";
+import { ReceiptSchema } from "@/prisma/generated/zod";
+import { ItemSchema, Item } from "@/prisma/generated/zod";
+
+const unauthorizedResponse = NextResponse.json(
+  { error: "Unauthorized" },
+  { status: 401 }
+);
+const invalidDataResponse = NextResponse.json(
+  { error: "Invalid data" },
+  { status: 400 }
+);
+
+const ReceiptWithItemsSchema = ReceiptSchema.extend({
+  items: z.array(ItemSchema),
+});
 
 export async function GET(req: NextRequest) {
   const session = await auth.api.getSession({ headers: req.headers });
 
   if (!session?.user?.id) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return unauthorizedResponse;
   }
 
   const receipts = await prisma.receipt.findMany({
     where: { userId: session.user.id },
+    include: { items: true },
   });
   return NextResponse.json(receipts);
 }
@@ -19,12 +36,24 @@ export async function POST(req: NextRequest) {
   const session = await auth.api.getSession({ headers: req.headers });
 
   if (!session?.user?.id) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return unauthorizedResponse;
   }
 
-  const data = await req.json();
+  const body = await req.json();
+  const parsedBody = ReceiptWithItemsSchema.safeParse(body);
+
+  if (!parsedBody.success) {
+    return invalidDataResponse;
+  }
+
   const newReceipt = await prisma.receipt.create({
-    data: { ...data, userId: session.user.id },
+    data: {
+      ...parsedBody.data,
+      userId: session.user.id,
+      items: {
+        create: parsedBody?.data?.items,
+      },
+    },
   });
   return NextResponse.json(newReceipt, { status: 201 });
 }
@@ -33,13 +62,27 @@ export async function PUT(req: NextRequest) {
   const session = await auth.api.getSession({ headers: req.headers });
 
   if (!session?.user?.id) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return unauthorizedResponse;
   }
 
-  const data = await req.json();
+  const body = await req.json();
+  const parsedBody = ReceiptWithItemsSchema.safeParse(body);
+
+  if (!parsedBody.success) {
+    return invalidDataResponse;
+  }
+
   const updatedReceipt = await prisma.receipt.update({
-    where: { id: data.id, userId: session.user.id },
-    data,
+    where: { id: parsedBody.data.id, userId: session.user.id },
+    data: {
+      ...parsedBody.data,
+      items: {
+        update: parsedBody.data.items.map((item) => ({
+          where: { id: item.id },
+          data: item,
+        })),
+      },
+    },
   });
   return NextResponse.json(updatedReceipt);
 }
@@ -48,12 +91,14 @@ export async function DELETE(req: NextRequest) {
   const session = await auth.api.getSession({ headers: req.headers });
 
   if (!session?.user?.id) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return unauthorizedResponse;
   }
 
-  const data = await req.json();
+  const body = await req.json();
+  const { id } = z.object({ id: z.string() }).parse(body);
+
   const deletedReceipt = await prisma.receipt.delete({
-    where: { id: data.id, userId: session.user.id },
+    where: { id, userId: session.user.id },
   });
   return NextResponse.json(deletedReceipt);
 }

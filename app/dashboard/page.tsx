@@ -7,61 +7,6 @@ import { QuickActions } from "@/components/dashboard/quick-actions";
 import { EnvironmentalImpact } from "@/components/dashboard/environmental-impact";
 import { RewardsCard } from "@/components/dashboard/RewardsCard";
 
-// Mock data for the dashboard
-const recentReceipts = [
-  { 
-    id: 1,
-    name: "Grocery Store",
-    date: "May 15, 2023",
-    amount: "12.5kg",
-    type: "Mixed",
-    items: [
-      { name: "Plastic packaging", weight: "3.2kg", category: "Recycle" },
-      { name: "Food waste", weight: "5.1kg", category: "Compost" },
-      { name: "Paper bags", weight: "2.7kg", category: "Recycle" },
-      { name: "Non-recyclables", weight: "1.5kg", category: "Landfill" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Farmers Market",
-    date: "May 12, 2023",
-    amount: "8.2kg",
-    type: "Compost",
-    items: [
-      { name: "Vegetable scraps", weight: "4.5kg", category: "Compost" },
-      { name: "Fruit peels", weight: "3.7kg", category: "Compost" },
-    ],
-  },
-  {
-    id: 3,
-    name: "Electronics Store",
-    date: "May 10, 2023",
-    amount: "5.7kg",
-    type: "Recycle",
-    items: [
-      { name: "Cardboard boxes", weight: "3.2kg", category: "Recycle" },
-      { name: "Plastic packaging", weight: "1.8kg", category: "Recycle" },
-      { name: "Styrofoam", weight: "0.7kg", category: "Landfill" },
-    ],
-  },
-  {
-    id: 4,
-    name: "Department Store",
-    date: "May 5, 2023",
-    amount: "3.1kg",
-    type: "Landfill",
-    items: [
-      {
-        name: "Non-recyclable plastics",
-        weight: "2.1kg",
-        category: "Landfill",
-      },
-      { name: "Mixed materials", weight: "1.0kg", category: "Landfill" },
-    ],
-  },
-];
-
 const stats = {
   total: 100,
   recycled: 70,
@@ -96,7 +41,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Recent Receipts */}
-        <RecentReceipts receipts={recentReceipts} />
+        <RecentReceipts />
 
         {/* Statistics */}
         <StatsSummary stats={stats} />
@@ -114,7 +59,7 @@ export default function Dashboard() {
           />
         </div>
       </div>
-      
+
       {/* Rewards Card */}
       <div className="w-full">
         <RewardsCard />

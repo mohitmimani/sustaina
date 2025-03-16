@@ -7,7 +7,9 @@
 generator client {
   provider = "prisma-client-js"
 }
-
+generator zod {
+  provider       = "zod-prisma-types"
+}
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -25,12 +27,12 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
-pendingConnections TelegramPendingConnection[]
+  pendingConnections TelegramPendingConnection[]
   @@unique([email])
   @@map("user")
   Receipt Receipt[]
 }
-// New model for pending Telegram connections
+
 model TelegramPendingConnection {
   id              String  @id @map("_id") @default(cuid())
   userId          String
@@ -38,10 +40,8 @@ model TelegramPendingConnection {
   expiresAt       DateTime
   createdAt       DateTime @default(now())
   
-  // Relation to user
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  // Index for faster expiry lookup and cleanup
   @@index([expiresAt])
 }
 

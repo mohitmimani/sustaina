@@ -3,7 +3,9 @@
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { ProgressProvider } from "@bprogress/next/app";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeProvider>
@@ -13,7 +15,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         options={{ showSpinner: false }}
         shallowRouting
       >
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </ProgressProvider>
     </ThemeProvider>
   );
