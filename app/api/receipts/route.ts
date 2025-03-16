@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth"; // Adjust the import path as necessary
 import { z } from "zod";
 import { ReceiptSchema } from "@/prisma/generated/zod";
 import { ItemSchema, Item } from "@/prisma/generated/zod";
+import { ReceiptWithItemsSchema } from "@/lib/schema/extended";
 
 const unauthorizedResponse = NextResponse.json(
   { error: "Unauthorized" },
@@ -13,10 +14,6 @@ const invalidDataResponse = NextResponse.json(
   { error: "Invalid data" },
   { status: 400 }
 );
-
-const ReceiptWithItemsSchema = ReceiptSchema.extend({
-  items: z.array(ItemSchema),
-});
 
 export async function GET(req: NextRequest) {
   const session = await auth.api.getSession({ headers: req.headers });

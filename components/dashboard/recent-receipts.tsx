@@ -18,14 +18,19 @@ import { FileText } from "lucide-react";
 import { ReceiptList } from "@/components/receipts/receipt-list";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
-import { ReceiptSchema } from "@/lib/schemas/receipt";
+import {
+  ReceiptWithItems,
+  ReceiptWithItemsSchema,
+} from "@/lib/schema/extended";
+import { Item } from "@/prisma/generated/zod";
 
-async function fetchReceipts(): Promise<ReceiptSchema[]> {
+async function fetchReceipts(): Promise<ReceiptWithItems[]> {
   const response = await fetch("/api/receipts");
+  const data = await response.json();
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
-  return response.json();
+  return data.map((item: Item) => ReceiptWithItemsSchema.safeParse(item).data);
 }
 
 export function RecentReceipts() {

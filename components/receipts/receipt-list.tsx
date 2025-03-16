@@ -21,9 +21,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Receipt } from "@/prisma/generated/zod";
+import { ReceiptWithItems } from "@/lib/schema/extended";
 
 interface ReceiptListProps {
-  receipts: Receipt[];
+  receipts: ReceiptWithItems[];
   limit?: number;
 }
 
@@ -48,9 +49,7 @@ export function ReceiptList({ receipts, limit }: ReceiptListProps) {
             <li className="flex items-center justify-between p-2 rounded-lg bg-white border border-green-100 hover:border-green-200 transition-colors cursor-pointer">
               <div>
                 <p className="font-medium text-sm">{receipt.name}</p>
-                <p className="text-xs text-gray-500">
-                  {receipt.date.toLocaleDateString()}
-                </p>
+                <p className="text-xs text-gray-500">{receipt.date + ""}</p>
               </div>
               <div className="flex items-center">
                 <Badge
@@ -74,8 +73,7 @@ export function ReceiptList({ receipts, limit }: ReceiptListProps) {
             <DialogHeader>
               <DialogTitle>{receipt.name}</DialogTitle>
               <DialogDescription>
-                {receipt.date.toLocaleDateString()} • {receipt.amount} total
-                waste
+                {receipt.date + ""} • {receipt.amount} total waste
               </DialogDescription>
             </DialogHeader>
             <div className="py-4">
