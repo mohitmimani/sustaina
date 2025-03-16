@@ -27,6 +27,7 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
+  Rectangle,
 } from "recharts";
 
 interface StatsChartProps {
@@ -58,16 +59,46 @@ export function StatsChart({ stats }: StatsChartProps) {
             <div className="h-[300px] w-full">
               <ChartContainer
                 config={chartConfig}
-                className="h-full w-full -ml-5"
+                className="h-full w-full -ml-5 [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-none"
               >
-                <ResponsiveContainer width="100%" height="100px">
+                <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={stats.monthlyData}>
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <Bar dataKey="recycled" fill="#3b82f6" />
-                    <Bar dataKey="composted" fill="#22c55e" />
-                    <Bar dataKey="landfill" fill="#ef4444" />
-                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Bar
+                      dataKey="recycled"
+                      fill="#3b82f6"
+                      activeBar={
+                        <Rectangle
+                          fill="rgba(59, 130, 246, 0.5)"
+                          stroke="#3b82f6"
+                        />
+                      }
+                    />
+                    <Bar
+                      dataKey="composted"
+                      fill="#22c55e"
+                      activeBar={
+                        <Rectangle
+                          fill="rgba(34, 197, 94, 0.5)"
+                          stroke="#22c55e"
+                        />
+                      }
+                    />
+                    <Bar
+                      dataKey="landfill"
+                      fill="#ef4444"
+                      activeBar={
+                        <Rectangle
+                          fill="rgba(239, 68, 68, 0.5)"
+                          stroke="#ef4444"
+                        />
+                      }
+                    />
+                    <ChartTooltip
+                      wrapperClassName="bg-slate-900 backdrop-blur-md"
+                      content={<ChartTooltipContent indicator="line" />}
+                    />
                     <ChartLegend content={<ChartLegendContent />} />
                   </BarChart>
                 </ResponsiveContainer>
