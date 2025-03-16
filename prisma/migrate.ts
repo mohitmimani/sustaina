@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 async function updateExistingItems() {
   await prisma.item.updateMany({
-    data: { isConsumed: false },
+    data: { weight: 1 },
   });
   console.log("Updated all existing items to have isUsed: false");
 }

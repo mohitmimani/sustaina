@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import {
   FileText,
   CheckCircle,
@@ -32,6 +32,7 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { Item } from "@/prisma/generated/zod";
 import { useItemStore } from "@/store/itemStore";
+import { downloadReceiptPDF, calculateWasteCost } from "@/lib/pdfGenerator"; // Import the PDF functions
 
 interface ReceiptListProps {
   receipts: ReceiptWithItems[];
@@ -63,6 +64,8 @@ export function ReceiptList({ receipts, limit }: ReceiptListProps) {
 function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
   const { items, setItems, updateItem } = useItemStore();
   const [loading, setLoading] = useState<string | null>(null);
+  const [downloadingPDF, setDownloadingPDF] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
     setItems(receipt.items);
@@ -105,6 +108,32 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
       setLoading(null);
     }
   };
+
+  // Function to handle PDF download
+  const handleDownloadPDF = async () => {
+    setDownloadingPDF(true);
+    try {
+      // Create a receipt object with the current state of items
+      const receiptWithCurrentItems = {
+        ...receipt,
+        items: items,
+      };
+
+      await downloadReceiptPDF(receiptWithCurrentItems, headerRef);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    } finally {
+      setDownloadingPDF(false);
+    }
+  };
+
+  // Calculate waste cost
+  const wasteCost = useMemo(() => {
+    return calculateWasteCost({
+      ...receipt,
+      items: items,
+    });
+  }, [receipt, items]);
 
   return (
     <Dialog>
@@ -160,12 +189,30 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
         </li>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>{receipt.name}</DialogTitle>
-          <DialogDescription>
-            {receipt.date + ""} • Rs {receipt.amount}
-          </DialogDescription>
-        </DialogHeader>
+        <div ref={headerRef}>
+          <DialogHeader>
+            <DialogTitle>{receipt.name}</DialogTitle>
+            <DialogDescription>
+              {receipt.date + ""} • Rs {receipt.amount}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-between items-center mt-2">
+            <span className="text-sm text-gray-500">
+              Waste Cost: Rs {wasteCost.toFixed(2)}
+            </span>
+            <Badge
+              className={
+                receipt.type === "Recycle"
+                  ? "bg-blue-100 text-blue-800"
+                  : receipt.type === "Compost"
+                  ? "bg-green-100 text-green-800"
+                  : "bg-red-100 text-red-800"
+              }
+            >
+              {receipt.type}
+            </Badge>
+          </div>
+        </div>
         <div className="py-4">
           <div className="flex justify-between items-center mb-2">
             <h4 className="text-sm font-medium">Waste Breakdown</h4>
@@ -238,7 +285,9 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
           </Table>
         </div>
         <DialogFooter>
-          <Button>Download PDF</Button>
+          <Button onClick={handleDownloadPDF} disabled={downloadingPDF}>
+            {downloadingPDF ? "Generating..." : "Download PDF"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

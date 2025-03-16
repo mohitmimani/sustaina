@@ -105,7 +105,7 @@ model Receipt {
 model Item {
   id        String  @id @map("_id") @default(cuid())
   name      String
-  weight    String
+  weight    Int
   category  String
   expiry    DateTime?
   price     Float
