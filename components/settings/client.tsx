@@ -12,11 +12,12 @@ import { PrivacyCard } from "@/components/settings/privacy-card";
 import { containerVariants } from "@/components/settings/settings-variants";
 
 const { useSession } = authClient;
+import { useTheme } from "next-themes";
 
 export default function SettingsPage() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
-  const [theme, setTheme] = useState("light");
+  const { theme, setTheme } = useTheme();
 
   // Toggle theme function
   const toggleTheme = () => {
@@ -31,7 +32,7 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-2xl font-bold text-green-800 mb-6">Settings</h1>
-        
+
         <Tabs defaultValue="account" className="w-full">
           <TabsList className="grid w-full grid-cols-4 mb-8 h-14">
             <TabsTrigger value="account" className="text-base py-3">
@@ -55,15 +56,15 @@ export default function SettingsPage() {
           >
             {/* Account Settings */}
             <TabsContent value="account" className="mt-0">
-              <AccountCardsGrid 
-                userName={session?.user?.name || undefined} 
-                userEmail={session?.user?.email || undefined} 
+              <AccountCardsGrid
+                userName={session?.user?.name || undefined}
+                userEmail={session?.user?.email || undefined}
               />
             </TabsContent>
 
             {/* Appearance Settings */}
             <TabsContent value="appearance" className="mt-0">
-              <ThemeCard theme={theme} toggleTheme={toggleTheme} />
+              <ThemeCard theme={theme || "light"} toggleTheme={toggleTheme} />
             </TabsContent>
 
             {/* Notifications Settings */}

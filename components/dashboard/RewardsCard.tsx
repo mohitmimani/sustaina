@@ -1,8 +1,14 @@
- "use client";
+"use client";
 
 import { motion } from "framer-motion";
 import { Gift, Award, Star } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
@@ -25,13 +31,9 @@ export function RewardsCard() {
   const points = 1250;
   const nextRewardAt = 1500;
   const progress = (points / nextRewardAt) * 100;
-  
+
   return (
-    <motion.div 
-      variants={itemVariants}
-      initial="hidden"
-      animate="visible"
-    >
+    <motion.div variants={itemVariants} initial="hidden" animate="visible">
       <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 -mt-8 -mr-8 bg-green-100 rounded-full opacity-70" />
         <CardHeader className="pb-2 relative">
@@ -39,13 +41,18 @@ export function RewardsCard() {
             <Award className="h-5 w-5 mr-2 text-green-600" />
             Sustainability Rewards
           </CardTitle>
+          <CardDescription>
+            Earn points for every sustainable action you take
+          </CardDescription>
         </CardHeader>
         <CardContent className="relative">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="mb-4 sm:mb-0">
               <div className="flex items-center">
                 <Star className="h-6 w-6 text-amber-500 mr-2 fill-amber-500" />
-                <h3 className="text-2xl font-bold text-gray-900">{points} Points</h3>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  {points} Points
+                </h3>
               </div>
               <p className="text-sm text-gray-600 mt-1">
                 Earn points for every sustainable action you take
@@ -55,14 +62,21 @@ export function RewardsCard() {
                   <span>Current</span>
                   <span>Next Reward: {nextRewardAt} pts</span>
                 </div>
-                <Progress value={progress} className="h-2 bg-gray-100" indicatorClassName="bg-gradient-to-r from-green-500 to-emerald-500" />
+                <Progress
+                  value={progress}
+                  className="h-2 bg-gray-100"
+                  indicatorClassName="bg-gradient-to-r from-green-500 to-emerald-500"
+                />
               </div>
             </div>
             <div className="flex flex-col space-y-2">
               <Button className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white">
                 Redeem Points
               </Button>
-              <Button variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
+              <Button
+                variant="outline"
+                className="border-green-200 text-green-700 hover:bg-green-50"
+              >
                 View Rewards History
               </Button>
             </div>
@@ -85,4 +99,4 @@ export function RewardsCard() {
       </Card>
     </motion.div>
   );
-} 
+}

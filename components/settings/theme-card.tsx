@@ -11,9 +11,13 @@ import {
 } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { itemVariants } from "./settings-variants";
-
-// Theme Settings Card
-export function ThemeCard({ theme, toggleTheme }: { theme: string; toggleTheme: () => void }) {
+export function ThemeCard({
+  theme,
+  toggleTheme,
+}: {
+  theme: string;
+  toggleTheme: () => void;
+}) {
   return (
     <motion.div variants={itemVariants}>
       <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm">
@@ -26,9 +30,7 @@ export function ThemeCard({ theme, toggleTheme }: { theme: string; toggleTheme: 
             )}
             Theme Settings
           </CardTitle>
-          <CardDescription>
-            Customize your visual experience
-          </CardDescription>
+          <CardDescription>Customize your visual experience</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-green-100">
@@ -56,4 +58,4 @@ export function ThemeCard({ theme, toggleTheme }: { theme: string; toggleTheme: 
       </Card>
     </motion.div>
   );
-} 
+}
