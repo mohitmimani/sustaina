@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth"; // Adjust the import path as necessary
 import { z } from "zod";
-import { ReceiptSchema } from "@/prisma/generated/zod";
-import { ItemSchema, Item } from "@/prisma/generated/zod";
-import { ReceiptWithItemsSchema } from "@/lib/schema/extended";
+import { ReceiptWithoutIdSchema } from "@/lib/schema/extended";
 
 const unauthorizedResponse = NextResponse.json(
   { error: "Unauthorized" },
@@ -36,13 +34,13 @@ export async function POST(req: NextRequest) {
     return unauthorizedResponse;
   }
 
-  const body = await req.json();
-  const parsedBody = ReceiptWithItemsSchema.safeParse(body);
+  const body = { ...(await req.json()), userId: session.user.id };
+  const parsedBody = ReceiptWithoutIdSchema.safeParse(body);
+  console.log(parsedBody.error, parsedBody.data);
 
   if (!parsedBody.success) {
     return invalidDataResponse;
   }
-
   const newReceipt = await prisma.receipt.create({
     data: {
       ...parsedBody.data,
@@ -63,7 +61,7 @@ export async function PUT(req: NextRequest) {
   }
 
   const body = await req.json();
-  const parsedBody = ReceiptWithItemsSchema.safeParse(body);
+  const parsedBody = ReceiptWithoutIdSchema.safeParse(body);
 
   if (!parsedBody.success) {
     return invalidDataResponse;

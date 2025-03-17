@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileBarChart, Plus, Settings, Upload, User } from "lucide-react";
+import { AddReceiptButton } from "../receipts/add-receipt-button";
 
 export function QuickActions() {
   return (
@@ -21,10 +22,7 @@ export function QuickActions() {
         <CardDescription>Quick access to common tasks</CardDescription>
       </CardHeader>
       <CardContent className="grid grid-cols-2 gap-3">
-        <Button className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white">
-          <Plus className="h-4 w-4 mr-2" />
-          Add Receipt
-        </Button>
+        <AddReceiptButton />
         <Button
           variant="outline"
           className="border-green-200 text-green-700 hover:bg-green-50"

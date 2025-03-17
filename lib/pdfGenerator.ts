@@ -160,16 +160,16 @@ export const downloadReceiptPDF = async (
       pdf.text(`${item.weight} ${item.weightUnit}`, margin + colWidth + 3, y);
 
       // Category with color indicator
-      const category = item.category;
+      const category = item.wasteCategory || "";
       pdf.text(category, margin + colWidth * 2 + 3, y);
 
       // Small colored square for category
       const squareSize = 3;
       let categoryColor = [41, 128, 185]; // blue for recycle
 
-      if (category === "Compost") {
+      if (category === "COMPOST") {
         categoryColor = [46, 204, 113]; // green
-      } else if (category === "Landfill") {
+      } else if (category === "LANDFILL") {
         categoryColor = [231, 76, 60]; // red
       }
 

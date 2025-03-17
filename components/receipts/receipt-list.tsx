@@ -27,15 +27,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { ReceiptWithItems } from "@/lib/schema/extended";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import type { Item } from "@/prisma/generated/zod";
 import { useItemStore } from "@/store/itemStore";
 import { downloadReceiptPDF, calculateWasteCost } from "@/lib/pdfGenerator"; // Import the PDF functions
+import { ItemWithoutId, ReceiptWithoutId } from "@/lib/schema/extended";
 
 interface ReceiptListProps {
-  receipts: ReceiptWithItems[];
+  receipts: ReceiptWithoutId[];
   limit?: number;
 }
 
@@ -61,14 +61,14 @@ export function ReceiptList({ receipts, limit }: ReceiptListProps) {
   );
 }
 
-function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
+function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
   const { items, setItems, updateItem } = useItemStore();
-  const [loading, setLoading] = useState<string | null>(null);
+  const [loading, setLoading] = useState<string | undefined | null>(undefined);
   const [downloadingPDF, setDownloadingPDF] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
-    setItems(receipt.items);
+    setItems(receipt.items ?? []);
   }, [receipt.items, setItems]);
 
   // Calculate consumption stats - memoized to avoid recalculation on re-renders
@@ -100,11 +100,11 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
     items.forEach((item) => {
       if (item.wasteCategory) {
         categories[item.wasteCategory]++;
-      } else if (item.category === "Recycle") {
+      } else if (item.wasteCategory === "RECYCLE") {
         categories.RECYCLE++;
-      } else if (item.category === "Compost") {
+      } else if (item.wasteCategory === "COMPOST") {
         categories.COMPOST++;
-      } else if (item.category === "Landfill") {
+      } else if (item.wasteCategory === "Landfill") {
         categories.LANDFILL++;
       }
     });
@@ -116,7 +116,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
     };
   }, [items]);
 
-  const toggleConsumedStatus = async (item: Item) => {
+  const toggleConsumedStatus = async (item: ItemWithoutId) => {
     setLoading(item.id);
     try {
       const updatedItem = { ...item, isConsumed: !item.isConsumed };
@@ -311,12 +311,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
                 {wasteCategoryBreakdown.RECYCLE}%
               </span>
               <span className="text-xs text-blue-500">
-                {
-                  items.filter(
-                    (i) =>
-                      i.wasteCategory === "RECYCLE" || i.category === "Recycle"
-                  ).length
-                }{" "}
+                {items.filter((i) => i.wasteCategory === "RECYCLE").length}{" "}
                 items
               </span>
             </div>
@@ -328,12 +323,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
                 {wasteCategoryBreakdown.COMPOST}%
               </span>
               <span className="text-xs text-green-500">
-                {
-                  items.filter(
-                    (i) =>
-                      i.wasteCategory === "COMPOST" || i.category === "Compost"
-                  ).length
-                }{" "}
+                {items.filter((i) => i.wasteCategory === "COMPOST").length}{" "}
                 items
               </span>
             </div>
@@ -345,13 +335,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
                 {wasteCategoryBreakdown.LANDFILL}%
               </span>
               <span className="text-xs text-gray-500">
-                {
-                  items.filter(
-                    (i) =>
-                      i.wasteCategory === "LANDFILL" ||
-                      i.category === "Landfill"
-                  ).length
-                }{" "}
+                {items.filter((i) => i.wasteCategory === "LANDFILL").length}{" "}
                 items
               </span>
             </div>
@@ -385,16 +369,14 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
                     <TableCell>
                       <Badge
                         className={
-                          item.wasteCategory === "RECYCLE" ||
-                          item.category === "Recycle"
+                          item.wasteCategory === "RECYCLE"
                             ? "bg-blue-100 text-blue-800"
-                            : item.wasteCategory === "COMPOST" ||
-                              item.category === "Compost"
+                            : item.wasteCategory === "COMPOST"
                             ? "bg-green-100 text-green-800"
                             : "bg-gray-100 text-gray-800"
                         }
                       >
-                        {item.wasteCategory || item.category}
+                        {item.wasteCategory}
                       </Badge>
                     </TableCell>
                     <TableCell>

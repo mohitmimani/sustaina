@@ -106,6 +106,7 @@ enum ReceiptType {
   GROCERIES
   ELECTRONICS
   CLOTHING
+  OTHER
 }
 
 
@@ -114,7 +115,8 @@ model Item {
   name          String
   weight        Int
   weightUnit    String
-  materialCategory MaterialCategory?
+  materialCategory MaterialCategory
+  wasteCategory WasteCategory
   expiry        DateTime?
   price         Float
   quantity      Int

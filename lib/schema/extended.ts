@@ -1,17 +1,35 @@
-import { ItemSchema, ReceiptSchema } from "@/prisma/generated/zod";
+import {
+  MaterialCategorySchema,
+  WasteCategorySchema,
+  ReceiptTypeSchema,
+} from "@/prisma/generated/zod";
 import { z } from "zod";
 
-export const ReceiptWithItemsSchema = ReceiptSchema.extend({
-  items: z.array(ItemSchema),
-  date: z.string().transform((str) => {
-    const date = new Date(str);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  }),
+export const ItemWithoutIdSchema = z.object({
+  id: z.string().optional(),
+  materialCategory: MaterialCategorySchema,
+  wasteCategory: WasteCategorySchema,
+  name: z.string(),
+  weight: z.number().int(),
+  weightUnit: z.string(),
+  expiry: z.coerce.date().nullable(),
+  price: z.number(),
+  quantity: z.number().int(),
+  brand: z.string().nullable(),
+  isConsumed: z.boolean().nullable(),
+  receiptId: z.string().optional(),
 });
 
-// Type export
-export type ReceiptWithItems = z.infer<typeof ReceiptWithItemsSchema>;
+export const ReceiptWithoutIdSchema = z.object({
+  id: z.string().optional(),
+  type: ReceiptTypeSchema,
+  name: z.string(),
+  date: z.coerce.date(),
+  amount: z.string(),
+  items: ItemWithoutIdSchema.array().optional(),
+  userId: z.string().optional(),
+});
+
+// Type exports
+export type ItemWithoutId = z.infer<typeof ItemWithoutIdSchema>;
+export type ReceiptWithoutId = z.infer<typeof ReceiptWithoutIdSchema>;

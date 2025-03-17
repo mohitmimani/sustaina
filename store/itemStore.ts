@@ -1,16 +1,16 @@
 import { create } from "zustand";
-import { Item } from "@/prisma/generated/zod";
+import { ItemWithoutId } from "@/lib/schema/extended";
 
 interface ItemState {
-  items: Item[];
-  setItems: (items: Item[]) => void;
-  updateItem: (updatedItem: Item) => void;
+  items: ItemWithoutId[];
+  setItems: (items: ItemWithoutId[]) => void;
+  updateItem: (updatedItem: ItemWithoutId) => void;
 }
 
 export const useItemStore = create<ItemState>((set) => ({
   items: [],
-  setItems: (items: Item[]) => set({ items }),
-  updateItem: (updatedItem: Item) =>
+  setItems: (items: ItemWithoutId[]) => set({ items }),
+  updateItem: (updatedItem: ItemWithoutId) =>
     set((state) => ({
       items: state.items.map((item) =>
         item.id === updatedItem.id ? updatedItem : item

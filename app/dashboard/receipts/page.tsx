@@ -14,19 +14,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  ReceiptWithItems,
-  ReceiptWithItemsSchema,
-} from "@/lib/schema/extended";
 import { Item } from "@/prisma/generated/zod";
+import {
+  ReceiptWithoutId,
+  ReceiptWithoutIdSchema,
+} from "@/lib/schema/extended";
 
-async function fetchReceipts(): Promise<ReceiptWithItems[]> {
+async function fetchReceipts(): Promise<ReceiptWithoutId[]> {
   const response = await fetch("/api/receipts");
   const data = await response.json();
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
-  return data.map((item: Item) => ReceiptWithItemsSchema.safeParse(item).data);
+  return data.map((item: Item) => ReceiptWithoutIdSchema.safeParse(item).data);
 }
 
 export default function ReceiptsPage() {
