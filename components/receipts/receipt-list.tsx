@@ -211,7 +211,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
             <div className="flex items-center gap-2">
               <div className="w-full bg-gray-100 rounded-full h-2.5">
                 <div
-                  className="bg-blue-500 h-2.5 rounded-l-full"
+                  className="bg-blue-500 h-2.5 rounded-full"
                   style={{ width: `${wasteCategoryBreakdown.RECYCLE}%` }}
                 ></div>
               </div>
@@ -225,7 +225,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
             <div className="flex items-center gap-2">
               <div className="w-full bg-gray-100 rounded-full h-2.5">
                 <div
-                  className="bg-green-500 h-2.5 rounded-l-full"
+                  className="bg-green-500 h-2.5 rounded-full"
                   style={{ width: `${wasteCategoryBreakdown.COMPOST}%` }}
                 ></div>
               </div>
@@ -239,7 +239,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
             <div className="flex items-center gap-2">
               <div className="w-full bg-gray-100 rounded-full h-2.5">
                 <div
-                  className="bg-gray-500 h-2.5 rounded-l-full"
+                  className="bg-gray-500 h-2.5 rounded-full"
                   style={{ width: `${wasteCategoryBreakdown.LANDFILL}%` }}
                 ></div>
               </div>
