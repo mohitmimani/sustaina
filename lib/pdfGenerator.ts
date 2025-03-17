@@ -3,17 +3,14 @@ import html2canvas from "html2canvas-pro";
 import { ReceiptWithItems } from "@/lib/schema/extended";
 
 /**
- * Calculates the total cost of waste based on consumed and expired items
+ * Calculates the total cost of waste based on expired items
  * @param receipt The receipt with items to calculate waste cost for
  * @returns The total cost of waste
  */
 export const calculateWasteCost = (receipt: ReceiptWithItems): number => {
   return receipt.items.reduce((total, item) => {
-    // Only count items that are either consumed or expired
-    if (
-      item.isConsumed ||
-      (item.expiry && new Date(item.expiry).getTime() < Date.now())
-    ) {
+    // Only count items that are expired
+    if (item.expiry && new Date(item.expiry).getTime() < Date.now()) {
       // Use the item's cost if available, otherwise use weight as a proxy for cost
       const itemCost = item.price || item.weight;
       return total + (typeof itemCost === "number" ? itemCost : 0);
@@ -21,7 +18,6 @@ export const calculateWasteCost = (receipt: ReceiptWithItems): number => {
     return total;
   }, 0);
 };
-
 /**
  * Generates and downloads a beautifully formatted PDF for a receipt and its items
  * @param receipt The receipt with items to generate PDF for

@@ -95,18 +95,26 @@ model Receipt {
   name      String
   date      DateTime
   amount    String
-  type      String
+  type      ReceiptType
   items     Item[]
   
   userId    String
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum ReceiptType {
+  GROCERIES
+  ELECTRONICS
+  CLOTHING
+}
+
+
 model Item {
   id        String  @id @map("_id") @default(cuid())
   name      String
   weight    Int
   weightUnit String
+  wasteCategory WasteCategory?
   category  String
   expiry    DateTime?
   price     Float
@@ -115,4 +123,10 @@ model Item {
   isConsumed Boolean? @default(false) 
   receiptId String
   receipt   Receipt @relation(fields: [receiptId], references: [id], onDelete: Cascade)
+}
+
+enum WasteCategory {
+  RECYCLE
+  COMPOST
+  LANDFILL
 }

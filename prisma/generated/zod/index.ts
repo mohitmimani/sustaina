@@ -22,11 +22,20 @@ export const VerificationScalarFieldEnumSchema = z.enum(['id','identifier','valu
 
 export const ReceiptScalarFieldEnumSchema = z.enum(['id','name','date','amount','type','userId']);
 
-export const ItemScalarFieldEnumSchema = z.enum(['id','name','weight','weightUnit','category','expiry','price','quantity','brand','isConsumed','receiptId']);
+export const ItemScalarFieldEnumSchema = z.enum(['id','name','weight','weightUnit','wasteCategory','category','expiry','price','quantity','brand','isConsumed','receiptId']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const QueryModeSchema = z.enum(['default','insensitive']);
+
+export const ReceiptTypeSchema = z.enum(['GROCERIES','ELECTRONICS','CLOTHING']);
+
+export type ReceiptTypeType = `${z.infer<typeof ReceiptTypeSchema>}`
+
+export const WasteCategorySchema = z.enum(['RECYCLE','COMPOST','LANDFILL']);
+
+export type WasteCategoryType = `${z.infer<typeof WasteCategorySchema>}`
+
 /////////////////////////////////////////
 // MODELS
 /////////////////////////////////////////
@@ -122,11 +131,11 @@ export type Verification = z.infer<typeof VerificationSchema>
 /////////////////////////////////////////
 
 export const ReceiptSchema = z.object({
+  type: ReceiptTypeSchema,
   id: z.string().cuid(),
   name: z.string(),
   date: z.coerce.date(),
   amount: z.string(),
-  type: z.string(),
   userId: z.string(),
 })
 
@@ -137,6 +146,7 @@ export type Receipt = z.infer<typeof ReceiptSchema>
 /////////////////////////////////////////
 
 export const ItemSchema = z.object({
+  wasteCategory: WasteCategorySchema.nullable(),
   id: z.string().cuid(),
   name: z.string(),
   weight: z.number().int(),
@@ -329,6 +339,7 @@ export const ItemSelectSchema: z.ZodType<Prisma.ItemSelect> = z.object({
   name: z.boolean().optional(),
   weight: z.boolean().optional(),
   weightUnit: z.boolean().optional(),
+  wasteCategory: z.boolean().optional(),
   category: z.boolean().optional(),
   expiry: z.boolean().optional(),
   price: z.boolean().optional(),
@@ -746,7 +757,7 @@ export const ReceiptWhereInputSchema: z.ZodType<Prisma.ReceiptWhereInput> = z.ob
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   date: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   amount: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  type: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  type: z.union([ z.lazy(() => EnumReceiptTypeFilterSchema),z.lazy(() => ReceiptTypeSchema) ]).optional(),
   userId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   items: z.lazy(() => ItemListRelationFilterSchema).optional(),
   user: z.union([ z.lazy(() => UserScalarRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
@@ -774,7 +785,7 @@ export const ReceiptWhereUniqueInputSchema: z.ZodType<Prisma.ReceiptWhereUniqueI
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   date: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   amount: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  type: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  type: z.union([ z.lazy(() => EnumReceiptTypeFilterSchema),z.lazy(() => ReceiptTypeSchema) ]).optional(),
   userId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   items: z.lazy(() => ItemListRelationFilterSchema).optional(),
   user: z.union([ z.lazy(() => UserScalarRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
@@ -800,7 +811,7 @@ export const ReceiptScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Recei
   name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   date: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   amount: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  type: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  type: z.union([ z.lazy(() => EnumReceiptTypeWithAggregatesFilterSchema),z.lazy(() => ReceiptTypeSchema) ]).optional(),
   userId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
 }).strict();
 
@@ -812,6 +823,7 @@ export const ItemWhereInputSchema: z.ZodType<Prisma.ItemWhereInput> = z.object({
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   weight: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   weightUnit: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => EnumWasteCategoryNullableFilterSchema),z.lazy(() => WasteCategorySchema) ]).optional().nullable(),
   category: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   expiry: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   price: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
@@ -827,6 +839,7 @@ export const ItemOrderByWithRelationInputSchema: z.ZodType<Prisma.ItemOrderByWit
   name: z.lazy(() => SortOrderSchema).optional(),
   weight: z.lazy(() => SortOrderSchema).optional(),
   weightUnit: z.lazy(() => SortOrderSchema).optional(),
+  wasteCategory: z.lazy(() => SortOrderSchema).optional(),
   category: z.lazy(() => SortOrderSchema).optional(),
   expiry: z.lazy(() => SortOrderSchema).optional(),
   price: z.lazy(() => SortOrderSchema).optional(),
@@ -848,6 +861,7 @@ export const ItemWhereUniqueInputSchema: z.ZodType<Prisma.ItemWhereUniqueInput> 
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   weight: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   weightUnit: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => EnumWasteCategoryNullableFilterSchema),z.lazy(() => WasteCategorySchema) ]).optional().nullable(),
   category: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   expiry: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   price: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
@@ -863,6 +877,7 @@ export const ItemOrderByWithAggregationInputSchema: z.ZodType<Prisma.ItemOrderBy
   name: z.lazy(() => SortOrderSchema).optional(),
   weight: z.lazy(() => SortOrderSchema).optional(),
   weightUnit: z.lazy(() => SortOrderSchema).optional(),
+  wasteCategory: z.lazy(() => SortOrderSchema).optional(),
   category: z.lazy(() => SortOrderSchema).optional(),
   expiry: z.lazy(() => SortOrderSchema).optional(),
   price: z.lazy(() => SortOrderSchema).optional(),
@@ -885,6 +900,7 @@ export const ItemScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.ItemScal
   name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   weight: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   weightUnit: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => EnumWasteCategoryNullableWithAggregatesFilterSchema),z.lazy(() => WasteCategorySchema) ]).optional().nullable(),
   category: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   expiry: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
   price: z.union([ z.lazy(() => FloatWithAggregatesFilterSchema),z.number() ]).optional(),
@@ -1284,7 +1300,7 @@ export const ReceiptCreateInputSchema: z.ZodType<Prisma.ReceiptCreateInput> = z.
   name: z.string(),
   date: z.coerce.date(),
   amount: z.string(),
-  type: z.string(),
+  type: z.lazy(() => ReceiptTypeSchema),
   items: z.lazy(() => ItemCreateNestedManyWithoutReceiptInputSchema).optional(),
   user: z.lazy(() => UserCreateNestedOneWithoutReceiptInputSchema)
 }).strict();
@@ -1294,7 +1310,7 @@ export const ReceiptUncheckedCreateInputSchema: z.ZodType<Prisma.ReceiptUnchecke
   name: z.string(),
   date: z.coerce.date(),
   amount: z.string(),
-  type: z.string(),
+  type: z.lazy(() => ReceiptTypeSchema),
   userId: z.string(),
   items: z.lazy(() => ItemUncheckedCreateNestedManyWithoutReceiptInputSchema).optional()
 }).strict();
@@ -1303,7 +1319,7 @@ export const ReceiptUpdateInputSchema: z.ZodType<Prisma.ReceiptUpdateInput> = z.
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   date: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   amount: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => EnumReceiptTypeFieldUpdateOperationsInputSchema) ]).optional(),
   items: z.lazy(() => ItemUpdateManyWithoutReceiptNestedInputSchema).optional(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutReceiptNestedInputSchema).optional()
 }).strict();
@@ -1312,7 +1328,7 @@ export const ReceiptUncheckedUpdateInputSchema: z.ZodType<Prisma.ReceiptUnchecke
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   date: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   amount: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => EnumReceiptTypeFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   items: z.lazy(() => ItemUncheckedUpdateManyWithoutReceiptNestedInputSchema).optional()
 }).strict();
@@ -1322,7 +1338,7 @@ export const ReceiptCreateManyInputSchema: z.ZodType<Prisma.ReceiptCreateManyInp
   name: z.string(),
   date: z.coerce.date(),
   amount: z.string(),
-  type: z.string(),
+  type: z.lazy(() => ReceiptTypeSchema),
   userId: z.string()
 }).strict();
 
@@ -1330,14 +1346,14 @@ export const ReceiptUpdateManyMutationInputSchema: z.ZodType<Prisma.ReceiptUpdat
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   date: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   amount: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => EnumReceiptTypeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const ReceiptUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ReceiptUncheckedUpdateManyInput> = z.object({
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   date: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   amount: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => EnumReceiptTypeFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
@@ -1346,6 +1362,7 @@ export const ItemCreateInputSchema: z.ZodType<Prisma.ItemCreateInput> = z.object
   name: z.string(),
   weight: z.number().int(),
   weightUnit: z.string(),
+  wasteCategory: z.lazy(() => WasteCategorySchema).optional().nullable(),
   category: z.string(),
   expiry: z.coerce.date().optional().nullable(),
   price: z.number(),
@@ -1360,6 +1377,7 @@ export const ItemUncheckedCreateInputSchema: z.ZodType<Prisma.ItemUncheckedCreat
   name: z.string(),
   weight: z.number().int(),
   weightUnit: z.string(),
+  wasteCategory: z.lazy(() => WasteCategorySchema).optional().nullable(),
   category: z.string(),
   expiry: z.coerce.date().optional().nullable(),
   price: z.number(),
@@ -1373,6 +1391,7 @@ export const ItemUpdateInputSchema: z.ZodType<Prisma.ItemUpdateInput> = z.object
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weight: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   weightUnit: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NullableEnumWasteCategoryFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   expiry: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   price: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
@@ -1386,6 +1405,7 @@ export const ItemUncheckedUpdateInputSchema: z.ZodType<Prisma.ItemUncheckedUpdat
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weight: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   weightUnit: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NullableEnumWasteCategoryFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   expiry: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   price: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
@@ -1400,6 +1420,7 @@ export const ItemCreateManyInputSchema: z.ZodType<Prisma.ItemCreateManyInput> = 
   name: z.string(),
   weight: z.number().int(),
   weightUnit: z.string(),
+  wasteCategory: z.lazy(() => WasteCategorySchema).optional().nullable(),
   category: z.string(),
   expiry: z.coerce.date().optional().nullable(),
   price: z.number(),
@@ -1413,6 +1434,7 @@ export const ItemUpdateManyMutationInputSchema: z.ZodType<Prisma.ItemUpdateManyM
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weight: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   weightUnit: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NullableEnumWasteCategoryFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   expiry: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   price: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
@@ -1425,6 +1447,7 @@ export const ItemUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ItemUncheckedU
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weight: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   weightUnit: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NullableEnumWasteCategoryFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   expiry: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   price: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
@@ -1780,6 +1803,13 @@ export const VerificationMinOrderByAggregateInputSchema: z.ZodType<Prisma.Verifi
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
+export const EnumReceiptTypeFilterSchema: z.ZodType<Prisma.EnumReceiptTypeFilter> = z.object({
+  equals: z.lazy(() => ReceiptTypeSchema).optional(),
+  in: z.lazy(() => ReceiptTypeSchema).array().optional(),
+  notIn: z.lazy(() => ReceiptTypeSchema).array().optional(),
+  not: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => NestedEnumReceiptTypeFilterSchema) ]).optional(),
+}).strict();
+
 export const ItemListRelationFilterSchema: z.ZodType<Prisma.ItemListRelationFilter> = z.object({
   every: z.lazy(() => ItemWhereInputSchema).optional(),
   some: z.lazy(() => ItemWhereInputSchema).optional(),
@@ -1817,6 +1847,16 @@ export const ReceiptMinOrderByAggregateInputSchema: z.ZodType<Prisma.ReceiptMinO
   userId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
+export const EnumReceiptTypeWithAggregatesFilterSchema: z.ZodType<Prisma.EnumReceiptTypeWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => ReceiptTypeSchema).optional(),
+  in: z.lazy(() => ReceiptTypeSchema).array().optional(),
+  notIn: z.lazy(() => ReceiptTypeSchema).array().optional(),
+  not: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => NestedEnumReceiptTypeWithAggregatesFilterSchema) ]).optional(),
+  _count: z.lazy(() => NestedIntFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumReceiptTypeFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumReceiptTypeFilterSchema).optional()
+}).strict();
+
 export const IntFilterSchema: z.ZodType<Prisma.IntFilter> = z.object({
   equals: z.number().optional(),
   in: z.number().array().optional(),
@@ -1826,6 +1866,14 @@ export const IntFilterSchema: z.ZodType<Prisma.IntFilter> = z.object({
   gt: z.number().optional(),
   gte: z.number().optional(),
   not: z.union([ z.number(),z.lazy(() => NestedIntFilterSchema) ]).optional(),
+}).strict();
+
+export const EnumWasteCategoryNullableFilterSchema: z.ZodType<Prisma.EnumWasteCategoryNullableFilter> = z.object({
+  equals: z.lazy(() => WasteCategorySchema).optional().nullable(),
+  in: z.lazy(() => WasteCategorySchema).array().optional().nullable(),
+  notIn: z.lazy(() => WasteCategorySchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NestedEnumWasteCategoryNullableFilterSchema) ]).optional().nullable(),
+  isSet: z.boolean().optional()
 }).strict();
 
 export const FloatFilterSchema: z.ZodType<Prisma.FloatFilter> = z.object({
@@ -1855,6 +1903,7 @@ export const ItemCountOrderByAggregateInputSchema: z.ZodType<Prisma.ItemCountOrd
   name: z.lazy(() => SortOrderSchema).optional(),
   weight: z.lazy(() => SortOrderSchema).optional(),
   weightUnit: z.lazy(() => SortOrderSchema).optional(),
+  wasteCategory: z.lazy(() => SortOrderSchema).optional(),
   category: z.lazy(() => SortOrderSchema).optional(),
   expiry: z.lazy(() => SortOrderSchema).optional(),
   price: z.lazy(() => SortOrderSchema).optional(),
@@ -1875,6 +1924,7 @@ export const ItemMaxOrderByAggregateInputSchema: z.ZodType<Prisma.ItemMaxOrderBy
   name: z.lazy(() => SortOrderSchema).optional(),
   weight: z.lazy(() => SortOrderSchema).optional(),
   weightUnit: z.lazy(() => SortOrderSchema).optional(),
+  wasteCategory: z.lazy(() => SortOrderSchema).optional(),
   category: z.lazy(() => SortOrderSchema).optional(),
   expiry: z.lazy(() => SortOrderSchema).optional(),
   price: z.lazy(() => SortOrderSchema).optional(),
@@ -1889,6 +1939,7 @@ export const ItemMinOrderByAggregateInputSchema: z.ZodType<Prisma.ItemMinOrderBy
   name: z.lazy(() => SortOrderSchema).optional(),
   weight: z.lazy(() => SortOrderSchema).optional(),
   weightUnit: z.lazy(() => SortOrderSchema).optional(),
+  wasteCategory: z.lazy(() => SortOrderSchema).optional(),
   category: z.lazy(() => SortOrderSchema).optional(),
   expiry: z.lazy(() => SortOrderSchema).optional(),
   price: z.lazy(() => SortOrderSchema).optional(),
@@ -1918,6 +1969,17 @@ export const IntWithAggregatesFilterSchema: z.ZodType<Prisma.IntWithAggregatesFi
   _sum: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedIntFilterSchema).optional(),
   _max: z.lazy(() => NestedIntFilterSchema).optional()
+}).strict();
+
+export const EnumWasteCategoryNullableWithAggregatesFilterSchema: z.ZodType<Prisma.EnumWasteCategoryNullableWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => WasteCategorySchema).optional().nullable(),
+  in: z.lazy(() => WasteCategorySchema).array().optional().nullable(),
+  notIn: z.lazy(() => WasteCategorySchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NestedEnumWasteCategoryNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumWasteCategoryNullableFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumWasteCategoryNullableFilterSchema).optional(),
+  isSet: z.boolean().optional()
 }).strict();
 
 export const FloatWithAggregatesFilterSchema: z.ZodType<Prisma.FloatWithAggregatesFilter> = z.object({
@@ -2197,6 +2259,10 @@ export const ItemUncheckedCreateNestedManyWithoutReceiptInputSchema: z.ZodType<P
   connect: z.union([ z.lazy(() => ItemWhereUniqueInputSchema),z.lazy(() => ItemWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
+export const EnumReceiptTypeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.EnumReceiptTypeFieldUpdateOperationsInput> = z.object({
+  set: z.lazy(() => ReceiptTypeSchema).optional()
+}).strict();
+
 export const ItemUpdateManyWithoutReceiptNestedInputSchema: z.ZodType<Prisma.ItemUpdateManyWithoutReceiptNestedInput> = z.object({
   create: z.union([ z.lazy(() => ItemCreateWithoutReceiptInputSchema),z.lazy(() => ItemCreateWithoutReceiptInputSchema).array(),z.lazy(() => ItemUncheckedCreateWithoutReceiptInputSchema),z.lazy(() => ItemUncheckedCreateWithoutReceiptInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => ItemCreateOrConnectWithoutReceiptInputSchema),z.lazy(() => ItemCreateOrConnectWithoutReceiptInputSchema).array() ]).optional(),
@@ -2245,6 +2311,11 @@ export const IntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.IntFieldUpdat
   decrement: z.number().optional(),
   multiply: z.number().optional(),
   divide: z.number().optional()
+}).strict();
+
+export const NullableEnumWasteCategoryFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableEnumWasteCategoryFieldUpdateOperationsInput> = z.object({
+  set: z.lazy(() => WasteCategorySchema).optional().nullable(),
+  unset: z.boolean().optional()
 }).strict();
 
 export const FloatFieldUpdateOperationsInputSchema: z.ZodType<Prisma.FloatFieldUpdateOperationsInput> = z.object({
@@ -2420,6 +2491,31 @@ export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.
   isSet: z.boolean().optional()
 }).strict();
 
+export const NestedEnumReceiptTypeFilterSchema: z.ZodType<Prisma.NestedEnumReceiptTypeFilter> = z.object({
+  equals: z.lazy(() => ReceiptTypeSchema).optional(),
+  in: z.lazy(() => ReceiptTypeSchema).array().optional(),
+  notIn: z.lazy(() => ReceiptTypeSchema).array().optional(),
+  not: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => NestedEnumReceiptTypeFilterSchema) ]).optional(),
+}).strict();
+
+export const NestedEnumReceiptTypeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumReceiptTypeWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => ReceiptTypeSchema).optional(),
+  in: z.lazy(() => ReceiptTypeSchema).array().optional(),
+  notIn: z.lazy(() => ReceiptTypeSchema).array().optional(),
+  not: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => NestedEnumReceiptTypeWithAggregatesFilterSchema) ]).optional(),
+  _count: z.lazy(() => NestedIntFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumReceiptTypeFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumReceiptTypeFilterSchema).optional()
+}).strict();
+
+export const NestedEnumWasteCategoryNullableFilterSchema: z.ZodType<Prisma.NestedEnumWasteCategoryNullableFilter> = z.object({
+  equals: z.lazy(() => WasteCategorySchema).optional().nullable(),
+  in: z.lazy(() => WasteCategorySchema).array().optional().nullable(),
+  notIn: z.lazy(() => WasteCategorySchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NestedEnumWasteCategoryNullableFilterSchema) ]).optional().nullable(),
+  isSet: z.boolean().optional()
+}).strict();
+
 export const NestedFloatFilterSchema: z.ZodType<Prisma.NestedFloatFilter> = z.object({
   equals: z.number().optional(),
   in: z.number().array().optional(),
@@ -2451,6 +2547,17 @@ export const NestedIntWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntWith
   _sum: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedIntFilterSchema).optional(),
   _max: z.lazy(() => NestedIntFilterSchema).optional()
+}).strict();
+
+export const NestedEnumWasteCategoryNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumWasteCategoryNullableWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => WasteCategorySchema).optional().nullable(),
+  in: z.lazy(() => WasteCategorySchema).array().optional().nullable(),
+  notIn: z.lazy(() => WasteCategorySchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NestedEnumWasteCategoryNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumWasteCategoryNullableFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumWasteCategoryNullableFilterSchema).optional(),
+  isSet: z.boolean().optional()
 }).strict();
 
 export const NestedFloatWithAggregatesFilterSchema: z.ZodType<Prisma.NestedFloatWithAggregatesFilter> = z.object({
@@ -2574,7 +2681,7 @@ export const ReceiptCreateWithoutUserInputSchema: z.ZodType<Prisma.ReceiptCreate
   name: z.string(),
   date: z.coerce.date(),
   amount: z.string(),
-  type: z.string(),
+  type: z.lazy(() => ReceiptTypeSchema),
   items: z.lazy(() => ItemCreateNestedManyWithoutReceiptInputSchema).optional()
 }).strict();
 
@@ -2583,7 +2690,7 @@ export const ReceiptUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.Rece
   name: z.string(),
   date: z.coerce.date(),
   amount: z.string(),
-  type: z.string(),
+  type: z.lazy(() => ReceiptTypeSchema),
   items: z.lazy(() => ItemUncheckedCreateNestedManyWithoutReceiptInputSchema).optional()
 }).strict();
 
@@ -2712,7 +2819,7 @@ export const ReceiptScalarWhereInputSchema: z.ZodType<Prisma.ReceiptScalarWhereI
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   date: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   amount: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  type: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  type: z.union([ z.lazy(() => EnumReceiptTypeFilterSchema),z.lazy(() => ReceiptTypeSchema) ]).optional(),
   userId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
 }).strict();
 
@@ -2943,6 +3050,7 @@ export const ItemCreateWithoutReceiptInputSchema: z.ZodType<Prisma.ItemCreateWit
   name: z.string(),
   weight: z.number().int(),
   weightUnit: z.string(),
+  wasteCategory: z.lazy(() => WasteCategorySchema).optional().nullable(),
   category: z.string(),
   expiry: z.coerce.date().optional().nullable(),
   price: z.number(),
@@ -2956,6 +3064,7 @@ export const ItemUncheckedCreateWithoutReceiptInputSchema: z.ZodType<Prisma.Item
   name: z.string(),
   weight: z.number().int(),
   weightUnit: z.string(),
+  wasteCategory: z.lazy(() => WasteCategorySchema).optional().nullable(),
   category: z.string(),
   expiry: z.coerce.date().optional().nullable(),
   price: z.number(),
@@ -3032,6 +3141,7 @@ export const ItemScalarWhereInputSchema: z.ZodType<Prisma.ItemScalarWhereInput> 
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   weight: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   weightUnit: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => EnumWasteCategoryNullableFilterSchema),z.lazy(() => WasteCategorySchema) ]).optional().nullable(),
   category: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   expiry: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   price: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
@@ -3085,7 +3195,7 @@ export const ReceiptCreateWithoutItemsInputSchema: z.ZodType<Prisma.ReceiptCreat
   name: z.string(),
   date: z.coerce.date(),
   amount: z.string(),
-  type: z.string(),
+  type: z.lazy(() => ReceiptTypeSchema),
   user: z.lazy(() => UserCreateNestedOneWithoutReceiptInputSchema)
 }).strict();
 
@@ -3094,7 +3204,7 @@ export const ReceiptUncheckedCreateWithoutItemsInputSchema: z.ZodType<Prisma.Rec
   name: z.string(),
   date: z.coerce.date(),
   amount: z.string(),
-  type: z.string(),
+  type: z.lazy(() => ReceiptTypeSchema),
   userId: z.string()
 }).strict();
 
@@ -3118,7 +3228,7 @@ export const ReceiptUpdateWithoutItemsInputSchema: z.ZodType<Prisma.ReceiptUpdat
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   date: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   amount: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => EnumReceiptTypeFieldUpdateOperationsInputSchema) ]).optional(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutReceiptNestedInputSchema).optional()
 }).strict();
 
@@ -3126,7 +3236,7 @@ export const ReceiptUncheckedUpdateWithoutItemsInputSchema: z.ZodType<Prisma.Rec
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   date: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   amount: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => EnumReceiptTypeFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
@@ -3167,7 +3277,7 @@ export const ReceiptCreateManyUserInputSchema: z.ZodType<Prisma.ReceiptCreateMan
   name: z.string(),
   date: z.coerce.date(),
   amount: z.string(),
-  type: z.string()
+  type: z.lazy(() => ReceiptTypeSchema)
 }).strict();
 
 export const SessionUpdateWithoutUserInputSchema: z.ZodType<Prisma.SessionUpdateWithoutUserInput> = z.object({
@@ -3261,7 +3371,7 @@ export const ReceiptUpdateWithoutUserInputSchema: z.ZodType<Prisma.ReceiptUpdate
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   date: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   amount: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => EnumReceiptTypeFieldUpdateOperationsInputSchema) ]).optional(),
   items: z.lazy(() => ItemUpdateManyWithoutReceiptNestedInputSchema).optional()
 }).strict();
 
@@ -3269,7 +3379,7 @@ export const ReceiptUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.Rece
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   date: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   amount: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => EnumReceiptTypeFieldUpdateOperationsInputSchema) ]).optional(),
   items: z.lazy(() => ItemUncheckedUpdateManyWithoutReceiptNestedInputSchema).optional()
 }).strict();
 
@@ -3277,7 +3387,7 @@ export const ReceiptUncheckedUpdateManyWithoutUserInputSchema: z.ZodType<Prisma.
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   date: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   amount: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  type: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => ReceiptTypeSchema),z.lazy(() => EnumReceiptTypeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const ItemCreateManyReceiptInputSchema: z.ZodType<Prisma.ItemCreateManyReceiptInput> = z.object({
@@ -3285,6 +3395,7 @@ export const ItemCreateManyReceiptInputSchema: z.ZodType<Prisma.ItemCreateManyRe
   name: z.string(),
   weight: z.number().int(),
   weightUnit: z.string(),
+  wasteCategory: z.lazy(() => WasteCategorySchema).optional().nullable(),
   category: z.string(),
   expiry: z.coerce.date().optional().nullable(),
   price: z.number(),
@@ -3297,6 +3408,7 @@ export const ItemUpdateWithoutReceiptInputSchema: z.ZodType<Prisma.ItemUpdateWit
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weight: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   weightUnit: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NullableEnumWasteCategoryFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   expiry: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   price: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3309,6 +3421,7 @@ export const ItemUncheckedUpdateWithoutReceiptInputSchema: z.ZodType<Prisma.Item
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weight: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   weightUnit: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NullableEnumWasteCategoryFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   expiry: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   price: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3321,6 +3434,7 @@ export const ItemUncheckedUpdateManyWithoutReceiptInputSchema: z.ZodType<Prisma.
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weight: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   weightUnit: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  wasteCategory: z.union([ z.lazy(() => WasteCategorySchema),z.lazy(() => NullableEnumWasteCategoryFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   expiry: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   price: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),

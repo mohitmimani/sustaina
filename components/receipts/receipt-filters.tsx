@@ -1,8 +1,8 @@
-"use client"
-import { Search, Filter, ArrowUpDown } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+"use client";
+import { Search, Filter, ArrowUpDown } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
   DialogContent,
@@ -11,17 +11,22 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select"
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 
 interface ReceiptFiltersProps {
-  searchQuery: string
-  setSearchQuery: (query: string) => void
-  activeTab: string
-  setActiveTab: (tab: string) => void
-  sortOrder: string
-  setSortOrder: (order: string) => void
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  sortOrder: string;
+  setSortOrder: (order: string) => void;
 }
 
 export function ReceiptFilters({
@@ -54,7 +59,9 @@ export function ReceiptFilters({
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Filter Receipts</DialogTitle>
-                <DialogDescription>Select filters to apply to your receipts list</DialogDescription>
+                <DialogDescription>
+                  Select filters to apply to your receipts list
+                </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div className="space-y-2">
@@ -104,15 +111,17 @@ export function ReceiptFilters({
           </Select>
         </div>
       </div>
-      <Tabs defaultValue={activeTab} className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="grid grid-cols-4 w-full">
+      <Tabs
+        defaultValue={activeTab}
+        className="w-full"
+        onValueChange={setActiveTab}
+      >
+        <TabsList className="grid grid-cols-3 w-full">
           <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="recycle">Recycle</TabsTrigger>
-          <TabsTrigger value="compost">Compost</TabsTrigger>
-          <TabsTrigger value="landfill">Landfill</TabsTrigger>
+          <TabsTrigger value="groceries">Groceries</TabsTrigger>
+          <TabsTrigger value="electronics">Electronics</TabsTrigger>
         </TabsList>
       </Tabs>
     </div>
-  )
+  );
 }
-

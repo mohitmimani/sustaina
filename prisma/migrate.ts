@@ -3,8 +3,10 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function updateExistingItems() {
-  await prisma.item.updateMany({
-    data: { weight: 1 },
+  await prisma.receipt.updateMany({
+    data: {
+      type: "GROCERIES",
+    },
   });
   console.log("Updated all existing items to have isUsed: false");
 }

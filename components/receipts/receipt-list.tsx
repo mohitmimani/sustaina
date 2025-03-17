@@ -30,7 +30,7 @@ import {
 import type { ReceiptWithItems } from "@/lib/schema/extended";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import { Item } from "@/prisma/generated/zod";
+import type { Item } from "@/prisma/generated/zod";
 import { useItemStore } from "@/store/itemStore";
 import { downloadReceiptPDF, calculateWasteCost } from "@/lib/pdfGenerator"; // Import the PDF functions
 
@@ -86,6 +86,36 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
     };
   }, [items]);
 
+  // Calculate waste category breakdown
+  const wasteCategoryBreakdown = useMemo(() => {
+    const totalItems = items.length;
+    if (totalItems === 0) return { RECYCLE: 0, COMPOST: 0, LANDFILL: 0 };
+
+    const categories = {
+      RECYCLE: 0,
+      COMPOST: 0,
+      LANDFILL: 0,
+    };
+
+    items.forEach((item) => {
+      if (item.wasteCategory) {
+        categories[item.wasteCategory]++;
+      } else if (item.category === "Recycle") {
+        categories.RECYCLE++;
+      } else if (item.category === "Compost") {
+        categories.COMPOST++;
+      } else if (item.category === "Landfill") {
+        categories.LANDFILL++;
+      }
+    });
+
+    return {
+      RECYCLE: Math.round((categories.RECYCLE / totalItems) * 100),
+      COMPOST: Math.round((categories.COMPOST / totalItems) * 100),
+      LANDFILL: Math.round((categories.LANDFILL / totalItems) * 100),
+    };
+  }, [items]);
+
   const toggleConsumedStatus = async (item: Item) => {
     setLoading(item.id);
     try {
@@ -138,53 +168,88 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <li className="flex items-center justify-between p-3 rounded-lg bg-white border border-green-100 hover:border-green-200 transition-colors cursor-pointer">
-          <div className="flex-grow">
-            <p className="font-medium text-sm">{receipt.name}</p>
-            <p className="text-xs text-gray-500">{receipt.date + ""}</p>
-          </div>
-
-          {/* Consumption Status Indicator */}
-          <div className="flex flex-col items-center mr-3 min-w-[60px]">
-            <div className="flex items-center mb-1">
-              <span className="text-xs font-medium mr-1">
-                {consumptionStats.percent}%
-              </span>
-              {consumptionStats.percent >= 50 ? (
-                <CheckCircle className="h-3 w-3 text-green-500" />
-              ) : (
-                <XCircle className="h-3 w-3 text-red-500" />
-              )}
+        <li className="flex flex-col p-3 rounded-lg bg-white border border-green-100 hover:border-green-200 transition-colors cursor-pointer">
+          <div className="flex items-center justify-between">
+            <div className="flex-grow">
+              <p className="font-medium text-sm">{receipt.name}</p>
+              <p className="text-xs text-gray-500">{receipt.date + ""}</p>
             </div>
-            <Progress
-              value={consumptionStats.percent}
-              className="h-1.5 w-full"
-              indicatorClassName={
-                consumptionStats.percent >= 75
-                  ? "bg-green-500"
-                  : consumptionStats.percent >= 50
-                  ? "bg-green-400"
-                  : consumptionStats.percent >= 25
-                  ? "bg-yellow-500"
-                  : "bg-red-500"
-              }
-            />
+
+            {/* Consumption Status Indicator */}
+            <div className="flex flex-col items-center mr-3 min-w-[60px]">
+              <div className="flex items-center mb-1">
+                <span className="text-xs font-medium mr-1">
+                  {consumptionStats.percent}%
+                </span>
+                {consumptionStats.percent >= 50 ? (
+                  <CheckCircle className="h-3 w-3 text-green-500" />
+                ) : (
+                  <XCircle className="h-3 w-3 text-red-500" />
+                )}
+              </div>
+              <Progress
+                value={consumptionStats.percent}
+                className="h-1.5 w-full"
+                indicatorClassName={
+                  consumptionStats.percent >= 75
+                    ? "bg-green-500"
+                    : consumptionStats.percent >= 50
+                    ? "bg-green-400"
+                    : consumptionStats.percent >= 25
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+                }
+              />
+            </div>
           </div>
 
-          <div className="flex items-center">
-            <Badge
-              className={`mr-2 ${
-                receipt.type === "Recycle"
-                  ? "bg-blue-100 text-blue-800 hover:bg-blue-100"
-                  : receipt.type === "Compost"
-                  ? "bg-green-100 text-green-800 hover:bg-green-100"
-                  : receipt.type === "Landfill"
-                  ? "bg-red-100 text-red-800 hover:bg-red-100"
-                  : "bg-gray-100 text-gray-800 hover:bg-gray-100"
-              }`}
-            >
-              {receipt.type}
-            </Badge>
+          {/* Waste Category Breakdown */}
+          <div className="mt-3 space-y-1.5">
+            <p className="text-xs font-medium text-gray-600">
+              Waste Breakdown:
+            </p>
+            <div className="flex items-center gap-2">
+              <div className="w-full bg-gray-100 rounded-full h-2.5">
+                <div
+                  className="bg-blue-500 h-2.5 rounded-l-full"
+                  style={{ width: `${wasteCategoryBreakdown.RECYCLE}%` }}
+                ></div>
+              </div>
+              <span className="text-xs text-blue-600 min-w-[30px]">
+                {wasteCategoryBreakdown.RECYCLE}%
+              </span>
+              <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">
+                ♻️ Recycle
+              </Badge>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-full bg-gray-100 rounded-full h-2.5">
+                <div
+                  className="bg-green-500 h-2.5 rounded-l-full"
+                  style={{ width: `${wasteCategoryBreakdown.COMPOST}%` }}
+                ></div>
+              </div>
+              <span className="text-xs text-green-600 min-w-[30px]">
+                {wasteCategoryBreakdown.COMPOST}%
+              </span>
+              <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                🌱 Compost
+              </Badge>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-full bg-gray-100 rounded-full h-2.5">
+                <div
+                  className="bg-gray-500 h-2.5 rounded-l-full"
+                  style={{ width: `${wasteCategoryBreakdown.LANDFILL}%` }}
+                ></div>
+              </div>
+              <span className="text-xs text-gray-600 min-w-[30px]">
+                {wasteCategoryBreakdown.LANDFILL}%
+              </span>
+              <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-100">
+                🚮 Landfill
+              </Badge>
+            </div>
           </div>
         </li>
       </DialogTrigger>
@@ -202,9 +267,9 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
             </span>
             <Badge
               className={
-                receipt.type === "Recycle"
+                receipt.type === "GROCERIES"
                   ? "bg-blue-100 text-blue-800"
-                  : receipt.type === "Compost"
+                  : receipt.type === "ELECTRONICS"
                   ? "bg-green-100 text-green-800"
                   : "bg-red-100 text-red-800"
               }
@@ -235,6 +300,63 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
               />
             </div>
           </div>
+
+          {/* Waste Category Summary */}
+          <div className="grid grid-cols-3 gap-2 mb-4">
+            <div className="flex flex-col items-center p-2 rounded-lg bg-blue-50">
+              <span className="text-xs text-blue-600 font-medium">
+                ♻️ Recyclable
+              </span>
+              <span className="text-lg font-bold text-blue-700">
+                {wasteCategoryBreakdown.RECYCLE}%
+              </span>
+              <span className="text-xs text-blue-500">
+                {
+                  items.filter(
+                    (i) =>
+                      i.wasteCategory === "RECYCLE" || i.category === "Recycle"
+                  ).length
+                }{" "}
+                items
+              </span>
+            </div>
+            <div className="flex flex-col items-center p-2 rounded-lg bg-green-50">
+              <span className="text-xs text-green-600 font-medium">
+                🌱 Compostable
+              </span>
+              <span className="text-lg font-bold text-green-700">
+                {wasteCategoryBreakdown.COMPOST}%
+              </span>
+              <span className="text-xs text-green-500">
+                {
+                  items.filter(
+                    (i) =>
+                      i.wasteCategory === "COMPOST" || i.category === "Compost"
+                  ).length
+                }{" "}
+                items
+              </span>
+            </div>
+            <div className="flex flex-col items-center p-2 rounded-lg bg-gray-50">
+              <span className="text-xs text-gray-600 font-medium">
+                🚮 Landfill
+              </span>
+              <span className="text-lg font-bold text-gray-700">
+                {wasteCategoryBreakdown.LANDFILL}%
+              </span>
+              <span className="text-xs text-gray-500">
+                {
+                  items.filter(
+                    (i) =>
+                      i.wasteCategory === "LANDFILL" ||
+                      i.category === "Landfill"
+                  ).length
+                }{" "}
+                items
+              </span>
+            </div>
+          </div>
+
           <Table>
             <TableHeader>
               <TableRow>
@@ -246,49 +368,73 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithItems }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {items.map((item, index) => (
-                <TableRow key={item.id || index}>
-                  <TableCell className="flex items-center">
-                    {item.name}
-                  </TableCell>
-                  <TableCell>{item.weight}</TableCell>
-                  <TableCell>
-                    <Badge
-                      className={
-                        item.category === "Recycle"
-                          ? "bg-blue-100 text-blue-800"
-                          : item.category === "Compost"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }
-                    >
-                      {item.category}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    {new Date(item.expiry + "").toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </TableCell>
-                  <TableCell>
-                    <div
-                      className={cn(
-                        "flex items-center justify-center cursor-pointer",
-                        loading === item.id && "opacity-50 cursor-wait"
-                      )}
-                      onClick={() => !loading && toggleConsumedStatus(item)}
-                    >
-                      {item.isConsumed ? (
-                        <ToggleRight className="h-6 w-6 text-green-500" />
+              {items.map((item, index) => {
+                // Check if item is expired
+                const isExpired =
+                  item.expiry && new Date(item.expiry + "") < new Date();
+
+                return (
+                  <TableRow
+                    key={item.id || index}
+                    className={isExpired ? "bg-red-50" : ""}
+                  >
+                    <TableCell className="flex items-center">
+                      {item.name}
+                    </TableCell>
+                    <TableCell>{item.weight}</TableCell>
+                    <TableCell>
+                      <Badge
+                        className={
+                          item.wasteCategory === "RECYCLE" ||
+                          item.category === "Recycle"
+                            ? "bg-blue-100 text-blue-800"
+                            : item.wasteCategory === "COMPOST" ||
+                              item.category === "Compost"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-gray-100 text-gray-800"
+                        }
+                      >
+                        {item.wasteCategory || item.category}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      {item.expiry ? (
+                        <span
+                          className={
+                            isExpired ? "text-red-600 font-medium" : ""
+                          }
+                        >
+                          {new Date(item.expiry + "").toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )}
+                        </span>
                       ) : (
-                        <ToggleLeft className="h-6 w-6 text-gray-400" />
+                        "N/A"
                       )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+                    </TableCell>
+                    <TableCell>
+                      <div
+                        className={cn(
+                          "flex items-center justify-center cursor-pointer",
+                          loading === item.id && "opacity-50 cursor-wait"
+                        )}
+                        onClick={() => !loading && toggleConsumedStatus(item)}
+                      >
+                        {item.isConsumed ? (
+                          <ToggleRight className="h-6 w-6 text-green-500" />
+                        ) : (
+                          <ToggleLeft className="h-6 w-6 text-gray-400" />
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>

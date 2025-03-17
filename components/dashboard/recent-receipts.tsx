@@ -80,11 +80,10 @@ export function RecentReceipts() {
               <Input placeholder="Search receipts..." className="pl-8" />
             </div>
             <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid grid-cols-4 w-full">
+              <TabsList className="grid grid-cols-3 w-full">
                 <TabsTrigger value="all">All</TabsTrigger>
-                <TabsTrigger value="recycle">Recycle</TabsTrigger>
-                <TabsTrigger value="compost">Compost</TabsTrigger>
-                <TabsTrigger value="landfill">Landfill</TabsTrigger>
+                <TabsTrigger value="groceries">Groceries</TabsTrigger>
+                <TabsTrigger value="electronics">Electronics</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
@@ -129,17 +128,16 @@ export function RecentReceipts() {
             className="w-full"
             onValueChange={setActiveTab}
           >
-            <TabsList className="grid grid-cols-4 w-full">
+            <TabsList className="grid grid-cols-3 w-full">
               <TabsTrigger value="all">All</TabsTrigger>
-              <TabsTrigger value="recycle">Recycle</TabsTrigger>
-              <TabsTrigger value="compost">Compost</TabsTrigger>
-              <TabsTrigger value="landfill">Landfill</TabsTrigger>
+              <TabsTrigger value="groceries">Groceries</TabsTrigger>
+              <TabsTrigger value="electronics">Electronics</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
       </CardHeader>
       <CardContent>
-        <ReceiptList receipts={filteredReceipts} limit={4} />
+        <ReceiptList receipts={filteredReceipts} limit={2} />
       </CardContent>
       <CardFooter>
         <Link href="/dashboard/receipts" className="flex w-full justify-center">
