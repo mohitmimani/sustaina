@@ -110,19 +110,27 @@ enum ReceiptType {
 
 
 model Item {
-  id        String  @id @map("_id") @default(cuid())
-  name      String
-  weight    Int
-  weightUnit String
-  wasteCategory WasteCategory?
-  category  String
-  expiry    DateTime?
-  price     Float
-  quantity  Int
-  brand     String?
-  isConsumed Boolean? @default(false) 
-  receiptId String
-  receipt   Receipt @relation(fields: [receiptId], references: [id], onDelete: Cascade)
+  id            String        @id @map("_id") @default(cuid())
+  name          String
+  weight        Int
+  weightUnit    String
+  materialCategory MaterialCategory?
+  expiry        DateTime?
+  price         Float
+  quantity      Int
+  brand         String?
+  isConsumed    Boolean?      @default(false) 
+  receiptId     String
+  receipt       Receipt       @relation(fields: [receiptId], references: [id], onDelete: Cascade)
+}
+
+enum MaterialCategory {
+  PAPER
+  PLASTIC
+  FOOD
+  GLASS
+  METAL
+  OTHER
 }
 
 enum WasteCategory {
