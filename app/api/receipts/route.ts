@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       ...parsedBody.data,
       userId: session.user.id,
       items: {
-        create: parsedBody?.data?.items,
+        create: parsedBody?.data?.items || [],
       },
     },
   });
@@ -68,9 +68,10 @@ export async function PUT(req: NextRequest) {
   }
 
   const updatedReceipt = await prisma.receipt.update({
-    where: { id: parsedBody.data.id, userId: session.user.id },
+    where: { id: parsedBody.data.id!, userId: session.user.id },
     data: {
       ...parsedBody.data,
+      userId: session.user.id, // Ensure userId is always a string
       items: {
         update: parsedBody.data?.items?.map((item) => ({
           where: { id: item.id },

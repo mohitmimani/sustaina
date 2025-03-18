@@ -6,7 +6,7 @@ import {
 import { z } from "zod";
 
 export const ItemWithoutIdSchema = z.object({
-  id: z.string().optional().nullable(),
+  id: z.string().optional(),
   materialCategory: MaterialCategorySchema,
   wasteCategory: WasteCategorySchema,
   name: z.string(),
@@ -21,7 +21,7 @@ export const ItemWithoutIdSchema = z.object({
 });
 
 export const ReceiptWithoutIdSchema = z.object({
-  id: z.string().optional().nullable(),
+  id: z.string().optional(),
   type: ReceiptTypeSchema,
   name: z.string(),
   date: z.coerce.date(), // Only date part
