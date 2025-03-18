@@ -55,11 +55,12 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { MobileItemCard } from "./mobile-item-card";
+import { ScanReceiptButton } from "./scan-receipt-button";
 
 import { ItemForm } from "./item-form";
 import {
-  ItemWithoutId,
-  ItemWithoutIdSchema,
+  type ItemWithoutId,
+  ReceiptWithoutId,
   ReceiptWithoutIdSchema,
 } from "@/lib/schema/extended";
 
@@ -106,6 +107,52 @@ export function AddReceiptButton() {
     setCurrentEditingItem({ item, index });
     setShowItemForm(true);
   }
+
+  const handleScanComplete = (data: ReceiptWithoutId) => {
+    // Update form with scanned data
+    if (data.name) {
+      form.setValue("name", data.name);
+    }
+
+    if (data.amount) {
+      form.setValue("amount", data.amount);
+    }
+
+    if (
+      data.type &&
+      ["GROCERIES", "ELECTRONICS", "CLOTHING", "OTHER"].includes(data.type)
+    ) {
+      form.setValue("type", data.type);
+    }
+
+    // Add scanned items
+    if (data.items && Array.isArray(data.items) && data.items.length > 0) {
+      const validatedItems = data.items.map((item: ItemWithoutId) => {
+        // Ensure each item has required fields and proper types
+        const validItem: ItemWithoutId = {
+          id: cuid(),
+          name: item.name || "Unknown Item",
+          price: typeof item.price === "number" ? item.price : 0,
+          quantity: typeof item.quantity === "number" ? item.quantity : 1,
+          weight: item.weight,
+          weightUnit: item.weightUnit,
+          materialCategory: item.materialCategory,
+          wasteCategory: item.wasteCategory,
+          expiry: item.expiry,
+          brand: item.brand,
+          isConsumed: item.isConsumed,
+        };
+        return validItem;
+      });
+
+      setItems([...items, ...validatedItems]);
+
+      toast({
+        title: "Items added",
+        description: `${validatedItems.length} items added from receipt scan.`,
+      });
+    }
+  };
 
   const onSubmit = async (data: z.infer<typeof ReceiptWithoutIdSchema>) => {
     setIsSubmitting(true);
@@ -157,7 +204,7 @@ export function AddReceiptButton() {
           Add Receipt <Plus className="ml-2 h-4 w-4" />
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="max-h-[90vh]  overflow-y-auto">
+      <AlertDialogContent className="max-h-[90vh] overflow-y-auto">
         <AlertDialogHeader>
           <AlertDialogTitle>Add a new receipt</AlertDialogTitle>
           <AlertDialogDescription>
@@ -166,6 +213,11 @@ export function AddReceiptButton() {
         </AlertDialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-medium">Receipt Details</h3>
+              <ScanReceiptButton onScanComplete={handleScanComplete} />
+            </div>
+
             <FormField
               control={form.control}
               name="name"
@@ -226,7 +278,17 @@ export function AddReceiptButton() {
                 <FormItem>
                   <FormLabel>Total Amount</FormLabel>
                   <FormControl>
-                    <Input placeholder="Rs 0.00" {...field} />
+                    <Input
+                      placeholder="Rs 0.00"
+                      {...field}
+                      disabled
+                      value={items
+                        .reduce(
+                          (acc, item) => acc + item.price * item.quantity,
+                          0
+                        )
+                        .toFixed(2)}
+                    />
                   </FormControl>
                   <FormDescription>
                     The total amount on the receipt.
@@ -254,6 +316,7 @@ export function AddReceiptButton() {
                       <SelectItem value="GROCERIES">Groceries</SelectItem>
                       <SelectItem value="ELECTRONICS">Electronics</SelectItem>
                       <SelectItem value="CLOTHING">Clothing</SelectItem>
+                      <SelectItem value="OTHER">Other</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormDescription>The type of the receipt.</FormDescription>
@@ -261,9 +324,11 @@ export function AddReceiptButton() {
                 </FormItem>
               )}
             />
-            <Button type="button" variant="secondary" onClick={addNewItem}>
-              Add Item
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button type="button" variant="secondary" onClick={addNewItem}>
+                Add Item Manually
+              </Button>
+            </div>
             {showItemForm && (
               <ItemForm
                 onAddItem={(updatedItem) => {
@@ -282,6 +347,7 @@ export function AddReceiptButton() {
                 initialItem={currentEditingItem?.item}
                 onCancel={() => {
                   setShowItemForm(false);
+
                   setCurrentEditingItem(null);
                 }}
                 open={showItemForm}
@@ -367,7 +433,14 @@ export function AddReceiptButton() {
               </Table>
             </div>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel
+                onClick={() => {
+                  form.reset();
+                  setItems([]);
+                }}
+              >
+                Cancel
+              </AlertDialogCancel>
               <Button
                 type="button"
                 disabled={isSubmitting}

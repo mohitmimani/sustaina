@@ -362,8 +362,13 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
                     key={item.id || index}
                     className={isExpired ? "bg-red-50" : ""}
                   >
-                    <TableCell className="flex items-center">
-                      {item.name}
+                    <TableCell className="flex items-center space-x-2">
+                      <span className="font-medium">{item.name}</span>
+                      {item.quantity && (
+                        <span className="text-xs text-gray-500">
+                          x {item.quantity}
+                        </span>
+                      )}
                     </TableCell>
                     <TableCell>{item.weight}</TableCell>
                     <TableCell>

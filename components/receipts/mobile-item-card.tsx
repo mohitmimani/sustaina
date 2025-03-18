@@ -10,9 +10,10 @@ import { Trash2, Edit } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { z } from "zod";
+import { ItemWithoutId } from "@/lib/schema/extended";
 
 interface MobileItemCardProps {
-  item: z.infer<typeof ItemCreateManyReceiptInputSchema>;
+  item: ItemWithoutId;
   onEdit: () => void;
   onDelete: () => void;
 }

@@ -113,13 +113,13 @@ enum ReceiptType {
 model Item {
   id            String        @id @map("_id") @default(cuid())
   name          String
-  weight        Int
-  weightUnit    String
   materialCategory MaterialCategory
   wasteCategory WasteCategory
-  expiry        DateTime?
   price         Float
   quantity      Int
+  expiry        DateTime?
+  weight        Int?
+  weightUnit    String?
   brand         String?
   isConsumed    Boolean?      @default(false) 
   receiptId     String
