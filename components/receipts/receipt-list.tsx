@@ -33,6 +33,7 @@ import type { Item } from "@/prisma/generated/zod";
 import { useItemStore } from "@/store/itemStore";
 import { downloadReceiptPDF, calculateWasteCost } from "@/lib/pdfGenerator"; // Import the PDF functions
 import { ItemWithoutId, ReceiptWithoutId } from "@/lib/schema/extended";
+import { MobileItemCard } from "./mobile-item-card";
 
 interface ReceiptListProps {
   receipts: ReceiptWithoutId[];
@@ -51,7 +52,7 @@ export function ReceiptList({ receipts, limit }: ReceiptListProps) {
       </div>
     );
   }
-
+  console.log(displayReceipts);
   return (
     <ul className="space-y-3">
       {displayReceipts.map((receipt) => (
@@ -62,7 +63,12 @@ export function ReceiptList({ receipts, limit }: ReceiptListProps) {
 }
 
 function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
-  const { items, setItems, updateItem } = useItemStore();
+  const [items, setItems] = useState<ItemWithoutId[]>([]);
+  const updateItem = (updatedItem: ItemWithoutId) => {
+    setItems((prevItems) =>
+      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+  };
   const [loading, setLoading] = useState<string | undefined | null>(undefined);
   const [downloadingPDF, setDownloadingPDF] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null!);
@@ -253,7 +259,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
           </div>
         </li>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-10/12 overflow-auto max-h-screen">
         <div ref={headerRef}>
           <DialogHeader>
             <DialogTitle>{receipt.name}</DialogTitle>
@@ -302,7 +308,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
           </div>
 
           {/* Waste Category Summary */}
-          <div className="grid grid-cols-3 gap-2 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
             <div className="flex flex-col items-center p-2 rounded-lg bg-blue-50">
               <span className="text-xs text-blue-600 font-medium">
                 ♻️ Recyclable

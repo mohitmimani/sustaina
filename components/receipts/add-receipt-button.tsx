@@ -86,7 +86,7 @@ export function AddReceiptButton() {
   const form = useForm<z.infer<typeof ReceiptWithoutIdSchema>>({
     resolver: zodResolver(ReceiptWithoutIdSchema),
     defaultValues: {
-      date: new Date(),
+      date: new Date().toISOString(),
       name: "",
       amount: "",
       type: "GROCERIES", // Default value for type
@@ -260,7 +260,9 @@ export function AddReceiptButton() {
                     <PopoverContent className="w-auto p-0" align="start">
                       <Calendar
                         mode="single"
-                        selected={field.value}
+                        selected={
+                          field.value ? new Date(field.value) : undefined
+                        }
                         onSelect={field.onChange}
                         initialFocus
                       />

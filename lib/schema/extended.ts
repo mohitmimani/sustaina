@@ -6,28 +6,28 @@ import {
 import { z } from "zod";
 
 export const ItemWithoutIdSchema = z.object({
-  id: z.string().optional(),
+  id: z.string().optional().nullable(),
   materialCategory: MaterialCategorySchema,
   wasteCategory: WasteCategorySchema,
   name: z.string(),
   price: z.number(),
-  weight: z.number().int().optional(),
-  weightUnit: z.string().optional(),
-  expiry: z.coerce.date().optional(),
+  weight: z.number().int().optional().nullable(),
+  weightUnit: z.string().optional().nullable(),
+  expiry: z.coerce.date().optional().nullable(),
   quantity: z.number().int(),
-  brand: z.string().nullable(),
-  isConsumed: z.boolean().nullable(),
-  receiptId: z.string().optional(),
+  brand: z.string().optional().nullable(),
+  isConsumed: z.boolean().optional().nullable(),
+  receiptId: z.string().optional().nullable(),
 });
 
 export const ReceiptWithoutIdSchema = z.object({
-  id: z.string().optional(),
+  id: z.string().optional().nullable(),
   type: ReceiptTypeSchema,
   name: z.string(),
-  date: z.coerce.date(),
+  date: z.coerce.date().transform((date) => date.toISOString().split("T")[0]), // Only date part
   amount: z.string(),
-  items: ItemWithoutIdSchema.array().optional(),
-  userId: z.string().optional(),
+  items: ItemWithoutIdSchema.array().optional().nullable(),
+  userId: z.string().optional().nullable(),
 });
 
 // Type exports

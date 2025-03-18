@@ -62,7 +62,7 @@ export function ItemForm({
       materialCategory: initialItem?.materialCategory || "PLASTIC",
       wasteCategory: initialItem?.wasteCategory || "RECYCLE",
       expiry: initialItem?.expiry || undefined,
-      brand: initialItem?.brand || null,
+      brand: initialItem?.brand || undefined,
       isConsumed: initialItem?.isConsumed || false,
     },
   });
@@ -166,6 +166,7 @@ export function ItemForm({
                         type="number"
                         placeholder="0"
                         {...field}
+                        value={field.value ?? ""}
                         onChange={(e) =>
                           field.onChange(Number.parseInt(e.target.value))
                         }
@@ -184,7 +185,7 @@ export function ItemForm({
                     <FormLabel>Weight Unit</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={field.value || "g"}
                     >
                       <FormControl>
                         <SelectTrigger>

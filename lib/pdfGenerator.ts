@@ -1,22 +1,24 @@
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas-pro";
-import { ReceiptWithItems } from "@/lib/schema/extended";
+import { ReceiptWithoutId } from "@/lib/schema/extended";
 
 /**
  * Calculates the total cost of waste based on expired items
  * @param receipt The receipt with items to calculate waste cost for
  * @returns The total cost of waste
  */
-export const calculateWasteCost = (receipt: ReceiptWithItems): number => {
-  return receipt.items.reduce((total, item) => {
-    // Only count items that are expired
-    if (item.expiry && new Date(item.expiry).getTime() < Date.now()) {
-      // Use the item's cost if available, otherwise use weight as a proxy for cost
-      const itemCost = item.price || item.weight;
-      return total + (typeof itemCost === "number" ? itemCost : 0);
-    }
-    return total;
-  }, 0);
+export const calculateWasteCost = (receipt: ReceiptWithoutId): number => {
+  return (
+    receipt?.items?.reduce((total, item) => {
+      // Only count items that are expired
+      if (item.expiry && new Date(item.expiry).getTime() < Date.now()) {
+        // Use the item's cost if available, otherwise use weight as a proxy for cost
+        const itemCost = item.price || item.weight;
+        return total + (typeof itemCost === "number" ? itemCost : 0);
+      }
+      return total;
+    }, 0) || 0
+  );
 };
 /**
  * Generates and downloads a beautifully formatted PDF for a receipt and its items
@@ -24,7 +26,7 @@ export const calculateWasteCost = (receipt: ReceiptWithItems): number => {
  * @param elementRef Optional ref to a DOM element to include as header (e.g., a logo)
  */
 export const downloadReceiptPDF = async (
-  receipt: ReceiptWithItems,
+  receipt: ReceiptWithoutId,
   elementRef?: React.RefObject<HTMLDivElement> | null
 ) => {
   try {
@@ -58,7 +60,7 @@ export const downloadReceiptPDF = async (
     pdf.setFontSize(14);
     pdf.setTextColor(44, 62, 80);
     pdf.text(`Type: ${receipt.type}`, margin, margin + 30);
-    pdf.text(`Total Waste: ${receipt.amount}`, margin, margin + 40);
+    pdf.text(`Total Amount: ${receipt.amount}`, margin, margin + 40);
     pdf.text(
       `Total Waste Cost: Rs. ${wasteCost.toFixed(2)}`,
       margin,
@@ -66,11 +68,10 @@ export const downloadReceiptPDF = async (
     );
 
     // Calculate consumption stats
-    const totalItems = receipt.items.length;
-    const consumedItems = receipt.items.filter(
-      (item) => item.isConsumed
-    ).length;
-    const expiredItems = receipt.items.filter(
+    const totalItems = receipt?.items?.length || 0;
+    const consumedItems =
+      receipt?.items?.filter((item) => item.isConsumed).length || 0;
+    const expiredItems = receipt?.items?.filter(
       (item) => item.expiry && new Date(item.expiry).getTime() < Date.now()
     ).length;
     const consumptionPercent =
@@ -140,7 +141,7 @@ export const downloadReceiptPDF = async (
     pdf.setFont("", "normal");
     currentY += 10;
 
-    receipt.items.forEach((item, index) => {
+    receipt?.items?.forEach((item, index) => {
       const rowHeight = 8;
       const y = currentY + rowHeight * index + 6;
 
@@ -157,7 +158,11 @@ export const downloadReceiptPDF = async (
       }
 
       pdf.text(item.name, margin + 3, y);
-      pdf.text(`${item.weight} ${item.weightUnit}`, margin + colWidth + 3, y);
+      pdf.text(
+        item.weight ? `${item.weight} ${item.weightUnit}` : "-",
+        margin + colWidth + 3,
+        y
+      );
 
       // Category with color indicator
       const category = item.wasteCategory || "";
@@ -203,7 +208,7 @@ export const downloadReceiptPDF = async (
       // Cost column
       const itemCost = item.price || item.weight;
       const itemCostNumber =
-        typeof itemCost === "number" ? itemCost : parseFloat(itemCost);
+        typeof itemCost === "number" ? itemCost : parseFloat(itemCost ?? "0");
       pdf.text(
         `Rs. ${itemCostNumber.toFixed(2)}`,
         margin + colWidth * 4 + 3,
@@ -212,7 +217,7 @@ export const downloadReceiptPDF = async (
     });
 
     // Add summary section
-    const summaryY = currentY + receipt.items.length * 8 + 15;
+    const summaryY = currentY + (receipt?.items?.length || 1) * 8 + 15;
     pdf.setFillColor(245, 245, 245);
     pdf.rect(margin, summaryY, contentWidth, 40, "F");
 
