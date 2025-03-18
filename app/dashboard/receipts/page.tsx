@@ -19,6 +19,7 @@ import {
   ReceiptWithoutId,
   ReceiptWithoutIdSchema,
 } from "@/lib/schema/extended";
+import { AddReceiptButton } from "@/components/receipts/add-receipt-button";
 
 async function fetchReceipts(): Promise<ReceiptWithoutId[]> {
   const response = await fetch("/api/receipts");
@@ -77,10 +78,7 @@ export default function ReceiptsPage() {
     <>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-green-800">Receipts</h1>
-        <Button className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white">
-          <Plus className="h-4 w-4 mr-2" />
-          Add Receipt
-        </Button>
+        <AddReceiptButton />
       </div>
 
       <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm">
