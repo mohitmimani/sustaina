@@ -72,7 +72,7 @@ export async function PUT(req: NextRequest) {
     data: {
       ...parsedBody.data,
       items: {
-        update: parsedBody.data.items.map((item) => ({
+        update: parsedBody.data?.items?.map((item) => ({
           where: { id: item.id },
           data: item,
         })),
