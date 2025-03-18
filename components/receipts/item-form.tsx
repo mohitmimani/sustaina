@@ -61,7 +61,7 @@ export function ItemForm({
       quantity: initialItem?.quantity,
       materialCategory: initialItem?.materialCategory || "PLASTIC",
       wasteCategory: initialItem?.wasteCategory || "RECYCLE",
-      expiry: initialItem?.expiry || null,
+      expiry: initialItem?.expiry || undefined,
       brand: initialItem?.brand || null,
       isConsumed: initialItem?.isConsumed || false,
     },
@@ -194,8 +194,11 @@ export function ItemForm({
                       <SelectContent>
                         <SelectItem value="g">Grams (g)</SelectItem>
                         <SelectItem value="kg">Kilograms (kg)</SelectItem>
-                        <SelectItem value="oz">Ounces (oz)</SelectItem>
-                        <SelectItem value="lb">Pounds (lb)</SelectItem>
+                        <SelectItem value="mg">Milligrams (mg)</SelectItem>
+                        <SelectItem value="l">Liters (l)</SelectItem>
+                        <SelectItem value="ml">Milliliters (ml)</SelectItem>
+                        <SelectItem value="dozen">Dozen</SelectItem>
+                        <SelectItem value="piece">Piece</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
