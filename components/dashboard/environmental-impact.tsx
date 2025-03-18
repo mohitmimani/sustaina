@@ -14,7 +14,7 @@ import { Leaf } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 
 const fetchStats = async (): Promise<Stats> => {
-  const response = await fetch("http://localhost:3000/api/receipts/stats");
+  const response = await fetch("/api/receipts/stats");
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }

@@ -16,7 +16,7 @@ import type { Stats } from "@/types/stats";
 import Link from "next/link";
 
 const fetchStats = async (): Promise<Stats> => {
-  const response = await fetch("http://localhost:3000/api/receipts/stats");
+  const response = await fetch("/api/receipts/stats");
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
