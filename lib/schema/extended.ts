@@ -24,7 +24,7 @@ export const ReceiptWithoutIdSchema = z.object({
   id: z.string().optional().nullable(),
   type: ReceiptTypeSchema,
   name: z.string(),
-  date: z.coerce.date().transform((date) => date.toISOString().split("T")[0]), // Only date part
+  date: z.coerce.date(), // Only date part
   amount: z.string(),
   items: ItemWithoutIdSchema.array().optional().nullable(),
   userId: z.string().optional().nullable(),

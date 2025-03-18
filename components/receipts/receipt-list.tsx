@@ -178,7 +178,9 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
           <div className="flex items-center justify-between">
             <div className="flex-grow">
               <p className="font-medium text-sm">{receipt.name}</p>
-              <p className="text-xs text-gray-500">{receipt.date + ""}</p>
+              <p className="text-xs text-gray-500">
+                {receipt.date.toISOString().split("T")[0] + ""}
+              </p>
             </div>
 
             {/* Consumption Status Indicator */}
@@ -264,7 +266,8 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
           <DialogHeader>
             <DialogTitle>{receipt.name}</DialogTitle>
             <DialogDescription>
-              {receipt.date + ""} • Rs {receipt.amount}
+              {receipt.date.toISOString().split("T")[0] + ""} • Rs{" "}
+              {receipt.amount}
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-between items-center mt-2">
@@ -376,7 +379,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
                         </span>
                       )}
                     </TableCell>
-                    <TableCell>{item.weight}</TableCell>
+                    <TableCell>{item.weight || "-"}</TableCell>
                     <TableCell>
                       <Badge
                         className={

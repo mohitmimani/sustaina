@@ -86,7 +86,7 @@ export function AddReceiptButton() {
   const form = useForm<z.infer<typeof ReceiptWithoutIdSchema>>({
     resolver: zodResolver(ReceiptWithoutIdSchema),
     defaultValues: {
-      date: new Date().toISOString(),
+      date: new Date(),
       name: "",
       amount: "",
       type: "GROCERIES", // Default value for type
