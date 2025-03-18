@@ -86,7 +86,7 @@ export function WasteBreakdown({ stats }: WasteBreakdownProps) {
               {stats.wasteByCategory.map((item) => (
                 <TableRow key={item.category}>
                   <TableCell>{item.category}</TableCell>
-                  <TableCell>{item.amount}kg</TableCell>
+                  <TableCell>{item.amount} unit</TableCell>
                   <TableCell>
                     {item.recyclable ? (
                       <Badge className="bg-green-100 text-green-800">Yes</Badge>

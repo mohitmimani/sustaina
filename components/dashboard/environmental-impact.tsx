@@ -11,6 +11,7 @@ import { Stats } from "@/types/stats";
 import { useQuery } from "@tanstack/react-query";
 
 import { Leaf } from "lucide-react";
+import { Skeleton } from "../ui/skeleton";
 
 const fetchStats = async (): Promise<Stats> => {
   const response = await fetch("http://localhost:3000/api/receipts/stats");
@@ -28,7 +29,25 @@ export function EnvironmentalImpact() {
   } = useQuery<Stats>({ queryKey: ["stats"], queryFn: fetchStats });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm w-full">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-bold flex items-center">
+            <Leaf className="h-5 w-5 mr-2 text-green-600" />
+            Your Impact
+          </CardTitle>
+          <CardDescription>
+            Environmental benefits of your efforts
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="h-4 w-3/4 mb-2" />
+          <Skeleton className="h-4 w-1/2 mb-2" />
+          <Skeleton className="h-4 w-full mb-2" />
+          <Skeleton className="h-4 w-2/3 mb-2" />
+        </CardContent>
+      </Card>
+    );
   }
 
   if (error) {

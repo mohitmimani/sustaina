@@ -98,19 +98,19 @@ export function RewardsCard() {
     {
       id: 1,
       name: "First Recycling",
-      completed: true,
+      completed: false,
       icon: <Leaf className="h-4 w-4" />,
     },
     {
       id: 2,
       name: "5 Sustainable Purchases",
-      completed: true,
+      completed: false,
       icon: <BadgeCheck className="h-4 w-4" />,
     },
     {
       id: 3,
       name: "Refer a Friend",
-      completed: false,
+      completed: true,
       icon: <Trophy className="h-4 w-4" />,
     },
   ];
@@ -416,7 +416,7 @@ export function RewardsCard() {
                         variant="outline"
                         className="text-gray-600 border-gray-200 hover:bg-gray-50 dark:text-gray-400 dark:border-gray-700 dark:hover:bg-gray-800/70"
                       >
-                        Complete
+                        Pending
                       </Button>
                     )}
                   </motion.div>
@@ -426,14 +426,14 @@ export function RewardsCard() {
           </Tabs>
         </CardContent>
 
-        <CardFooter className="pt-0 pb-4 relative z-10">
+        {/* <CardFooter className="pt-0 pb-4 relative z-10">
           <Button
             variant="ghost"
             className="w-full text-green-700 hover:text-green-800 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900/30"
           >
             View Rewards History
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </motion.div>
   );

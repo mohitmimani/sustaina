@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { Stats } from "@/types/stats";
 import Link from "next/link";
+import { Skeleton } from "../ui/skeleton";
 
 const fetchStats = async (): Promise<Stats> => {
   const response = await fetch("http://localhost:3000/api/receipts/stats");
@@ -37,7 +38,31 @@ export function StatsSummary() {
   } = useQuery<Stats>({ queryKey: ["stats"], queryFn: fetchStats });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm md:col-span-3 lg:col-span-1 w-full">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-bold flex items-center justify-between">
+            <div className="flex items-center">
+              <BarChart3 className="h-5 w-5 mr-2 text-green-600" />
+              Statistics
+            </div>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <Calendar className="h-4 w-4" />
+            </Button>
+          </CardTitle>
+          <CardDescription>Your waste management breakdown</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="h-4 w-3/4 mb-2" />
+          <Skeleton className="h-4 w-1/2 mb-2" />
+          <Skeleton className="h-4 w-full mb-2" />
+          <Skeleton className="h-4 w-2/3 mb-2" />
+        </CardContent>
+        <CardFooter>
+          <Skeleton className="h-10 w-full" />
+        </CardFooter>
+      </Card>
+    );
   }
 
   if (error) {

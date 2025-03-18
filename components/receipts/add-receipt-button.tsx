@@ -63,7 +63,7 @@ import {
   ReceiptWithoutId,
   ReceiptWithoutIdSchema,
 } from "@/lib/schema/extended";
-
+import { useQueryClient } from "@tanstack/react-query";
 interface ItemFormProps {
   onAddItem: (item: ItemWithoutId) => void;
   initialItem?: ItemWithoutId;
@@ -73,6 +73,7 @@ interface ItemFormProps {
 }
 
 export function AddReceiptButton() {
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<ItemWithoutId[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -146,7 +147,6 @@ export function AddReceiptButton() {
       });
 
       setItems([...items, ...validatedItems]);
-
       toast({
         title: "Items added",
         description: `${validatedItems.length} items added from receipt scan.`,
@@ -180,6 +180,7 @@ export function AddReceiptButton() {
         title: "Receipt created",
         description: "Your receipt has been successfully created.",
       });
+      queryClient.refetchQueries({ queryKey: ["receipts"] });
 
       // Reset form and close modal
       form.reset();
