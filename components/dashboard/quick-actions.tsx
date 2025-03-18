@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FileBarChart, Plus, Settings, Upload, User } from "lucide-react";
 import { AddReceiptButton } from "../receipts/add-receipt-button";
+import Link from "next/link";
 
 export function QuickActions() {
   return (
@@ -23,27 +24,25 @@ export function QuickActions() {
       </CardHeader>
       <CardContent className="grid grid-cols-2 gap-3">
         <AddReceiptButton />
-        <Button
-          variant="outline"
-          className="border-green-200 text-green-700 hover:bg-green-50"
-        >
-          <Upload className="h-4 w-4 mr-2" />
-          Upload Data
-        </Button>
-        <Button
-          variant="outline"
-          className="border-green-200 text-green-700 hover:bg-green-50"
-        >
-          <FileBarChart className="h-4 w-4 mr-2" />
-          View Reports
-        </Button>
-        <Button
-          variant="outline"
-          className="border-green-200 text-green-700 hover:bg-green-50"
-        >
-          <User className="h-4 w-4 mr-2" />
-          Profile
-        </Button>
+
+        <Link href="/dashboard/statistics">
+          <Button
+            variant="outline"
+            className="border-green-200 text-green-700 hover:bg-green-50"
+          >
+            <FileBarChart className="h-4 w-4 mr-2" />
+            View Reports
+          </Button>
+        </Link>
+        <Link href="/dashboard/settings">
+          <Button
+            variant="outline"
+            className="border-green-200 text-green-700 hover:bg-green-50 w-full"
+          >
+            <User className="h-4 w-4 mr-2" />
+            Profile
+          </Button>
+        </Link>
       </CardContent>
     </Card>
   );
