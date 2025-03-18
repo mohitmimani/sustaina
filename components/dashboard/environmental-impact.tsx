@@ -1,15 +1,43 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Leaf } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Stats } from "@/types/stats";
+import { useQuery } from "@tanstack/react-query";
 
-interface EnvironmentalImpactProps {
-  treesEquivalent: string
-  waterSaved: string
-  co2Reduced: string
-}
+import { Leaf } from "lucide-react";
 
-export function EnvironmentalImpact({ treesEquivalent, waterSaved, co2Reduced }: EnvironmentalImpactProps) {
+const fetchStats = async (): Promise<Stats> => {
+  const response = await fetch("http://localhost:3000/api/receipts/stats");
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
+};
+
+export function EnvironmentalImpact() {
+  const {
+    data: stats,
+    isLoading,
+    error,
+  } = useQuery<Stats>({ queryKey: ["stats"], queryFn: fetchStats });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading stats</div>;
+  }
+  const treesEquivalent = ((stats?.recycled ?? 0) * 2.5).toFixed(1);
+  const waterSaved = ((stats?.recycled ?? 0) * 13.3).toFixed(1);
+  const co2Reduced = ((stats?.recycled ?? 0) * 0.17).toFixed(1);
+
   return (
     <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm">
       <CardHeader className="pb-2">
@@ -17,7 +45,9 @@ export function EnvironmentalImpact({ treesEquivalent, waterSaved, co2Reduced }:
           <Leaf className="h-5 w-5 mr-2 text-green-600" />
           Your Impact
         </CardTitle>
-        <CardDescription>Environmental benefits of your efforts</CardDescription>
+        <CardDescription>
+          Environmental benefits of your efforts
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between p-2 rounded-lg bg-blue-50 border border-blue-100">
@@ -33,7 +63,9 @@ export function EnvironmentalImpact({ treesEquivalent, waterSaved, co2Reduced }:
             <span className="text-2xl mr-2">🌳</span>
             <span className="text-sm">Trees Equivalent</span>
           </div>
-          <span className="font-bold text-green-700">{treesEquivalent} trees</span>
+          <span className="font-bold text-green-700">
+            {treesEquivalent} trees
+          </span>
         </div>
 
         <div className="flex items-center justify-between p-2 rounded-lg bg-gray-50 border border-gray-100">
@@ -45,6 +77,5 @@ export function EnvironmentalImpact({ treesEquivalent, waterSaved, co2Reduced }:
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-

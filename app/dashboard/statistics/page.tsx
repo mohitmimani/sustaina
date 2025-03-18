@@ -10,31 +10,36 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
 
-// Mock data for statistics
-const stats = {
-  total: 100,
-  recycled: 70,
-  composted: 20,
-  landfill: 10,
-  monthlyData: [
-    { month: "Jan", recycled: 65, composted: 15, landfill: 20 },
-    { month: "Feb", recycled: 68, composted: 17, landfill: 15 },
-    { month: "Mar", recycled: 70, composted: 20, landfill: 10 },
-    { month: "Apr", recycled: 72, composted: 22, landfill: 6 },
-    { month: "May", recycled: 75, composted: 20, landfill: 5 },
-  ],
-  wasteByCategory: [
-    { category: "Paper", amount: 30, recyclable: true },
-    { category: "Plastic", amount: 25, recyclable: true },
-    { category: "Food", amount: 20, recyclable: true },
-    { category: "Glass", amount: 15, recyclable: true },
-    { category: "Metal", amount: 5, recyclable: true },
-    { category: "Other", amount: 5, recyclable: false },
-  ],
+import type { Stats } from "@/types/stats";
+import Link from "next/link";
+
+const fetchStats = async (): Promise<Stats> => {
+  const response = await fetch("http://localhost:3000/api/receipts/stats");
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
 };
 
 export default function StatisticsPage() {
+  const {
+    data: stats,
+    isLoading,
+    error,
+  } = useQuery<Stats>({ queryKey: ["stats"], queryFn: fetchStats });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading stats</div>;
+  }
+  if (!stats?.wasteByCategory) {
+    return <div>Not enough data</div>;
+  }
   return (
     <>
       <div className="mb-6">
@@ -65,11 +70,11 @@ export default function StatisticsPage() {
             <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-100">
               <div>
                 <p className="text-sm text-gray-600">Current Month</p>
-                <p className="text-2xl font-bold text-green-700">75%</p>
+                <p className="text-2xl font-bold text-green-700">100%</p>
               </div>
               <div className="text-right">
                 <p className="text-sm text-gray-600">Change</p>
-                <p className="text-lg font-medium text-green-600">+3%</p>
+                <p className="text-lg font-medium text-green-600">+0%</p>
               </div>
             </div>
           </CardContent>

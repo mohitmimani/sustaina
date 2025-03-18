@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+
 import { ReceiptFilters } from "@/components/receipts/receipt-filters";
 import { ReceiptList } from "@/components/receipts/receipt-list";
 import { Button } from "@/components/ui/button";
