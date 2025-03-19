@@ -1,6 +1,8 @@
 import { streamText } from "ai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import type { Message } from "ai";
+import { auth } from "@/lib/auth";
+import { NextResponse } from "next/server";
 
 const google = createGoogleGenerativeAI({
   // custom settings
@@ -8,8 +10,16 @@ const google = createGoogleGenerativeAI({
 });
 // Configure the Google Gemini model
 const gemini = google("gemini-2.0-flash-001", {});
-
+const unauthorizedResponse = NextResponse.json(
+  { error: "Unauthorized" },
+  { status: 401 }
+);
 export async function POST(req: Request) {
+  const session = await auth.api.getSession({ headers: req.headers });
+
+  if (!session?.user?.id) {
+    return unauthorizedResponse;
+  }
   const { messages }: { messages: Message[] } = await req.json();
 
   // Convert the messages to a format that Gemini can understand
