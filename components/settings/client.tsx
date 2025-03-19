@@ -34,17 +34,17 @@ export default function SettingsPage() {
         <h1 className="text-2xl font-bold text-green-800 mb-6">Settings</h1>
 
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8 h-14">
-            <TabsTrigger value="account" className="text-base py-3">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-8 h-auto min-h-14 gap-1">
+            <TabsTrigger value="account" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
               Account
             </TabsTrigger>
-            <TabsTrigger value="appearance" className="text-base py-3">
+            <TabsTrigger value="appearance" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
               Appearance
             </TabsTrigger>
-            <TabsTrigger value="notifications" className="text-base py-3">
+            <TabsTrigger value="notifications" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
               Notifications
             </TabsTrigger>
-            <TabsTrigger value="privacy" className="text-base py-3">
+            <TabsTrigger value="privacy" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
               Privacy
             </TabsTrigger>
           </TabsList>
