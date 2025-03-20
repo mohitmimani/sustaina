@@ -128,7 +128,7 @@ export function TelegramConnect() {
               <Check className="h-6 w-6 text-green-600" />
             </div>
             <div>
-              <h3 className="font-medium text-green-700 flex items-center gap-2">
+              <h3 className="font-medium text-green-700 flex items-center gap-2 dark:text-green-400 hidden md:block">
                 Connected to Telegram
                 <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded-full">
                   Active
