@@ -19,6 +19,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const { data: session, isPending, error } = useSession();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const router = useRouter();
+
   // Close sidebar on mobile by default
   useEffect(() => {
     if (isMobile) {
@@ -36,7 +37,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
   if (isPending) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen dark:bg-slate-900 dark:text-gray-300">
         Loading...
       </div>
     );
@@ -44,30 +45,27 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen dark:bg-slate-900 dark:text-red-400">
         Error: {error.message}
       </div>
     );
   }
+
   if (session === null) {
     return null;
   }
+
   return (
-    <div className="flex h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className="flex h-screen bg-gradient-to-br from-green-50 to-blue-50 dark:from-slate-900 dark:to-gray-800">
       {/* Sidebar */}
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
+      <Sidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
 
       {/* Mobile Dock */}
       {isMobile && <MobileDock />}
 
       {/* Main Content */}
       <div
-        className={`flex-1 flex flex-col overflow-hidden ${
-          isMobile ? "pb-20" : ""
-        }`}
+        className={`flex-1 flex flex-col overflow-hidden ${isMobile ? "pb-20" : ""}`}
       >
         {/* Header */}
         <Header
@@ -78,7 +76,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
         />
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 dark:bg-slate-900 dark:text-gray-300">
+          {children}
+        </main>
       </div>
     </div>
   );
