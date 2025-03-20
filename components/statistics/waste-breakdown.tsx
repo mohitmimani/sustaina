@@ -41,15 +41,15 @@ const COLORS = [
 
 export function WasteBreakdown({ stats }: WasteBreakdownProps) {
   return (
-    <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm">
+    <Card className="backdrop-blur-md bg-white/70 dark:bg-slate-900 border-green-100 dark:border-green-900/30 shadow-sm">
       <CardHeader>
-        <CardTitle>Waste Breakdown by Category</CardTitle>
-        <CardDescription>
+        <CardTitle className="dark:text-gray-300">Waste Breakdown by Category</CardTitle>
+        <CardDescription className="dark:text-gray-400">
           Detailed analysis of your waste composition
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6 md:grid-cols-2">
-        <div className="flex justify-center items-center h-[300px]">
+        <div className="flex justify-center items-center h-[300px] dark:bg-slate-900 p-4 rounded-lg">
           <PieChart width={250} height={250}>
             <Pie
               data={stats.wasteByCategory}
@@ -68,30 +68,30 @@ export function WasteBreakdown({ stats }: WasteBreakdownProps) {
                 />
               ))}
             </Pie>
-            <Tooltip />
-            <Legend />
+            <Tooltip contentStyle={{ backgroundColor: "#1e293b", color: "#f8fafc" }} />
+            <Legend wrapperStyle={{ color: "#f8fafc" }} />
           </PieChart>
         </div>
 
         <div className="overflow-x-auto">
-          <Table>
+          <Table className="dark:bg-slate-900">
             <TableHeader>
-              <TableRow>
-                <TableHead>Category</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Recyclable</TableHead>
+              <TableRow className="dark:text-gray-300">
+                <TableHead className="dark:text-gray-300">Category</TableHead>
+                <TableHead className="dark:text-gray-300">Amount</TableHead>
+                <TableHead className="dark:text-gray-300">Recyclable</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {stats.wasteByCategory.map((item) => (
-                <TableRow key={item.category}>
-                  <TableCell>{item.category}</TableCell>
-                  <TableCell>{item.amount} unit</TableCell>
+                <TableRow key={item.category} className="dark:border-green-900/30">
+                  <TableCell className="dark:text-gray-300">{item.category}</TableCell>
+                  <TableCell className="dark:text-gray-300">{item.amount} unit</TableCell>
                   <TableCell>
                     {item.recyclable ? (
-                      <Badge className="bg-green-100 text-green-800">Yes</Badge>
+                      <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-400">Yes</Badge>
                     ) : (
-                      <Badge className="bg-red-100 text-red-800">No</Badge>
+                      <Badge className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-400">No</Badge>
                     )}
                   </TableCell>
                 </TableRow>
