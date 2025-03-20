@@ -29,22 +29,22 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50 dark:from-slate-900 dark:to-slate-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold text-green-800 mb-6">Settings</h1>
+        <h1 className="text-2xl font-bold text-green-800 dark:text-green-400 mb-6">Settings</h1>
 
         <Tabs defaultValue="account" className="w-full">
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-8 h-auto min-h-14 gap-1">
-            <TabsTrigger value="account" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
+            <TabsTrigger value="account" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto dark:text-gray-200">
               Account
             </TabsTrigger>
-            <TabsTrigger value="appearance" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
+            <TabsTrigger value="appearance" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto dark:text-gray-200">
               Appearance
             </TabsTrigger>
-            <TabsTrigger value="notifications" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
+            <TabsTrigger value="notifications" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto dark:text-gray-200">
               Notifications
             </TabsTrigger>
-            <TabsTrigger value="privacy" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
+            <TabsTrigger value="privacy" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto dark:text-gray-200">
               Privacy
             </TabsTrigger>
           </TabsList>
