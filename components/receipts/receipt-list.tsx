@@ -29,11 +29,8 @@ import {
 } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import type { Item } from "@/prisma/generated/zod";
-import { useItemStore } from "@/store/itemStore";
 import { downloadReceiptPDF, calculateWasteCost } from "@/lib/pdfGenerator"; // Import the PDF functions
-import { ItemWithoutId, ReceiptWithoutId } from "@/lib/schema/extended";
-import { MobileItemCard } from "./mobile-item-card";
+import type { ItemWithoutId, ReceiptWithoutId } from "@/lib/schema/extended";
 
 interface ReceiptListProps {
   receipts: ReceiptWithoutId[];
@@ -46,9 +43,11 @@ export function ReceiptList({ receipts, limit }: ReceiptListProps) {
   if (displayReceipts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-8 text-center">
-        <FileText className="h-12 w-12 text-gray-300 mb-2" />
-        <p className="text-gray-500">No receipts found</p>
-        <p className="text-sm text-gray-400">Try adjusting your filters</p>
+        <FileText className="h-12 w-12 text-gray-300 dark:text-gray-600 mb-2" />
+        <p className="text-gray-500 dark:text-gray-400">No receipts found</p>
+        <p className="text-sm text-gray-400 dark:text-gray-500">
+          Try adjusting your filters
+        </p>
       </div>
     );
   }
@@ -174,11 +173,13 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <li className="flex flex-col p-3 rounded-lg bg-white border border-green-100 hover:border-green-200 transition-colors cursor-pointer">
+        <li className="flex flex-col p-3 rounded-lg bg-white dark:bg-gray-900 border border-green-100 dark:border-green-900/30 hover:border-green-200 dark:hover:border-green-800 transition-colors cursor-pointer">
           <div className="flex items-center justify-between">
             <div className="flex-grow">
-              <p className="font-medium text-sm">{receipt.name}</p>
-              <p className="text-xs text-gray-500">
+              <p className="font-medium text-sm dark:text-gray-200">
+                {receipt.name}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 {receipt.date.toISOString().split("T")[0] + ""}
               </p>
             </div>
@@ -213,65 +214,67 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
 
           {/* Waste Category Breakdown */}
           <div className="mt-3 space-y-1.5">
-            <p className="text-xs font-medium text-gray-600">
+            <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
               Waste Breakdown:
             </p>
             <div className="flex items-center gap-2">
-              <div className="w-full bg-gray-100 rounded-full h-2.5">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                 <div
                   className="bg-blue-500 h-2.5 rounded-full"
                   style={{ width: `${wasteCategoryBreakdown.RECYCLE}%` }}
                 ></div>
               </div>
-              <span className="text-xs text-blue-600 min-w-[30px]">
+              <span className="text-xs text-blue-600 dark:text-blue-400 min-w-[30px]">
                 {wasteCategoryBreakdown.RECYCLE}%
               </span>
-              <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">
+              <Badge className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900">
                 ♻️ Recycle
               </Badge>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-full bg-gray-100 rounded-full h-2.5">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                 <div
                   className="bg-green-500 h-2.5 rounded-full"
                   style={{ width: `${wasteCategoryBreakdown.COMPOST}%` }}
                 ></div>
               </div>
-              <span className="text-xs text-green-600 min-w-[30px]">
+              <span className="text-xs text-green-600 dark:text-green-400 min-w-[30px]">
                 {wasteCategoryBreakdown.COMPOST}%
               </span>
-              <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+              <Badge className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900">
                 🌱 Compost
               </Badge>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-full bg-gray-100 rounded-full h-2.5">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                 <div
                   className="bg-gray-500 h-2.5 rounded-full"
                   style={{ width: `${wasteCategoryBreakdown.LANDFILL}%` }}
                 ></div>
               </div>
-              <span className="text-xs text-gray-600 min-w-[30px]">
+              <span className="text-xs text-gray-600 dark:text-gray-400 min-w-[30px]">
                 {wasteCategoryBreakdown.LANDFILL}%
               </span>
-              <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-100">
+              <Badge className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900">
                 🚮 Landfill
               </Badge>
             </div>
           </div>
         </li>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-10/12 overflow-auto max-h-screen">
+      <DialogContent className="sm:max-w-10/12 overflow-auto max-h-screen dark:border-gray-700 dark:bg-gray-800">
         <div ref={headerRef}>
           <DialogHeader>
-            <DialogTitle>{receipt.name}</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="dark:text-gray-100">
+              {receipt.name}
+            </DialogTitle>
+            <DialogDescription className="dark:text-gray-400">
               {receipt.date.toISOString().split("T")[0] + ""} • Rs{" "}
               {receipt.amount}
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-between items-center mt-2">
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-gray-400">
               Waste Cost: Rs {wasteCost.toFixed(2)}
             </span>
             <Badge
@@ -289,8 +292,10 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
         </div>
         <div className="py-4">
           <div className="flex justify-between items-center mb-2">
-            <h4 className="text-sm font-medium">Waste Breakdown</h4>
-            <div className="flex items-center text-xs text-gray-500">
+            <h4 className="text-sm font-medium dark:text-gray-200">
+              Waste Breakdown
+            </h4>
+            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
               <span className="mr-2">
                 Consumed: {consumptionStats.consumed}/{consumptionStats.total}
               </span>
@@ -312,47 +317,47 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
 
           {/* Waste Category Summary */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
-            <div className="flex flex-col items-center p-2 rounded-lg bg-blue-50">
-              <span className="text-xs text-blue-600 font-medium">
+            <div className="flex flex-col items-center p-2 rounded-lg bg-blue-50 dark:bg-blue-950/50">
+              <span className="text-xs text-blue-600 dark:text-blue-400 font-medium">
                 ♻️ Recyclable
               </span>
-              <span className="text-lg font-bold text-blue-700">
+              <span className="text-lg font-bold text-blue-700 dark:text-blue-300">
                 {wasteCategoryBreakdown.RECYCLE}%
               </span>
-              <span className="text-xs text-blue-500">
+              <span className="text-xs text-blue-500 dark:text-blue-400">
                 {items.filter((i) => i.wasteCategory === "RECYCLE").length}{" "}
                 items
               </span>
             </div>
-            <div className="flex flex-col items-center p-2 rounded-lg bg-green-50">
-              <span className="text-xs text-green-600 font-medium">
+            <div className="flex flex-col items-center p-2 rounded-lg bg-green-50 dark:bg-green-950/50">
+              <span className="text-xs text-green-600 dark:text-green-400 font-medium">
                 🌱 Compostable
               </span>
-              <span className="text-lg font-bold text-green-700">
+              <span className="text-lg font-bold text-green-700 dark:text-green-300">
                 {wasteCategoryBreakdown.COMPOST}%
               </span>
-              <span className="text-xs text-green-500">
+              <span className="text-xs text-green-500 dark:text-green-400">
                 {items.filter((i) => i.wasteCategory === "COMPOST").length}{" "}
                 items
               </span>
             </div>
-            <div className="flex flex-col items-center p-2 rounded-lg bg-gray-50">
-              <span className="text-xs text-gray-600 font-medium">
+            <div className="flex flex-col items-center p-2 rounded-lg bg-gray-50 dark:bg-gray-900/50">
+              <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">
                 🚮 Landfill
               </span>
-              <span className="text-lg font-bold text-gray-700">
+              <span className="text-lg font-bold text-gray-700 dark:text-gray-300">
                 {wasteCategoryBreakdown.LANDFILL}%
               </span>
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
                 {items.filter((i) => i.wasteCategory === "LANDFILL").length}{" "}
                 items
               </span>
             </div>
           </div>
 
-          <Table>
+          <Table className="dark:text-gray-200">
             <TableHeader>
-              <TableRow>
+              <TableRow className="dark:border-gray-700">
                 <TableHead>Item</TableHead>
                 <TableHead>Weight</TableHead>
                 <TableHead>Category</TableHead>
@@ -369,12 +374,16 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
                 return (
                   <TableRow
                     key={item.id || index}
-                    className={isExpired ? "bg-red-50" : ""}
+                    className={
+                      isExpired
+                        ? "bg-red-50 dark:bg-red-950/30"
+                        : "dark:border-gray-700"
+                    }
                   >
                     <TableCell className="flex items-center space-x-2">
                       <span className="font-medium">{item.name}</span>
                       {item.quantity && (
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           x {item.quantity}
                         </span>
                       )}
@@ -384,10 +393,10 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
                       <Badge
                         className={
                           item.wasteCategory === "RECYCLE"
-                            ? "bg-blue-100 text-blue-800"
+                            ? "bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300"
                             : item.wasteCategory === "COMPOST"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-gray-100 text-gray-800"
+                            ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300"
+                            : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300"
                         }
                       >
                         {item.wasteCategory}
@@ -397,7 +406,9 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
                       {item.expiry ? (
                         <span
                           className={
-                            isExpired ? "text-red-600 font-medium" : ""
+                            isExpired
+                              ? "text-red-600 dark:text-red-400 font-medium"
+                              : ""
                           }
                         >
                           {new Date(item.expiry + "").toLocaleDateString(
@@ -424,7 +435,7 @@ function ReceiptItem({ receipt }: { receipt: ReceiptWithoutId }) {
                         {item.isConsumed ? (
                           <ToggleRight className="h-6 w-6 text-green-500" />
                         ) : (
-                          <ToggleLeft className="h-6 w-6 text-gray-400" />
+                          <ToggleLeft className="h-6 w-6 text-gray-400 dark:text-gray-500" />
                         )}
                       </div>
                     </TableCell>
