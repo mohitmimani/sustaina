@@ -54,9 +54,21 @@ export function EnvironmentalImpact() {
     return <div>Error loading stats</div>;
   }
 
-  const treesEquivalent = ((stats?.recycled ?? 0) * 2.5).toFixed(1);
-  const waterSaved = ((stats?.recycled ?? 0) * 13.3).toFixed(1);
-  const co2Reduced = ((stats?.recycled ?? 0) * 0.17).toFixed(1);
+  const treesEquivalent = (
+    (stats?.recycled ?? 0) * 2.5 +
+    (stats?.composted ?? 0) * 1.8 +
+    (stats?.landfill ?? 0) * 0.5
+  ).toFixed(1);
+  const waterSaved = (
+    (stats?.recycled ?? 0) * 13.3 +
+    (stats?.composted ?? 0) * 10.2 +
+    (stats?.landfill ?? 0) * 3.1
+  ).toFixed(1);
+  const co2Reduced = (
+    (stats?.recycled ?? 0) * 0.17 +
+    (stats?.composted ?? 0) * 0.12 +
+    (stats?.landfill ?? 0) * 0.05
+  ).toFixed(1);
 
   return (
     <Card className="backdrop-blur-md bg-white/70 dark:bg-slate-900 border-green-100 dark:border-green-900/30 shadow-sm">

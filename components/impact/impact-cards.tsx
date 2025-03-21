@@ -2,7 +2,15 @@
 
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
-import { Leaf, Droplets, TreePine, Factory, TrendingUp, Calendar, Target } from "lucide-react";
+import {
+  Leaf,
+  Droplets,
+  TreePine,
+  Factory,
+  TrendingUp,
+  Calendar,
+  Target,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +24,7 @@ import {
   PieChart,
   Pie,
   Cell,
+  Legend,
 } from "recharts";
 import { itemVariants, containerVariants } from "./impact-variants";
 
@@ -40,10 +49,7 @@ export const impactData = [
 export function ImpactHeader() {
   return (
     <div className="text-center mb-12">
-      <motion.div
-        variants={itemVariants}
-        className="inline-block mb-4"
-      >
+      <motion.div variants={itemVariants} className="inline-block mb-4">
         <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
           <Leaf className="h-8 w-8 text-emerald-500" />
         </div>
@@ -58,8 +64,8 @@ export function ImpactHeader() {
         variants={itemVariants}
         className="text-lg text-gray-600 max-w-2xl mx-auto"
       >
-        Track your contribution to environmental sustainability through water conservation,
-        carbon reduction, and tree preservation.
+        Track your contribution to environmental sustainability through water
+        conservation, carbon reduction, and tree preservation.
       </motion.p>
     </div>
   );
@@ -74,16 +80,24 @@ interface ImpactMetricCardProps {
   color: string;
 }
 
-export function ImpactMetricCard({ icon, title, value, description, color }: ImpactMetricCardProps) {
+export function ImpactMetricCard({
+  icon,
+  title,
+  value,
+  description,
+  color,
+}: ImpactMetricCardProps) {
   const bgColorClass = `bg-${color}-100`;
   const textColorClass = `text-${color}-500`;
-  
+
   return (
     <motion.div variants={itemVariants}>
       <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm">
         <CardContent className="p-6">
           <div className="flex items-center mb-4">
-            <div className={`w-12 h-12 rounded-full ${bgColorClass} flex items-center justify-center mr-4`}>
+            <div
+              className={`w-12 h-12 rounded-full ${bgColorClass} flex items-center justify-center mr-4`}
+            >
               {icon}
             </div>
             <div>
@@ -91,9 +105,7 @@ export function ImpactMetricCard({ icon, title, value, description, color }: Imp
               <p className={`text-2xl font-bold ${textColorClass}`}>{value}</p>
             </div>
           </div>
-          <p className="text-sm text-gray-600">
-            {description}
-          </p>
+          <p className="text-sm text-gray-600">{description}</p>
         </CardContent>
       </Card>
     </motion.div>
@@ -107,21 +119,21 @@ export function ImpactMetricsGrid() {
       variants={containerVariants}
       className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
     >
-      <ImpactMetricCard 
+      <ImpactMetricCard
         icon={<Droplets className="h-6 w-6 text-blue-500" />}
         title="Water Saved"
         value="250L"
         description="Equivalent to 100 days of drinking water for one person"
         color="blue"
       />
-      <ImpactMetricCard 
+      <ImpactMetricCard
         icon={<TreePine className="h-6 w-6 text-emerald-500" />}
         title="Trees Equivalent"
         value="20"
         description="Equivalent to 1.5 acres of forest carbon sequestration"
         color="emerald"
       />
-      <ImpactMetricCard 
+      <ImpactMetricCard
         icon={<Factory className="h-6 w-6 text-amber-500" />}
         title="CO2 Reduced"
         value="95kg"
@@ -150,6 +162,7 @@ export function MonthlyImpactChart() {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
+              <Legend />
               <Line
                 type="monotone"
                 dataKey="water"
@@ -260,9 +273,9 @@ export function ImpactTimeline() {
                     </div>
                   </div>
                 </div>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="border-green-200 text-green-700 hover:bg-green-50"
                 >
                   View Details
@@ -274,4 +287,4 @@ export function ImpactTimeline() {
       </Card>
     </motion.div>
   );
-} 
+}

@@ -1,7 +1,6 @@
 import { Leaf } from "lucide-react";
 import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "./impact-variants";
-
 export function ImpactHeader() {
   return (
     <motion.div
@@ -12,11 +11,14 @@ export function ImpactHeader() {
     >
       <motion.div variants={itemVariants} className="flex justify-center mb-2">
         <Leaf className="h-8 w-8 text-green-500 dark:text-green-400 mr-2" />
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-green-400 hidden md:block">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200 hidden md:block">
           Your Environmental Impact
         </h1>
       </motion.div>
-      <motion.p variants={itemVariants} className="text-gray-600 dark:text-gray-400">
+      <motion.p
+        variants={itemVariants}
+        className="text-gray-600 dark:text-gray-400"
+      >
         Track how your sustainable choices are making a difference
       </motion.p>
     </motion.div>

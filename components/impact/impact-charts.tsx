@@ -1,10 +1,10 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, PieChart as PieChartIcon } from "lucide-react";
 import { itemVariants, containerVariants } from "./impact-variants";
-import { monthlyImpactData, impactDistributionData } from "./impact-data";
 import {
   LineChart,
   Line,
@@ -18,9 +18,32 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import { useTheme } from "next-themes";
 
 // Monthly Impact Chart Component
 export function MonthlyImpactChart() {
+  const { theme } = useTheme();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["impactStats"],
+    queryFn: async () => {
+      const response = await fetch("/api/receipts/stats");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    },
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading data</div>;
+  }
+
+  const { monthlyData } = data;
   return (
     <motion.div variants={itemVariants}>
       <Card className="backdrop-blur-md bg-white/70 dark:bg-slate-900 border-green-100 dark:border-green-900/30 shadow-sm h-full">
@@ -32,42 +55,45 @@ export function MonthlyImpactChart() {
           <div className="h-64 dark:bg-slate-900 rounded-md p-2">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
-                data={monthlyImpactData}
+                data={monthlyData}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
                 {/* Grid lines for better visibility */}
-                <CartesianGrid strokeDasharray="3 3" opacity={0.3} className="dark:stroke-white-700" />
-                
-                {/* X Axis */}
-                <XAxis
-                  dataKey="month"
-                  stroke="#000"
-                  tick={{ fill: "#000" }} // Light mode
-                  className="dark:stroke-white-300 dark:tick-fill-white-300"
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  opacity={0.3}
+                  className="dark:stroke-white-700"
                 />
 
+                {/* X Axis */}
+                {theme === "dark" ? (
+                  <XAxis dataKey="month" stroke="#D1D5DB" />
+                ) : (
+                  <XAxis dataKey="month" stroke="#000" />
+                )}
+
                 {/* Y Axis */}
-                <YAxis
-                  stroke="#000"
-                  tick={{ fill: "#000" }} // Light mode
-                  className="dark:stroke-white-300 dark:tick-fill-white-300"
-                />
+                {theme === "dark" ? (
+                  <YAxis stroke="#D1D5DB" />
+                ) : (
+                  <YAxis stroke="#000" />
+                )}
 
                 {/* Tooltip for hover data */}
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#1E293B",
-                    color: "white",
-                    borderRadius: "6px",
+                    backgroundColor: "var(--tooltip-bg)",
+                    borderColor: "var(--tooltip-border)",
+                    borderRadius: "4px",
                   }}
                 />
 
                 <Legend />
-                
+
                 {/* Lines */}
                 <Line
                   type="monotone"
-                  dataKey="water"
+                  dataKey="recycled"
                   stroke="#3B82F6"
                   strokeWidth={2}
                   activeDot={{ r: 8 }}
@@ -75,14 +101,14 @@ export function MonthlyImpactChart() {
                 />
                 <Line
                   type="monotone"
-                  dataKey="trees"
+                  dataKey="composted"
                   stroke="#10B981"
                   strokeWidth={2}
                   className="dark:stroke-emerald-400"
                 />
                 <Line
                   type="monotone"
-                  dataKey="co2"
+                  dataKey="landfill"
                   stroke="#F59E0B"
                   strokeWidth={2}
                   className="dark:stroke-amber-400"
@@ -98,6 +124,27 @@ export function MonthlyImpactChart() {
 
 // Impact Distribution Chart Component
 export function ImpactDistributionChart() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["impactStats"],
+    queryFn: async () => {
+      const response = await fetch("/api/receipts/stats");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    },
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading data</div>;
+  }
+
+  const { wasteByCategory } = data;
+
   return (
     <motion.div variants={itemVariants}>
       <Card className="backdrop-blur-md bg-white/70 dark:bg-slate-900 border-green-100 dark:border-green-900/30 shadow-sm h-full">
@@ -108,29 +155,44 @@ export function ImpactDistributionChart() {
           </h3>
           <div className="h-64 dark:bg-slate-900 rounded-md p-2">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+              <PieChart width={250} height={250}>
                 <Pie
-                  data={impactDistributionData}
+                  data={wasteByCategory}
+                  dataKey="amount"
+                  nameKey="category"
                   cx="50%"
                   cy="50%"
-                  labelLine={false}
                   outerRadius={80}
-                  dataKey="value"
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  fill="#8884d8"
+                  label={({ category, amount }) =>
+                    `${category}: ${amount < 0 ? "Negative" : amount}`
+                  }
                 >
-                  {impactDistributionData.map((entry, index) => (
+                  {wasteByCategory.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={entry.color}
-                      className="dark:fill-current"
+                      fill={
+                        entry.category === "FOOD"
+                          ? "#10B981"
+                          : entry.recyclable
+                          ? "#3B82F6"
+                          : "#F59E0B"
+                      }
                     />
                   ))}
                 </Pie>
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#1E293B",
-                    color: "white",
-                    borderRadius: "6px",
+                    backgroundColor: "var(--tooltip-bg)",
+                    borderColor: "var(--tooltip-border)",
+                    color: "var(--foreground)",
+                  }}
+                  wrapperStyle={{ color: "var(--foreground)" }}
+                  itemStyle={{ color: "var(--foreground)" }}
+                />
+                <Legend
+                  wrapperStyle={{
+                    color: "var(--foreground)",
                   }}
                 />
               </PieChart>
@@ -141,7 +203,6 @@ export function ImpactDistributionChart() {
     </motion.div>
   );
 }
-
 // Charts Grid Component
 export function ChartsGrid() {
   return (
