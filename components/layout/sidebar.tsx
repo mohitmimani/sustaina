@@ -36,7 +36,7 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
           transition={{ duration: 0.3 }}
           className={`${
             isSidebarOpen ? "w-64" : "w-20"
-          } bg-muted text-muted-foreground backdrop-blur-md border-r border-muted/30 shadow-sm transition-all duration-300 flex flex-col ${
+          } bg-muted dark:bg-slate-900 text-muted-foreground backdrop-blur-md border-r border-muted/30 dark:border-green-900/30 shadow-sm transition-all duration-300 flex flex-col ${
             isMobile ? "fixed z-40 h-full" : ""
           }`}
         >
