@@ -9,7 +9,7 @@ import { containerVariants } from "@/components/impact/impact-variants";
 
 export default function ImpactPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-green-50 dark:bg-slate-900 py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
         className="max-w-7xl mx-auto"
         variants={containerVariants}
@@ -23,4 +23,4 @@ export default function ImpactPage() {
       </motion.div>
     </div>
   );
-} 
+}

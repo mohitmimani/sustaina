@@ -128,7 +128,7 @@ export function TelegramConnect() {
               <Check className="h-6 w-6 text-green-600" />
             </div>
             <div>
-              <h3 className="font-medium text-green-700 flex items-center gap-2">
+              <h3 className="font-medium text-green-700 flex items-center gap-2 dark:text-green-400 hidden md:block">
                 Connected to Telegram
                 <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded-full">
                   Active
@@ -156,19 +156,21 @@ export function TelegramConnect() {
   }
 
   return (
-    <Card className="backdrop-blur-md bg-white/70 border-blue-100 shadow-sm mb-6 hover:border-blue-200 transition-all">
+    <Card className="backdrop-blur-md bg-white/70 dark:bg-slate-900 border-blue-100 dark:border-green-900/30 shadow-sm mb-6 hover:border-blue-200 dark:hover:border-green-400 transition-all">
       <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between">
         <div className="flex items-center mb-4 sm:mb-0">
-          <div className="bg-blue-100 p-3 rounded-full mr-5">
-            <MessageSquare className="h-6 w-6 text-blue-600" />
+          <div className="bg-blue-100 dark:bg-green-900/30 p-3 rounded-full mr-5">
+            <MessageSquare className="h-6 w-6 text-blue-600 dark:text-green-400" />
           </div>
           <div>
-            <h3 className="font-medium text-gray-800">Connect Telegram Bot</h3>
-            <p className="text-sm text-gray-500 mt-1">
+            <h3 className="font-medium text-gray-800 dark:text-green-400">
+              Connect Telegram Bot
+            </h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               Get instant notifications and submit receipts via chat
             </p>
           </div>
-        </div>
+        </div>  
         <Button
           className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white flex items-center gap-2 px-5"
           onClick={handleConnect}

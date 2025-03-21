@@ -201,11 +201,11 @@ export function DashboardSection() {
 
         <div className="mt-24 max-w-full mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs defaultValue="personal" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8 h-14">
-              <TabsTrigger value="personal" className="text-base py-3">
+            <TabsList className="grid w-full grid-cols-2 mb-8 h-auto min-h-14 gap-1">
+              <TabsTrigger value="personal" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
                 Personal Dashboard
               </TabsTrigger>
-              <TabsTrigger value="business" className="text-base py-3">
+              <TabsTrigger value="business" className="text-base py-3 px-2 text-sm sm:text-base whitespace-normal h-auto">
                 Business Dashboard
               </TabsTrigger>
             </TabsList>

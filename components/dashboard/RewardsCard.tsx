@@ -163,10 +163,25 @@ export function RewardsCard() {
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="grid grid-cols-3 mb-4">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="rewards">Rewards</TabsTrigger>
-              <TabsTrigger value="achievements">Achievements</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 mb-4 h-auto min-h-10 gap-1">
+              <TabsTrigger 
+                value="overview" 
+                className="text-xs sm:text-sm py-2 px-1 sm:px-3 whitespace-normal h-auto"
+              >
+                Overview
+              </TabsTrigger>
+              <TabsTrigger 
+                value="rewards" 
+                className="text-xs sm:text-sm py-2 px-1 sm:px-3 whitespace-normal h-auto"
+              >
+                Rewards
+              </TabsTrigger>
+              <TabsTrigger 
+                value="achievements" 
+                className="text-xs sm:text-sm py-2 px-1 sm:px-3 whitespace-normal h-auto"
+              >
+                Achievements
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="mt-0">
@@ -377,16 +392,16 @@ export function RewardsCard() {
                     variants={itemVariants}
                     whileHover={{ x: 5 }}
                     className={cn(
-                      "flex items-center justify-between p-3 rounded-lg border",
+                      "flex flex-wrap sm:flex-nowrap items-center justify-between p-3 rounded-lg border",
                       achievement.completed
                         ? "bg-green-50 border-green-200 dark:bg-green-900/30 dark:border-green-800"
                         : "bg-gray-50 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700"
                     )}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center mb-2 sm:mb-0 min-w-0 w-full sm:w-auto">
                       <div
                         className={cn(
-                          "p-2 rounded-full mr-3",
+                          "p-2 rounded-full mr-3 flex-shrink-0",
                           achievement.completed
                             ? "bg-green-100 text-green-600 dark:bg-green-800 dark:text-green-300"
                             : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
@@ -396,7 +411,7 @@ export function RewardsCard() {
                       </div>
                       <p
                         className={cn(
-                          "font-medium",
+                          "font-medium truncate",
                           achievement.completed
                             ? "text-gray-800 dark:text-gray-200"
                             : "text-gray-500 dark:text-gray-400"
@@ -407,14 +422,14 @@ export function RewardsCard() {
                     </div>
 
                     {achievement.completed ? (
-                      <Badge className="bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900 dark:text-green-300">
+                      <Badge className="bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 flex-shrink-0 ml-auto">
                         Completed
                       </Badge>
                     ) : (
                       <Button
                         size="sm"
                         variant="outline"
-                        className="text-gray-600 border-gray-200 hover:bg-gray-50 dark:text-gray-400 dark:border-gray-700 dark:hover:bg-gray-800/70"
+                        className="text-gray-600 border-gray-200 hover:bg-gray-50 dark:text-gray-400 dark:border-gray-700 dark:hover:bg-gray-800/70 flex-shrink-0 ml-auto text-xs px-2 py-1 h-auto"
                       >
                         Pending
                       </Button>

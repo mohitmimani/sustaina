@@ -25,6 +25,7 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
   const pathname = usePathname();
   const isMobile = useIsMobile();
   const router = useRouter();
+
   return (
     <AnimatePresence>
       {(isSidebarOpen || !isMobile) && (
@@ -35,20 +36,19 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
           transition={{ duration: 0.3 }}
           className={`${
             isSidebarOpen ? "w-64" : "w-20"
-          } bg-white/80 backdrop-blur-md border-r border-green-100 shadow-sm transition-all duration-300 flex flex-col ${
+          } bg-muted dark:bg-slate-900 text-muted-foreground backdrop-blur-md border-r border-muted/30 dark:border-green-900/30 shadow-sm transition-all duration-300 flex flex-col ${
             isMobile ? "fixed z-40 h-full" : ""
           }`}
         >
-          <div className="p-4 border-b border-green-100 flex items-center justify-center">
+          <div className="p-4 border-b border-green-100 dark:border-green-900/30 flex items-center justify-center">
             <div
               className={`flex items-center ${
                 isSidebarOpen ? "justify-start" : "justify-center"
               }`}
             >
-              <Leaf className="h-8 w-8 text-emerald-500 mr-2" />
-
+              <Leaf className="h-8 w-8 text-emerald-500 dark:text-green-400 mr-2" />
               {isSidebarOpen && (
-                <span className="font-bold text-green-800 text-xl">
+                <span className="font-bold text-green-800 dark:text-green-400 text-xl">
                   Sustaina
                 </span>
               )}
@@ -67,68 +67,32 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
 
           <nav className="flex-1 p-4">
             <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/dashboard"
-                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
-                    pathname === "/dashboard" ? "bg-green-100" : ""
-                  }`}
-                >
-                  <Home className="h-5 w-5 mr-3" />
-                  {isSidebarOpen && <span>Dashboard</span>}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/dashboard/receipts"
-                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
-                    pathname === "/dashboard/receipts" ? "bg-green-100" : ""
-                  }`}
-                >
-                  <FileText className="h-5 w-5 mr-3" />
-                  {isSidebarOpen && <span>Receipts</span>}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/dashboard/statistics"
-                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
-                    pathname === "/dashboard/statistics" ? "bg-green-100" : ""
-                  }`}
-                >
-                  <BarChart3 className="h-5 w-5 mr-3" />
-                  {isSidebarOpen && <span>Statistics</span>}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/dashboard/impact"
-                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
-                    pathname === "/dashboard/impact" ? "bg-green-100" : ""
-                  }`}
-                >
-                  <Leaf className="h-5 w-5 mr-3" />
-                  {isSidebarOpen && <span>Environmental Impact</span>}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/dashboard/settings"
-                  className={`flex items-center p-2 rounded-lg text-gray-700 hover:bg-green-100/50 transition-colors ${
-                    pathname === "/dashboard/settings" ? "bg-green-100" : ""
-                  }`}
-                >
-                  <Settings className="h-5 w-5 mr-3" />
-                  {isSidebarOpen && <span>Settings</span>}
-                </Link>
-              </li>
+              {[
+                { href: "/dashboard", icon: Home, label: "Dashboard" },
+                { href: "/dashboard/receipts", icon: FileText, label: "Receipts" },
+                { href: "/dashboard/statistics", icon: BarChart3, label: "Statistics" },
+                { href: "/dashboard/impact", icon: Leaf, label: "Environmental Impact" },
+                { href: "/dashboard/settings", icon: Settings, label: "Settings" },
+              ].map(({ href, icon: Icon, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={`flex items-center p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-green-100/50 dark:hover:bg-green-900/30 transition-colors ${
+                      pathname === href ? "bg-green-100 dark:bg-green-900/30" : ""
+                    }`}
+                  >
+                    <Icon className="h-5 w-5 mr-3" />
+                    {isSidebarOpen && <span>{label}</span>}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
 
-          <div className="p-4 border-t border-green-100">
+          <div className="p-4 border-t border-green-100 dark:border-green-900/30">
             <Button
               variant="ghost"
-              className="w-full justify-start text-gray-700 hover:bg-red-100/50 hover:text-red-700"
+              className="w-full justify-start text-gray-700 dark:text-gray-400 hover:bg-red-100/50 dark:hover:bg-red-900/30 hover:text-red-700 dark:hover:text-red-500"
               onClick={async () => {
                 await authClient.signOut({
                   fetchOptions: {

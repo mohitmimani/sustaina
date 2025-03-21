@@ -42,17 +42,19 @@ const chartConfig = {
 
 export function StatsChart({ stats }: StatsChartProps) {
   return (
-    <Card className="backdrop-blur-md bg-white/70 border-green-100 shadow-sm">
+    <Card className="backdrop-blur-md bg-white/70 dark:bg-slate-900 border-green-100 dark:border-green-900/30 shadow-sm">
       <CardHeader>
-        <CardTitle>Waste Management Trends</CardTitle>
-        <CardDescription>Track your progress over time</CardDescription>
+        <CardTitle className="dark:text-gray-300">Waste Management Trends</CardTitle>
+        <CardDescription className="dark:text-gray-400">
+          Track your progress over time
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="bar" className="w-full">
-          <TabsList className="grid grid-cols-3 mb-4 w-full md:w-auto">
-            <TabsTrigger value="bar">Bar Chart</TabsTrigger>
-            <TabsTrigger value="line">Line Chart</TabsTrigger>
-            <TabsTrigger value="area">Area Chart</TabsTrigger>
+          <TabsList className="grid grid-cols-3 mb-4 w-full md:w-auto dark:bg-slate-900 dark:border-green-900/30">
+            <TabsTrigger value="bar" className="dark:text-gray-300">Bar Chart</TabsTrigger>
+            <TabsTrigger value="line" className="dark:text-gray-300">Line Chart</TabsTrigger>
+            <TabsTrigger value="area" className="dark:text-gray-300">Area Chart</TabsTrigger>
           </TabsList>
 
           <TabsContent value="bar" className="space-y-4">
@@ -63,8 +65,8 @@ export function StatsChart({ stats }: StatsChartProps) {
               >
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={stats.monthlyData}>
-                    <XAxis dataKey="month" />
-                    <YAxis />
+                    <XAxis dataKey="month" stroke="dark:text-gray-200" />
+                    <YAxis stroke="dark:text-gray-200" />
                     <Bar
                       dataKey="recycled"
                       fill="#3b82f6"
@@ -96,10 +98,10 @@ export function StatsChart({ stats }: StatsChartProps) {
                       }
                     />
                     <ChartTooltip
-                      wrapperClassName="bg-slate-900 backdrop-blur-md"
+                      wrapperClassName="bg-slate-900 dark:bg-slate-900 backdrop-blur-md"
                       content={<ChartTooltipContent indicator="line" />}
                     />
-                    <ChartLegend content={<ChartLegendContent />} />
+                    <ChartLegend content={<ChartLegendContent className="dark:text-gray-300" />} />
                   </BarChart>
                 </ResponsiveContainer>
               </ChartContainer>
@@ -114,17 +116,13 @@ export function StatsChart({ stats }: StatsChartProps) {
               >
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={stats.monthlyData}>
-                    <XAxis dataKey="month" />
-                    <YAxis />
+                    <XAxis dataKey="month" stroke="dark:text-gray-200" />
+                    <YAxis stroke="dark:text-gray-200" />
                     <Line type="monotone" dataKey="recycled" stroke="#3b82f6" />
-                    <Line
-                      type="monotone"
-                      dataKey="composted"
-                      stroke="#22c55e"
-                    />
+                    <Line type="monotone" dataKey="composted" stroke="#22c55e" />
                     <Line type="monotone" dataKey="landfill" stroke="#ef4444" />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <ChartLegend content={<ChartLegendContent />} />
+                    <ChartLegend content={<ChartLegendContent className="dark:text-gray-300" />} />
                   </LineChart>
                 </ResponsiveContainer>
               </ChartContainer>
@@ -139,28 +137,28 @@ export function StatsChart({ stats }: StatsChartProps) {
               >
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={stats.monthlyData}>
-                    <XAxis dataKey="month" />
-                    <YAxis />
+                    <XAxis dataKey="month" stroke="dark:text-gray-200" />
+                    <YAxis stroke="dark:text-gray-200" />
                     <Area
                       type="monotone"
                       dataKey="recycled"
                       stroke="#3b82f6"
-                      fill="#3b82f6"
+                      fill="rgba(59, 130, 246, 0.5)"
                     />
                     <Area
                       type="monotone"
                       dataKey="composted"
                       stroke="#22c55e"
-                      fill="#22c55e"
+                      fill="rgba(34, 197, 94, 0.5)"
                     />
                     <Area
                       type="monotone"
                       dataKey="landfill"
                       stroke="#ef4444"
-                      fill="#ef4444"
+                      fill="rgba(239, 68, 68, 0.5)"
                     />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <ChartLegend content={<ChartLegendContent />} />
+                    <ChartLegend content={<ChartLegendContent className="dark:text-gray-300" />} />
                   </AreaChart>
                 </ResponsiveContainer>
               </ChartContainer>
