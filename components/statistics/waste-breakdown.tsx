@@ -43,7 +43,9 @@ export function WasteBreakdown({ stats }: WasteBreakdownProps) {
   return (
     <Card className="backdrop-blur-md bg-white/70 dark:bg-slate-900 border-green-100 dark:border-green-900/30 shadow-sm">
       <CardHeader>
-        <CardTitle className="dark:text-gray-300">Waste Breakdown by Category</CardTitle>
+        <CardTitle className="dark:text-gray-300">
+          Waste Breakdown by Category
+        </CardTitle>
         <CardDescription className="dark:text-gray-400">
           Detailed analysis of your waste composition
         </CardDescription>
@@ -68,8 +70,20 @@ export function WasteBreakdown({ stats }: WasteBreakdownProps) {
                 />
               ))}
             </Pie>
-            <Tooltip contentStyle={{ backgroundColor: "#1e293b", color: "#f8fafc" }} />
-            <Legend wrapperStyle={{ color: "#f8fafc" }} />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "var(--tooltip-bg)",
+                borderColor: "var(--tooltip-border)",
+                color: "var(--foreground)",
+              }}
+              wrapperStyle={{ color: "var(--foreground)" }}
+              itemStyle={{ color: "var(--foreground)" }}
+            />
+            <Legend
+              wrapperStyle={{
+                color: "var(--foreground)",
+              }}
+            />
           </PieChart>
         </div>
 
@@ -84,14 +98,25 @@ export function WasteBreakdown({ stats }: WasteBreakdownProps) {
             </TableHeader>
             <TableBody>
               {stats.wasteByCategory.map((item) => (
-                <TableRow key={item.category} className="dark:border-green-900/30">
-                  <TableCell className="dark:text-gray-300">{item.category}</TableCell>
-                  <TableCell className="dark:text-gray-300">{item.amount} unit</TableCell>
+                <TableRow
+                  key={item.category}
+                  className="dark:border-green-900/30"
+                >
+                  <TableCell className="dark:text-gray-300">
+                    {item.category}
+                  </TableCell>
+                  <TableCell className="dark:text-gray-300">
+                    {item.amount} unit
+                  </TableCell>
                   <TableCell>
                     {item.recyclable ? (
-                      <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-400">Yes</Badge>
+                      <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-400">
+                        Yes
+                      </Badge>
                     ) : (
-                      <Badge className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-400">No</Badge>
+                      <Badge className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-400">
+                        No
+                      </Badge>
                     )}
                   </TableCell>
                 </TableRow>

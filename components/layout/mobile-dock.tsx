@@ -20,7 +20,7 @@ export function MobileDock() {
         {/* Home */}
         <Link
           href="/dashboard"
-          className={`flex flex-col items-center p-2 ${
+          className={`rounded-xl flex flex-col items-center p-2 ${
             pathname === "/dashboard" ? "bg-green-200 dark:bg-green-900" : ""
           }`}
         >
@@ -45,7 +45,7 @@ export function MobileDock() {
         {/* Receipts */}
         <Link
           href="/dashboard/receipts"
-          className={`flex flex-col items-center p-2 ${
+          className={`rounded-xl flex flex-col items-center p-2 ${
             pathname === "/dashboard/receipts"
               ? "bg-green-200 dark:bg-green-900"
               : ""
@@ -74,7 +74,7 @@ export function MobileDock() {
           variant="outline"
           size="icon"
           className="h-12 w-12 rounded-full bg-green-500 text-white border-green-400 shadow-md flex items-center justify-center"
-          onClick={() => router.push("/add-receipt")}
+          onClick={() => router.push("/dashboard/receipts")}
         >
           <Plus className="h-6 w-6 text-white dark:text-green-400" />
         </Button>
@@ -82,7 +82,7 @@ export function MobileDock() {
         {/* Stats */}
         <Link
           href="/dashboard/statistics"
-          className={`flex flex-col items-center p-2 ${
+          className={`rounded-xl flex flex-col items-center p-2 ${
             pathname === "/dashboard/statistics"
               ? "bg-green-200 dark:bg-green-900"
               : ""
@@ -109,7 +109,7 @@ export function MobileDock() {
         {/* Impact */}
         <Link
           href="/dashboard/impact"
-          className={`flex flex-col items-center p-2 ${
+          className={`rounded-xl flex flex-col items-center p-2 ${
             pathname === "/dashboard/impact"
               ? "bg-green-200 dark:bg-green-900"
               : ""

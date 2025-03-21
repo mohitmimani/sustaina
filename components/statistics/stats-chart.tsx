@@ -44,17 +44,25 @@ export function StatsChart({ stats }: StatsChartProps) {
   return (
     <Card className="backdrop-blur-md bg-white/70 dark:bg-slate-900 border-green-100 dark:border-green-900/30 shadow-sm">
       <CardHeader>
-        <CardTitle className="dark:text-gray-300">Waste Management Trends</CardTitle>
+        <CardTitle className="dark:text-gray-300">
+          Waste Management Trends
+        </CardTitle>
         <CardDescription className="dark:text-gray-400">
           Track your progress over time
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="bar" className="w-full">
-          <TabsList className="grid grid-cols-3 mb-4 w-full md:w-auto dark:bg-slate-900 dark:border-green-900/30">
-            <TabsTrigger value="bar" className="dark:text-gray-300">Bar Chart</TabsTrigger>
-            <TabsTrigger value="line" className="dark:text-gray-300">Line Chart</TabsTrigger>
-            <TabsTrigger value="area" className="dark:text-gray-300">Area Chart</TabsTrigger>
+          <TabsList className="grid grid-cols-3 mb-4 w-full md:w-auto">
+            <TabsTrigger value="bar" className="dark:text-gray-300">
+              Bar Chart
+            </TabsTrigger>
+            <TabsTrigger value="line" className="dark:text-gray-300">
+              Line Chart
+            </TabsTrigger>
+            <TabsTrigger value="area" className="dark:text-gray-300">
+              Area Chart
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="bar" className="space-y-4">
@@ -101,7 +109,11 @@ export function StatsChart({ stats }: StatsChartProps) {
                       wrapperClassName="bg-slate-900 dark:bg-slate-900 backdrop-blur-md"
                       content={<ChartTooltipContent indicator="line" />}
                     />
-                    <ChartLegend content={<ChartLegendContent className="dark:text-gray-300" />} />
+                    <ChartLegend
+                      content={
+                        <ChartLegendContent className="dark:text-gray-300" />
+                      }
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </ChartContainer>
@@ -119,10 +131,18 @@ export function StatsChart({ stats }: StatsChartProps) {
                     <XAxis dataKey="month" stroke="dark:text-gray-200" />
                     <YAxis stroke="dark:text-gray-200" />
                     <Line type="monotone" dataKey="recycled" stroke="#3b82f6" />
-                    <Line type="monotone" dataKey="composted" stroke="#22c55e" />
+                    <Line
+                      type="monotone"
+                      dataKey="composted"
+                      stroke="#22c55e"
+                    />
                     <Line type="monotone" dataKey="landfill" stroke="#ef4444" />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <ChartLegend content={<ChartLegendContent className="dark:text-gray-300" />} />
+                    <ChartLegend
+                      content={
+                        <ChartLegendContent className="dark:text-gray-300" />
+                      }
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </ChartContainer>
@@ -158,7 +178,11 @@ export function StatsChart({ stats }: StatsChartProps) {
                       fill="rgba(239, 68, 68, 0.5)"
                     />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <ChartLegend content={<ChartLegendContent className="dark:text-gray-300" />} />
+                    <ChartLegend
+                      content={
+                        <ChartLegendContent className="dark:text-gray-300" />
+                      }
+                    />
                   </AreaChart>
                 </ResponsiveContainer>
               </ChartContainer>

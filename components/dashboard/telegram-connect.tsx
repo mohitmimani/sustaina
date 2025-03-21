@@ -128,16 +128,16 @@ export function TelegramConnect() {
               <Check className="h-6 w-6 text-green-600" />
             </div>
             <div>
-              <h3 className="font-medium text-green-700 flex items-center gap-2 dark:text-green-400 hidden md:block">
+              <h3 className="font-medium text-green-700 items-center gap-2 dark:text-green-400 hidden md:flex gap-x-2">
                 Connected to Telegram
                 <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded-full">
                   Active
                 </span>
               </h3>
-              <p className="text-sm text-gray-600 mt-1 flex items-center">
+              <p className="text-sm text-gray-600 mt-1 flex items-center dark:text-gray-300">
                 <span className="font-medium">@{username}</span>
                 <span className="mx-2 text-gray-400 sm:flex hidden">•</span>
-                <span className="text-gray-500 sm:flex hidden">
+                <span className="text-gray-600 dark:text-gray-300 sm:flex hidden">
                   Receiving notifications
                 </span>
               </p>
@@ -170,7 +170,7 @@ export function TelegramConnect() {
               Get instant notifications and submit receipts via chat
             </p>
           </div>
-        </div>  
+        </div>
         <Button
           className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white flex items-center gap-2 px-5"
           onClick={handleConnect}
