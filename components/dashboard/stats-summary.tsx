@@ -106,7 +106,7 @@ export function StatsSummary() {
             <span>Total Waste</span>
             <span className="font-medium">{stats?.total ?? 0} unit</span>
           </div>
-          <Progress value={100} className="h-2 bg-gray-100" />
+          <Progress value={100} className="h-2" />
         </div>
 
         {/* Recycled */}
