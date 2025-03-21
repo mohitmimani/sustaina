@@ -16,7 +16,7 @@ export function ImpactHeader() {
           Your Environmental Impact
         </h1>
       </motion.div>
-      <motion.p variants={itemVariants} className="text-gray-600 dark:text-white-400">
+      <motion.p variants={itemVariants} className="text-gray-600 dark:text-gray-400">
         Track how your sustainable choices are making a difference
       </motion.p>
     </motion.div>
