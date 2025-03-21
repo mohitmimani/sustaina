@@ -36,7 +36,7 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
           transition={{ duration: 0.3 }}
           className={`${
             isSidebarOpen ? "w-64" : "w-20"
-          } bg-white/80 dark:bg-slate-900 backdrop-blur-md border-r border-green-100 dark:border-green-900/30 shadow-sm transition-all duration-300 flex flex-col ${
+          } bg-muted text-muted-foreground backdrop-blur-md border-r border-muted/30 shadow-sm transition-all duration-300 flex flex-col ${
             isMobile ? "fixed z-40 h-full" : ""
           }`}
         >
@@ -77,7 +77,7 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
                 <li key={href}>
                   <Link
                     href={href}
-                    className={`flex items-center p-2 rounded-lg text-gray-700 dark:text-gray-400 hover:bg-green-100/50 dark:hover:bg-green-900/30 transition-colors ${
+                    className={`flex items-center p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-green-100/50 dark:hover:bg-green-900/30 transition-colors ${
                       pathname === href ? "bg-green-100 dark:bg-green-900/30" : ""
                     }`}
                   >
