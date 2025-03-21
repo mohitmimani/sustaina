@@ -44,7 +44,7 @@ export default function StatisticsPage() {
     <>
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-green-800 dark:text-green-400 hidden md:block">Statistics</h1>
-        <p className="text-gray-600">
+        <p className="text-gray-600 dark:text-gray-400">
           Detailed analysis of your waste management and recycling habits
         </p>
       </div>
