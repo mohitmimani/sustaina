@@ -89,7 +89,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 p-4 overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4 overflow-hidden">
       {isSuccess && (
         <div className="fixed inset-0 pointer-events-none">
           {generateConfetti()}
@@ -102,7 +102,7 @@ export default function SignupPage() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <div className="backdrop-blur-md bg-white/70 rounded-3xl shadow-lg border border-green-100 overflow-hidden">
+        <div className="backdrop-blur-md bg-white/70 dark:bg-gray-800/70 rounded-3xl shadow-lg border border-green-100 dark:border-gray-700 overflow-hidden">
           <div className="p-8">
             <div className="text-center mb-8">
               <motion.div
@@ -118,14 +118,14 @@ export default function SignupPage() {
                     transition={{ duration: 0.5 }}
                     className="inline-block"
                   >
-                    <Leaf className="w-20 h-20 text-emerald-500" />
+                    <Leaf className="w-20 h-20 text-emerald-500 dark:text-emerald-400" />
                   </motion.div>
                 </div>
               </motion.div>
-              <h1 className="text-2xl font-bold text-green-800">
+              <h1 className="text-2xl font-bold text-green-800 dark:text-green-300">
                 Join Sustaina
               </h1>
-              <p className="text-gray-600 mt-2">
+              <p className="text-gray-600 dark:text-gray-400 mt-2">
                 Start your sustainability journey today
               </p>
             </div>
@@ -138,9 +138,11 @@ export default function SignupPage() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   className="text-center py-8"
                 >
-                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h2 className="text-xl font-bold text-green-800">Success!</h2>
-                  <p className="text-gray-600 mt-2">
+                  <CheckCircle className="w-16 h-16 text-green-500 dark:text-green-400 mx-auto mb-4" />
+                  <h2 className="text-xl font-bold text-green-800 dark:text-green-300">
+                    Success!
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400 mt-2">
                     Check your Telegram for a magic link to complete your
                     registration.
                   </p>
@@ -163,7 +165,7 @@ export default function SignupPage() {
                         onClick={googleSignIn}
                         type="button"
                         variant="outline"
-                        className="w-full flex items-center justify-center gap-2 py-6 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 rounded-xl shadow-sm transition-all"
+                        className="w-full flex items-center justify-center gap-2 py-6 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600 rounded-xl shadow-sm transition-all"
                       >
                         <Image
                           src="/google.svg"
@@ -176,17 +178,17 @@ export default function SignupPage() {
                     </motion.div>
 
                     <div className="relative flex items-center">
-                      <div className="flex-grow border-t border-gray-300"></div>
-                      <span className="flex-shrink mx-4 text-gray-500 text-sm">
+                      <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
+                      <span className="flex-shrink mx-4 text-gray-500 dark:text-gray-400 text-sm">
                         or
                       </span>
-                      <div className="flex-grow border-t border-gray-300"></div>
+                      <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
                     </div>
 
                     <div className="space-y-2">
                       <label
                         htmlFor="fullName"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                       >
                         Full Name
                       </label>
@@ -197,7 +199,7 @@ export default function SignupPage() {
                           placeholder="Enter your full name"
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
-                          className="w-full rounded-xl bg-white border-gray-200 focus:ring-green-500 focus:border-green-500 py-6"
+                          className="w-full rounded-xl bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 focus:ring-green-500 focus:border-green-500 py-6 dark:text-gray-200 dark:placeholder-gray-400"
                         />
                       </motion.div>
                     </div>
@@ -205,7 +207,7 @@ export default function SignupPage() {
                     <div className="space-y-2">
                       <label
                         htmlFor="phone"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                       >
                         Phone Number
                       </label>
@@ -214,10 +216,10 @@ export default function SignupPage() {
                           value={countryCode}
                           onValueChange={setCountryCode}
                         >
-                          <SelectTrigger className="w-[100px] rounded-xl bg-white border-gray-200">
+                          <SelectTrigger className="w-[100px] rounded-xl bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 dark:text-gray-200">
                             <SelectValue placeholder="+91" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
                             <SelectItem value="+91">+91 (IN)</SelectItem>
                             <SelectItem value="+1">+1 (US)</SelectItem>
                             <SelectItem value="+44">+44 (UK)</SelectItem>
@@ -235,14 +237,14 @@ export default function SignupPage() {
                             placeholder="Enter your phone number"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
-                            className="w-full rounded-xl bg-white border-gray-200 focus:ring-green-500 focus:border-green-500 py-6"
+                            className="w-full rounded-xl bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 focus:ring-green-500 focus:border-green-500 py-6 dark:text-gray-200 dark:placeholder-gray-400"
                           />
                         </motion.div>
                       </div>
                       {error && (
                         <p className="text-xs text-red-500 mt-1">{error}</p>
                       )}
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         We&apos;ll send a secure signup link to your Telegram.
                       </p>
                     </div>
@@ -255,7 +257,7 @@ export default function SignupPage() {
                   >
                     <Button
                       type="submit"
-                      className="w-full py-6 rounded-xl bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-medium shadow-md hover:shadow-lg transition-all duration-200"
+                      className="w-full py-6 rounded-xl bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-medium shadow-md hover:shadow-lg transition-all duration-200 dark:from-green-600 dark:to-teal-600 dark:hover:from-green-700 dark:hover:to-teal-700"
                       disabled={isLoading || !phoneNumber || !fullName}
                     >
                       {isLoading ? (
@@ -271,11 +273,11 @@ export default function SignupPage() {
             </AnimatePresence>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 Already have an account?{" "}
                 <Link
                   href="/login"
-                  className="text-green-600 hover:text-green-700 font-medium"
+                  className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium"
                 >
                   Log In
                 </Link>
@@ -283,12 +285,18 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <div className="px-8 py-4 bg-gray-50/50 border-t border-gray-100 text-center text-xs text-gray-500">
+          <div className="px-8 py-4 bg-gray-50/50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700 text-center text-xs text-gray-500 dark:text-gray-400">
             <div className="flex justify-center space-x-4">
-              <Link href="/privacy" className="hover:text-green-600">
+              <Link
+                href="/privacy"
+                className="hover:text-green-600 dark:hover:text-green-400"
+              >
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-green-600">
+              <Link
+                href="/terms"
+                className="hover:text-green-600 dark:hover:text-green-400"
+              >
                 Terms of Use
               </Link>
             </div>
