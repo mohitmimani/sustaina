@@ -10,6 +10,7 @@ import {
   Settings,
   LogOut,
   X,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -69,16 +70,39 @@ export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
             <ul className="space-y-2">
               {[
                 { href: "/dashboard", icon: Home, label: "Dashboard" },
-                { href: "/dashboard/receipts", icon: FileText, label: "Receipts" },
-                { href: "/dashboard/statistics", icon: BarChart3, label: "Statistics" },
-                { href: "/dashboard/impact", icon: Leaf, label: "Environmental Impact" },
-                { href: "/dashboard/settings", icon: Settings, label: "Settings" },
+                {
+                  href: "/dashboard/receipts",
+                  icon: FileText,
+                  label: "Receipts",
+                },
+                {
+                  href: "/dashboard/statistics",
+                  icon: BarChart3,
+                  label: "Statistics",
+                },
+                {
+                  href: "/dashboard/impact",
+                  icon: Leaf,
+                  label: "Environmental Impact",
+                },
+                {
+                  href: "/dashboard/chat",
+                  icon: MessageCircle,
+                  label: "AI Expert",
+                },
+                {
+                  href: "/dashboard/settings",
+                  icon: Settings,
+                  label: "Settings",
+                },
               ].map(({ href, icon: Icon, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
                     className={`flex items-center p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-green-100/50 dark:hover:bg-green-900/30 transition-colors ${
-                      pathname === href ? "bg-green-100 dark:bg-green-900/30" : ""
+                      pathname === href
+                        ? "bg-green-100 dark:bg-green-900/30"
+                        : ""
                     }`}
                   >
                     <Icon className="h-5 w-5 mr-3" />
