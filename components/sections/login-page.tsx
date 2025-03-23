@@ -58,14 +58,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <div className="backdrop-blur-md bg-white/70 rounded-3xl shadow-lg border border-green-100 overflow-hidden">
+        <div className="backdrop-blur-md bg-white/70 dark:bg-gray-800/70 rounded-3xl shadow-lg border border-green-100 dark:border-gray-700 overflow-hidden">
           <div className="p-8">
             <div className="text-center mb-8">
               <motion.div
@@ -74,12 +74,12 @@ export default function LoginPage() {
                 transition={{ duration: 0.5 }}
                 className="inline-block"
               >
-                <Leaf className="w-20 h-20 text-emerald-500" />
+                <Leaf className="w-20 h-20 text-emerald-500 dark:text-emerald-400" />
               </motion.div>
-              <h1 className="text-2xl font-bold text-green-800">
+              <h1 className="text-2xl font-bold text-green-800 dark:text-green-300">
                 Welcome to Sustaina
               </h1>
-              <p className="text-gray-600 mt-2">
+              <p className="text-gray-600 dark:text-gray-400 mt-2">
                 AI-powered sustainability tracking
               </p>
             </div>
@@ -105,7 +105,7 @@ export default function LoginPage() {
                         type="button"
                         variant="outline"
                         onClick={googleSignIn}
-                        className="w-full flex items-center justify-center gap-2 py-6 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 rounded-xl shadow-sm transition-all"
+                        className="w-full flex items-center justify-center gap-2 py-6 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600 rounded-xl shadow-sm transition-all"
                       >
                         <Image
                           src="/google.svg"
@@ -118,17 +118,17 @@ export default function LoginPage() {
                     </motion.div>
 
                     <div className="relative flex items-center">
-                      <div className="flex-grow border-t border-gray-300"></div>
-                      <span className="flex-shrink mx-4 text-gray-500 text-sm">
+                      <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
+                      <span className="flex-shrink mx-4 text-gray-500 dark:text-gray-400 text-sm">
                         or
                       </span>
-                      <div className="flex-grow border-t border-gray-300"></div>
+                      <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
                     </div>
 
                     <div className="space-y-2">
                       <label
                         htmlFor="phone"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                       >
                         Phone Number
                       </label>
@@ -137,7 +137,7 @@ export default function LoginPage() {
                           value={countryCode}
                           onValueChange={setCountryCode}
                         >
-                          <SelectTrigger className="w-[100px] rounded-xl bg-white border-gray-200">
+                          <SelectTrigger className="w-[100px] rounded-xl bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600">
                             <SelectValue placeholder="+91" />
                           </SelectTrigger>
                           <SelectContent>
@@ -158,14 +158,16 @@ export default function LoginPage() {
                             placeholder="Enter your phone number"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
-                            className="w-full rounded-xl bg-white border-gray-200 focus:ring-green-500 focus:border-green-500 py-6"
+                            className="w-full rounded-xl bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 focus:ring-green-500 focus:border-green-500 py-6"
                           />
                         </motion.div>
                       </div>
                       {error && (
-                        <p className="text-xs text-red-500 mt-1">{error}</p>
+                        <p className="text-xs text-red-500 dark:text-red-400 mt-1">
+                          {error}
+                        </p>
                       )}
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         We&apos;ll send a secure login link to your Telegram.
                       </p>
                     </div>
@@ -191,11 +193,11 @@ export default function LoginPage() {
                   </motion.div>
 
                   <div className="text-center">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Don&apos;t have an account?{" "}
                       <Link
                         href="/signup"
-                        className="text-green-600 hover:text-green-700 font-medium"
+                        className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium"
                       >
                         Sign Up
                       </Link>
@@ -215,14 +217,14 @@ export default function LoginPage() {
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                    className="mx-auto bg-green-100 rounded-full p-4 w-24 h-24 flex items-center justify-center"
+                    className="mx-auto bg-green-100 dark:bg-green-900/50 rounded-full p-4 w-24 h-24 flex items-center justify-center"
                   >
                     <motion.div
                       initial={{ rotate: 0 }}
                       animate={{ rotate: [0, 10, -10, 0] }}
                       transition={{ delay: 0.5, duration: 0.5 }}
                     >
-                      <Mail className="h-12 w-12 text-green-600" />
+                      <Mail className="h-12 w-12 text-green-600 dark:text-green-400" />
                     </motion.div>
                   </motion.div>
 
@@ -231,10 +233,10 @@ export default function LoginPage() {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <h3 className="text-xl font-bold text-green-800 mb-2">
+                    <h3 className="text-xl font-bold text-green-800 dark:text-green-300 mb-2">
                       Magic Link Sent!
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 dark:text-gray-400">
                       We&apos;ve sent a login link to your Telegram account
                       connected to {countryCode} {phoneNumber}.
                     </p>
@@ -246,7 +248,7 @@ export default function LoginPage() {
                     transition={{ delay: 0.4 }}
                     className="flex flex-col gap-3"
                   >
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       The link will expire in 5 minutes.
                     </p>
 
@@ -257,7 +259,7 @@ export default function LoginPage() {
                       <Button
                         onClick={handleBackToLogin}
                         variant="outline"
-                        className="w-full py-4 rounded-xl border border-gray-200 text-gray-700 font-medium"
+                        className="w-full py-4 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium"
                       >
                         <RotateCcw className="mr-2 h-4 w-4" />
                         Back to Login
@@ -278,14 +280,14 @@ export default function LoginPage() {
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                    className="mx-auto bg-red-100 rounded-full p-4 w-24 h-24 flex items-center justify-center"
+                    className="mx-auto bg-red-100 dark:bg-red-900/40 rounded-full p-4 w-24 h-24 flex items-center justify-center"
                   >
                     <motion.div
                       initial={{ rotate: 0 }}
                       animate={{ rotate: [0, 10, -10, 0] }}
                       transition={{ delay: 0.5, duration: 0.5 }}
                     >
-                      <UserX className="h-12 w-12 text-red-600" />
+                      <UserX className="h-12 w-12 text-red-600 dark:text-red-400" />
                     </motion.div>
                   </motion.div>
 
@@ -294,10 +296,10 @@ export default function LoginPage() {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <h3 className="text-xl font-bold text-red-800 mb-2">
+                    <h3 className="text-xl font-bold text-red-800 dark:text-red-300 mb-2">
                       User Not Found
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 dark:text-gray-400">
                       We couldn&apos;t find an account associated with{" "}
                       {countryCode} {phoneNumber}.
                     </p>
@@ -322,11 +324,11 @@ export default function LoginPage() {
                       </Button>
                     </motion.div>
 
-                    <p className="text-sm text-gray-600 mt-2">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
                       Don&apos;t have an account?{" "}
                       <Link
                         href="/signup"
-                        className="text-green-600 hover:text-green-700 font-medium"
+                        className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium"
                       >
                         Sign Up
                       </Link>
@@ -337,12 +339,18 @@ export default function LoginPage() {
             </AnimatePresence>
           </div>
 
-          <div className="px-8 py-4 bg-gray-50/50 border-t border-gray-100 text-center text-xs text-gray-500">
+          <div className="px-8 py-4 bg-gray-50/50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700 text-center text-xs text-gray-500 dark:text-gray-400">
             <div className="flex justify-center space-x-4">
-              <Link href="/privacy" className="hover:text-green-600">
+              <Link
+                href="/privacy"
+                className="hover:text-green-600 dark:hover:text-green-400"
+              >
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-green-600">
+              <Link
+                href="/terms"
+                className="hover:text-green-600 dark:hover:text-green-400"
+              >
                 Terms of Use
               </Link>
             </div>
