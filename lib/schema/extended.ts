@@ -11,7 +11,7 @@ export const ItemWithoutIdSchema = z.object({
   wasteCategory: WasteCategorySchema,
   name: z.string(),
   price: z.number(),
-  weight: z.number().int().optional().nullable(),
+  weight: z.number().optional().nullable(),
   weightUnit: z.string().optional().nullable(),
   expiry: z.coerce.date().optional().nullable(),
   quantity: z.number().int(),
