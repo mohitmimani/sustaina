@@ -88,9 +88,9 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-xl backdrop-blur-sm bg-white/30 dark:bg-slate-800/30 border border-white/20 dark:border-slate-700/20">
+            <div className="relative w-full h-[700px] md:h-[700px] rounded-3xl overflow-hidden shadow-xl backdrop-blur-sm bg-white/30 dark:bg-slate-800/30 border border-white/20 dark:border-slate-700/20">
               <Image
-                src="/placeholder.svg?height=500&width=600"
+                src="/hero_section.png"
                 alt="Sustaina Dashboard"
                 fill
                 className="object-cover"
