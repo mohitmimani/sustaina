@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
          - Quantity (default to 1 if not specified)
          - Weight and unit (if available)
          - Material category (choose from ['PAPER','PLASTIC','FOOD','GLASS','METAL','OTHER'])
-         - Waste category (choose from ['RECYCLE','COMPOST','LANDFILL'] if you can determine it)
+         - Waste category (choose from ['RECYCLE','COMPOST','LANDFILL'] mandatory to choose one)
          - Expiry (default to null if not specified)
          - Brand (default to null if not specified)
          - IsConsumed (default to null if not specified)
