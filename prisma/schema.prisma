@@ -118,7 +118,7 @@ model Item {
   price         Float
   quantity      Int
   expiry        DateTime?
-  weight        Int?
+  weight        Float?
   weightUnit    String?
   brand         String?
   isConsumed    Boolean?      @default(false) 
