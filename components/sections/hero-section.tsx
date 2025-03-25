@@ -7,6 +7,7 @@ import { Leaf, MessageSquare, Store } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export function HeroSection() {
   const heroRef = useRef(null);
@@ -50,17 +51,21 @@ export function HeroSection() {
               waste, and earn rewards.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button className="rounded-full text-base px-8 py-6 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 group">
-                <span>Join via Telegram</span>
-                <MessageSquare className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-              </Button>
-              <Button
-                variant="outline"
-                className="rounded-full text-base px-8 py-6"
-              >
-                <span>Become a Partner Store</span>
-                <Store className="ml-2 h-5 w-5" />
-              </Button>
+              <Link href="/login">
+                <Button className="rounded-full text-base px-8 py-6 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 group">
+                  <span>Join via Telegram</span>
+                  <MessageSquare className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
+                </Button>
+              </Link>
+              <Link href="/login">
+                <Button
+                  variant="outline"
+                  className="rounded-full text-base px-8 py-6"
+                >
+                  <span>Become a Partner Store</span>
+                  <Store className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
             </div>
             <div className="flex items-center space-x-4 pt-4">
               <div className="flex -space-x-2">

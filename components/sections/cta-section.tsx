@@ -6,6 +6,7 @@ import { MessageSquare, Sparkles, Store } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 
 export function CTASection() {
   return (
@@ -48,9 +49,11 @@ export function CTASection() {
                     Join via Telegram and start receiving digital receipts and
                     expiry alerts.
                   </p>
-                  <Button className="w-full bg-white text-emerald-600 hover:bg-teal-50 rounded-lg">
-                    Join via Telegram
-                  </Button>
+                  <Link href="/login">
+                    <Button className="w-full bg-white text-emerald-600 hover:bg-teal-50 rounded-lg">
+                      Join via Telegram
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
 
@@ -64,9 +67,11 @@ export function CTASection() {
                     Partner with us to offer digital receipts and enhance
                     customer loyalty.
                   </p>
-                  <Button className="w-full bg-white text-emerald-600 hover:bg-teal-50 rounded-lg">
-                    Become a Partner
-                  </Button>
+                  <Link href="/login">
+                    <Button className="w-full bg-white text-emerald-600 hover:bg-teal-50 rounded-lg">
+                      Become a Partner
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </div>
