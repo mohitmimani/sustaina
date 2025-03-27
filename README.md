@@ -173,3 +173,18 @@ sustaina/
 - **Notifications**: Telegram Bot API
 - **AI**: Google AI SDK
 - **Deployment**: Vercel/Netlify
+
+## 🚀 Future Roadmap
+
+- 🌐 Expanded store API integrations with major retailers
+- 📊 Advanced analytics dashboard with predictive waste patterns
+- 🔄 Real-time carbon footprint calculator
+- 👥 Community marketplace for sharing excess items
+- 🎯 Personalized sustainability goals and achievement tracking
+- 📱 Progressive Web App (PWA) for mobile-first experience
+
+## 🏆 Hackathon Project
+
+This project was created for the GDG Solutions Challenge 2025.
+
+---
