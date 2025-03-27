@@ -131,6 +131,9 @@ importers:
       next-themes:
         specifier: ^0.4.5
         version: 0.4.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      node-cron:
+        specifier: ^3.0.3
+        version: 3.0.3
       node-telegram-bot-api:
         specifier: ^0.66.0
         version: 0.66.0(request@2.88.2)
@@ -3308,6 +3311,10 @@ packages:
         optional: true
       sass:
         optional: true
+
+  node-cron@3.0.3:
+    resolution: {integrity: sha512-dOal67//nohNgYWb+nWmg5dkFdIwDm8EpeGYMekPMrngV3637lqnX0lbUcCtgibHTz6SEz7DAIjKvKDFYCnO1A==}
+    engines: {node: '>=6.0.0'}
 
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -7665,6 +7672,10 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+
+  node-cron@3.0.3:
+    dependencies:
+      uuid: 8.3.2
 
   node-fetch@2.7.0:
     dependencies:
