@@ -1,84 +1,175 @@
-# Sustaina: AI-powered Waste Management and Sustainability Tracking Platform
+# 🌱 Sustaina: AI-powered Waste Management and Sustainability Tracking Platform
 
-## Overview
+![Sustaina Dashboard](public/dark-dashboard1.png)
 
-Sustaina is an AI-powered platform designed to optimize waste management and track sustainability efforts. Our platform leverages advanced machine learning algorithms to provide actionable insights, helping organizations and consumers reduce waste, improve recycling rates, and achieve their sustainability goals.
+## 🚀 Overview
 
-Sustaina aligns with UN SDG 12: Responsible Consumption and Production, promoting sustainable habits without requiring users to manually track their consumption. The platform uses AI-driven automation, WhatsApp/Telegram notifications, voice-based consumption logging, and a web dashboard for advanced analytics.
+Sustaina is an AI-powered platform designed to optimize waste management and track sustainability efforts. It automates waste tracking, provides actionable insights, and helps users reduce waste, improve recycling rates, and achieve sustainability goals.
 
-This is our hackathon project for GDG 2025.
+Sustaina aligns with **UN SDG 12: Responsible Consumption and Production**, promoting sustainable habits through AI-driven automation, chat-based notifications, and a web dashboard for advanced analytics.
 
-## How Sustaina Works
+---
 
-1️⃣ **Automated Purchase Tracking (Seamless Integration with Partnered Stores)**
+## 🛠️ How Sustaina Works
 
-- When a user shops at partnered marts or supermarkets, the store’s POS system automatically sends the receipt data to Sustaina.
-- The AI extracts key product details:
+![Sustaina Process Flow](public/diagram-arch.png)
+
+### 1️⃣ **Automated Purchase Tracking**
+
+- Partnered stores send receipt data directly to Sustaina.
+- AI extracts key details:
   - 🏷 Product Name
   - 🏭 Manufacturer
-  - ⏳ Expiry Date (if applicable)
+  - ⏳ Expiry Date
   - 🔢 Quantity Purchased
   - 💰 Price (optional for spending insights)
-- Users instantly receive a WhatsApp/Telegram message confirming the tracked purchase—no manual input required.
+- Users receive instant WhatsApp/Telegram notifications.
 
-2️⃣ **Expiry Tracking & Smart Reminders**
+### 2️⃣ **Expiry Tracking & Smart Reminders**
 
-- AI monitors expiry dates and notifies users in advance via chat apps.
-- Reminders include:
-  - ⚡ Urgent alerts: “Your milk expires in 2 days. Use it soon!”
-  - 📅 Weekly summaries: “5 items are expiring this week. Check your fridge!”
+- AI monitors expiry dates and sends reminders:
+  - ⚡ Urgent alerts: "Your milk expires in 2 days!"
+  - 📅 Weekly summaries: "5 items are expiring this week."
+- Telegram bot sends reminders directly to users.
 
-3️⃣ **AI-Powered Consumption Logging (Voice & Text Input)**
+![Telegram Reminder](public/telegram.png)
 
-- Users can confirm product usage by simply responding via voice or text.
-- Example: If a user says “I finished the bread”, the system removes it from tracking.
-- AI can suggest recipes based on expiring items to encourage usage before waste.
+### 3️⃣ **AI-Powered Consumption Logging**
 
-4️⃣ **Manual Receipt Scanning (For Non-Partnered Stores)**
+- Users log consumption via voice or text:
+  - Example: "I finished the bread" removes it from tracking.
+- AI suggests recipes to reduce waste.
 
-- If a user shops at a non-integrated store, they can scan/upload their receipt manually.
-- AI-powered OCR extracts product details and adds them to their waste tracking history.
+### 4️⃣ **Manual Receipt Scanning**
 
-5️⃣ **Web Dashboard (Sustainability & Waste Insights)**
+- For non-partnered stores, users can scan/upload receipts.
+- AI-powered OCR extracts product details.
 
-- Users can log in to a web-based dashboard to view:
-  - 📊 Waste reduction insights (“You saved 10kg of food waste this month!”)
-  - 📈 Consumption habits tracking (“You buy 5 dairy products per week”)
-  - 🔄 Recycling & sustainable disposal suggestions
-- Businesses can track sustainability impact and get insights into waste trends.
+### 5️⃣ **Web Dashboard**
 
-## Key Features of Sustaina
+- View insights like:
+  - 📊 Waste reduction trends
+  - 📈 Consumption habits
+  - 🔄 Recycling suggestions
 
-- ✅ Automatic Receipt Integration (No manual entry for partnered stores)
-- ✅ WhatsApp/Telegram Notifications (No need to install an app)
-- ✅ Expiry Tracking & AI Suggestions (Reduces food & product waste)
-- ✅ Voice-Based Logging (Easy tracking via chat)
-- ✅ Manual Receipt Scanning (For non-partnered purchases)
-- ✅ Sustainability Analytics Dashboard (Track waste & habits)
+---
 
-## Why Sustaina?
+## ✨ Key Features
 
-Sustaina removes the friction of waste tracking by automating the entire process. Users effortlessly track purchases, receive expiry reminders, and reduce waste—all through a simple AI-powered system integrated with their daily shopping habits.
+- ✅ **Automatic Receipt Integration**: No manual entry for partnered stores.
+- ✅ **Telegram Notifications**: No app installation required.
+- ✅ **Expiry Tracking & AI Suggestions**: Reduces food and product waste.
+- ✅ **Voice-Based Logging**: Easy tracking via chat.
+- ✅ **Manual Receipt Scanning**: For non-partnered purchases.
+- ✅ **Sustainability Analytics Dashboard**: Track waste and habits.
 
-## Installation
+---
 
-1. Clone the repository:
+## 📂 Project Structure
+
+```
+sustaina/
+├── app/             # Next.js application
+├── components/      # Reusable React components
+├── lib/             # Utility functions and helpers
+├── prisma/          # Database schema and migrations
+├── public/          # Static assets
+└── scripts/
+      └── bot/       # Telegram bot functionality
+```
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- **Node.js** (v18.0.0 or higher)
+- **NPM** or **Yarn**
+- **MongoDB** database
+- **Telegram bot token** (for notifications)
+
+### Installation
+
+1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/mohitmimani/sustaina.git
    ```
-2. Navigate to the project directory:
+
+2. **Navigate to the project directory:**
+
    ```bash
    cd sustaina
    ```
-3. Install the required dependencies:
+
+3. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
-## Usage
+4. **Set up environment variables:**
+   Create a `.env` file in the root directory with the following variables:
 
-1. Start the application:
+   ```env
+   # MongoDB connection
+   DATABASE_URL="mongodb+srv://<username>:<password>@cluster.mongodb.net/sustaina?retryWrites=true&w=majority"
+
+   # Auth.js configuration
+   AUTH_SECRET="your-auth-secret"
+   AUTH_URL="http://localhost:3000"
+
+   # Telegram bot configuration
+   TELEGRAM_BOT_TOKEN="your-telegram-bot-token"
+   TELEGRAM_API_ID="your-telegram-api-id"
+   TELEGRAM_API_HASH="your-telegram-api-hash"
+   TELEGRAM_SESSION="your-telegram-session-string"
+
+   # Google API for AI features
+   GOOGLE_API_KEY="your-google-api-key"
+   ```
+
+5. **Run database setup:**
+
+   ```bash
+   npx prisma db push
+   ```
+
+6. **Start the development server:**
+
    ```bash
    npm run dev
    ```
-2. Access the platform through your web browser at `http://localhost:3000`.
+
+   Access the web application at `http://localhost:3000`.
+
+7. **Start the Telegram bot (in a separate terminal):**
+
+   ```bash
+   npm run bot
+   ```
+
+8. **Build for production:**
+   ```bash
+   npm run build
+   npm run start
+   ```
+
+---
+
+## 🌟 Demo
+
+![Demo Image](public/dark-dashboard3.png)
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js, React, TailwindCSS, Radix UI
+- **Backend**: Next.js API routes, Prisma ORM
+- **Database**: MongoDB
+- **Authentication**: Auth.js
+- **Notifications**: Telegram Bot API
+- **AI**: Google AI SDK
+- **Deployment**: Vercel/Netlify

@@ -8,9 +8,9 @@ dotenv.config();
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN || "");
 const prisma = new PrismaClient();
 
-// Schedule check every minute for testing
-cron.schedule("* * * * *", async () => {
-  console.log("Running daily expiry check...");
+// Schedule cron job
+cron.schedule("0 */12 * * *", async () => {
+  console.log("Running expiry check...");
 
   const today = new Date();
   const threeDaysFromNow = new Date();
